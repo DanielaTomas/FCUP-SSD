@@ -25,7 +25,7 @@ public class Block {
     }
 
     public String calculateHash() {
-        String input = previousHash + timestamp + nonce; //+
+        String input = previousHash + timestamp + nonce + transactions.toString();
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));

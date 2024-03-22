@@ -3,14 +3,30 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.security.KeyPair;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class BlockchainTest {
     private Blockchain blockchain;
+    private KeyPair AliceKeyPair;
+    private KeyPair BobKeyPair;
+    private KeyPair CharlieKeyPair;
+    private Transaction transaction1;
+    private Transaction transaction2;
 
     @BeforeEach
     public void setup() {
         this.blockchain = new Blockchain();
-        blockchain.addTransaction(new Transaction("Alice", "Bob", 5));
-        blockchain.addTransaction(new Transaction("Bob", "Charlie", 10));
+        this.AliceKeyPair = Transaction.generateKeyPair();
+        this.BobKeyPair = Transaction.generateKeyPair();
+        this.CharlieKeyPair = Transaction.generateKeyPair();
+
+        this.transaction1 = new Transaction(AliceKeyPair.getPublic(), BobKeyPair.getPublic(), 5);
+        blockchain.addTransaction(transaction1);
+        this.transaction2 = new Transaction(BobKeyPair.getPublic(), CharlieKeyPair.getPublic(), 10);
+        blockchain.addTransaction(transaction2);
     }
 
     @Test
@@ -27,22 +43,27 @@ public class BlockchainTest {
     }
 
     @Test
+    public void validSignature() {
+        transaction1.signTransaction(AliceKeyPair.getPrivate());
+        assertTrue(transaction1.verifySignature());
+    }
+
+    @Test
+    public void invalidSignature() {
+        assertFalse(transaction1.verifySignature());
+    }
+
+    @Test
     public void miningPendingTransactions() {
-        blockchain.minePendingTransactions("Miner1");
+        blockchain.minePendingTransactions(Transaction.generateKeyPair().getPublic());
         Assertions.assertEquals(2, blockchain.getChain().size());
         Assertions.assertEquals(1, blockchain.getPendingTransactions().size());
     }
 
     @Test
     public void debugPrint() {
-        blockchain.minePendingTransactions("Miner1");
-        System.out.println("Blockchain:");
-        for (Block block : blockchain.getChain()) {
-            System.out.println("\tBlock " + block.getIndex() + "   " + block.getHash());
-            for (Transaction transaction : block.getTransactions()) {
-                System.out.println("\t\t" + transaction.getSender() + " sent " + transaction.getAmount() + " to " + transaction.getReceiver());
-            }
-        }
+
+
     }
 
 }
