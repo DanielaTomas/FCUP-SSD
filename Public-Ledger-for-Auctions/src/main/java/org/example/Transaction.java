@@ -1,5 +1,6 @@
 package org.example;
 import java.security.*;
+import java.util.Arrays;
 
 public class Transaction {
     private PublicKey senderPublicKey;
@@ -47,6 +48,15 @@ public class Transaction {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "\n\tTransaction Details:\n" +
+                "\t\tSender: " + senderPublicKey.toString() + "\n" +
+                "\t\tReceiver: " + receiverPublicKey.toString() + "\n" +
+                "\t\tAmount: " + amount + "\n" +
+                "\t\tSignature: " + (signature != null ? Arrays.toString(signature) : "null") + "\n";
     }
 
     public PublicKey getSenderPublicKey() {

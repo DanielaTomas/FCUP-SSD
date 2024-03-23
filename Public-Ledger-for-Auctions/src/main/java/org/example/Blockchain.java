@@ -29,7 +29,7 @@ public class Blockchain {
         }
 
         public void addTransaction(Transaction transaction) {
-            if(transaction == null) return;
+            if(transaction == null || !transaction.verifySignature()) return;
             pendingTransactions.add(transaction);
         }
 

@@ -4,15 +4,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.security.KeyPair;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 
 public class BlockchainTest {
     private Blockchain blockchain;
     private KeyPair AliceKeyPair;
     private KeyPair BobKeyPair;
     private KeyPair CharlieKeyPair;
+    private KeyPair MinerKeyPair;
+
     private Transaction transaction1;
     private Transaction transaction2;
 
@@ -22,11 +25,9 @@ public class BlockchainTest {
         this.AliceKeyPair = Transaction.generateKeyPair();
         this.BobKeyPair = Transaction.generateKeyPair();
         this.CharlieKeyPair = Transaction.generateKeyPair();
-
+        this.MinerKeyPair = Transaction.generateKeyPair();
         this.transaction1 = new Transaction(AliceKeyPair.getPublic(), BobKeyPair.getPublic(), 5);
-        blockchain.addTransaction(transaction1);
         this.transaction2 = new Transaction(BobKeyPair.getPublic(), CharlieKeyPair.getPublic(), 10);
-        blockchain.addTransaction(transaction2);
     }
 
     @Test
@@ -38,32 +39,65 @@ public class BlockchainTest {
     }
 
     @Test
-    public void addingTransactions() {
-        Assertions.assertEquals(2, blockchain.getPendingTransactions().size());
-    }
-
-    @Test
     public void validSignature() {
-        transaction1.signTransaction(AliceKeyPair.getPrivate());
-        assertTrue(transaction1.verifySignature());
+        this.sign_and_add_transactions();
+        Assertions.assertTrue(transaction1.verifySignature());
+        Assertions.assertTrue(transaction2.verifySignature());
     }
 
     @Test
     public void invalidSignature() {
-        assertFalse(transaction1.verifySignature());
+        Assertions.assertFalse(transaction1.verifySignature());
+    }
+
+    @Test
+    public void addingTransactions() {
+        this.sign_and_add_transactions();
+        Assertions.assertEquals(2, blockchain.getPendingTransactions().size());
     }
 
     @Test
     public void miningPendingTransactions() {
-        blockchain.minePendingTransactions(Transaction.generateKeyPair().getPublic());
+        this.sign_and_add_transactions();
+        blockchain.minePendingTransactions(MinerKeyPair.getPublic());
         Assertions.assertEquals(2, blockchain.getChain().size());
         Assertions.assertEquals(1, blockchain.getPendingTransactions().size());
     }
 
     @Test
     public void debugPrint() {
+        this.sign_and_add_transactions();
+        blockchain.minePendingTransactions(MinerKeyPair.getPublic());
 
+        System.out.println("Blockchain:");
+        for (Block block : blockchain.getChain()) {
+            System.out.println("\tBlock Index: " + block.getIndex());
+            System.out.println("\tBlock Hash: " + block.getHash());
+            System.out.println("\tPrevious Hash: " + block.getPreviousHash());
+            System.out.println("\tTransactions: " + block.getTransactions().toString());
+            System.out.println("\tTimestamp: " + convertTime(block.getTimestamp()));
+        }
 
+        System.out.println("Pending Transactions:");
+        for (Transaction pendingTransaction : blockchain.getPendingTransactions()) {
+            System.out.println("\tSender: " + pendingTransaction.getSenderPublicKey());
+            System.out.println("\tReceiver: " + pendingTransaction.getReceiverPublicKey());
+            System.out.println("\tAmount: " + pendingTransaction.getAmount());
+            System.out.println("\tSignature: " + Arrays.toString(pendingTransaction.getSignature()));
+        }
+    }
+
+    public String convertTime(long time){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return format.format(date);
+    }
+
+    public void sign_and_add_transactions() {
+        transaction1.signTransaction(AliceKeyPair.getPrivate());
+        transaction2.signTransaction(BobKeyPair.getPrivate());
+        blockchain.addTransaction(transaction1);
+        blockchain.addTransaction(transaction2);
     }
 
 }

@@ -57,6 +57,10 @@ public class Block {
         return this.index;
     }
 
+    public long getTimestamp() {
+        return this.timestamp;
+    }
+
     public void mineBlock(int difficulty) {
         String target = new String(new char[difficulty]).replace('\0', '0');
         while (!hash.substring(0, difficulty).equals(target)) {
