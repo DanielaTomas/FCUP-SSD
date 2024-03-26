@@ -1,0 +1,65 @@
+\hypertarget{classorg_1_1example_1_1Node}{}\doxysection{org.\+example.\+Node Class Reference}
+\label{classorg_1_1example_1_1Node}\index{org.example.Node@{org.example.Node}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classorg_1_1example_1_1Node_a907db8d2581d2f9056603c9b2497606a}{Node}} (String node\+Id, String ip\+Addr, int port)
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a65dae5689185f44ba8ccd19e7857d1a6}\label{classorg_1_1example_1_1Node_a65dae5689185f44ba8ccd19e7857d1a6}} 
+void {\bfseries join\+Network} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} bootstrap\+Node)
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_add10506d616f84afeea442d4746d61ff}\label{classorg_1_1example_1_1Node_add10506d616f84afeea442d4746d61ff}} 
+void {\bfseries update\+Routing\+Table} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node)
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a284cf5d9bf43e2219b73e376db9e491e}\label{classorg_1_1example_1_1Node_a284cf5d9bf43e2219b73e376db9e491e}} 
+List$<$ \mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} $>$ {\bfseries find\+Node} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} target\+Node)
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a6cbad419cec73d9414fcaa0c148d4415}\label{classorg_1_1example_1_1Node_a6cbad419cec73d9414fcaa0c148d4415}} 
+void {\bfseries ping} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} target\+Node)
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a740ae8a7a509ad90e70d748efdc83067}\label{classorg_1_1example_1_1Node_a740ae8a7a509ad90e70d748efdc83067}} 
+void {\bfseries find\+Value} (String key)
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a58375db9d166970104ce268909517224}\label{classorg_1_1example_1_1Node_a58375db9d166970104ce268909517224}} 
+void {\bfseries store} (String key, String value)
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a00ba74cf607f7e6c64e0ef7389f4037d}\label{classorg_1_1example_1_1Node_a00ba74cf607f7e6c64e0ef7389f4037d}} 
+String {\bfseries get\+Node\+Id} ()
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a27a3333e4ad0d1c6be63603a4aedb8ad}\label{classorg_1_1example_1_1Node_a27a3333e4ad0d1c6be63603a4aedb8ad}} 
+String {\bfseries get\+Ip\+Addr} ()
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a34a6049082e33e6fa50e8c473cb47e68}\label{classorg_1_1example_1_1Node_a34a6049082e33e6fa50e8c473cb47e68}} 
+int {\bfseries get\+Port} ()
+\item 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a42476dbb7927d22c8be0b6951bb3cad7}\label{classorg_1_1example_1_1Node_a42476dbb7927d22c8be0b6951bb3cad7}} 
+Map$<$ String, String $>$ {\bfseries get\+Routing\+Table} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}}\+: Represents a node in a peer-\/to-\/peer network. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a907db8d2581d2f9056603c9b2497606a}\label{classorg_1_1example_1_1Node_a907db8d2581d2f9056603c9b2497606a}} 
+\index{org.example.Node@{org.example.Node}!Node@{Node}}
+\index{Node@{Node}!org.example.Node@{org.example.Node}}
+\doxysubsubsection{\texorpdfstring{Node()}{Node()}}
+{\footnotesize\ttfamily org.\+example.\+Node.\+Node (\begin{DoxyParamCaption}\item[{String}]{node\+Id,  }\item[{String}]{ip\+Addr,  }\item[{int}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a node with the specified parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & The ID of the node. \\
+\hline
+{\em ip\+Addr} & The IP address of the node. \\
+\hline
+{\em port} & The port on which the node listens. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/org/example/Node.\+java\end{DoxyCompactItemize}

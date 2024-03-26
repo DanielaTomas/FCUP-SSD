@@ -1,0 +1,96 @@
+\hypertarget{classorg_1_1example_1_1Blockchain}{}\doxysection{org.\+example.\+Blockchain Class Reference}
+\label{classorg_1_1example_1_1Blockchain}\index{org.example.Blockchain@{org.example.Blockchain}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classorg_1_1example_1_1Blockchain_a57b0509e05f71993956aec232ae83b39}{Blockchain}} ()
+\item 
+void \mbox{\hyperlink{classorg_1_1example_1_1Blockchain_a4f0fd7235e7baf86f63b6532b6016f46}{add\+Transaction}} (\mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}} transaction)
+\item 
+void \mbox{\hyperlink{classorg_1_1example_1_1Blockchain_a08af72f2a4f360708240d5b27b9632a4}{mine\+Pending\+Transactions}} (Public\+Key miner\+Public\+Key)
+\item 
+\mbox{\hyperlink{classorg_1_1example_1_1Block}{Block}} \mbox{\hyperlink{classorg_1_1example_1_1Blockchain_ad3c05a61129095fe6c8c4130ceb556d2}{get\+Last\+Block}} ()
+\item 
+List$<$ \mbox{\hyperlink{classorg_1_1example_1_1Block}{Block}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1Blockchain_aecb2c26a2eba70fa629d1c0f1ea26bec}{get\+Chain}} ()
+\item 
+List$<$ \mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1Blockchain_a31e7c82cfd93ccff19da460cc852bcba}{get\+Pending\+Transactions}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classorg_1_1example_1_1Blockchain}{Blockchain}}\+: Represents a blockchain containing a chain of blocks and pending transactions. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Blockchain_a57b0509e05f71993956aec232ae83b39}\label{classorg_1_1example_1_1Blockchain_a57b0509e05f71993956aec232ae83b39}} 
+\index{org.example.Blockchain@{org.example.Blockchain}!Blockchain@{Blockchain}}
+\index{Blockchain@{Blockchain}!org.example.Blockchain@{org.example.Blockchain}}
+\doxysubsubsection{\texorpdfstring{Blockchain()}{Blockchain()}}
+{\footnotesize\ttfamily org.\+example.\+Blockchain.\+Blockchain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a blockchain with default difficulty and creates the genesis block. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Blockchain_a4f0fd7235e7baf86f63b6532b6016f46}\label{classorg_1_1example_1_1Blockchain_a4f0fd7235e7baf86f63b6532b6016f46}} 
+\index{org.example.Blockchain@{org.example.Blockchain}!addTransaction@{addTransaction}}
+\index{addTransaction@{addTransaction}!org.example.Blockchain@{org.example.Blockchain}}
+\doxysubsubsection{\texorpdfstring{addTransaction()}{addTransaction()}}
+{\footnotesize\ttfamily void org.\+example.\+Blockchain.\+add\+Transaction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}}}]{transaction }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Adds a transaction to the list of pending transactions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & The transaction to add. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classorg_1_1example_1_1Blockchain_aecb2c26a2eba70fa629d1c0f1ea26bec}\label{classorg_1_1example_1_1Blockchain_aecb2c26a2eba70fa629d1c0f1ea26bec}} 
+\index{org.example.Blockchain@{org.example.Blockchain}!getChain@{getChain}}
+\index{getChain@{getChain}!org.example.Blockchain@{org.example.Blockchain}}
+\doxysubsubsection{\texorpdfstring{getChain()}{getChain()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classorg_1_1example_1_1Block}{Block}}$>$ org.\+example.\+Blockchain.\+get\+Chain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the chain of blocks in the blockchain.
+
+\begin{DoxyReturn}{Returns}
+The list of blocks forming the blockchain. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Blockchain_ad3c05a61129095fe6c8c4130ceb556d2}\label{classorg_1_1example_1_1Blockchain_ad3c05a61129095fe6c8c4130ceb556d2}} 
+\index{org.example.Blockchain@{org.example.Blockchain}!getLastBlock@{getLastBlock}}
+\index{getLastBlock@{getLastBlock}!org.example.Blockchain@{org.example.Blockchain}}
+\doxysubsubsection{\texorpdfstring{getLastBlock()}{getLastBlock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classorg_1_1example_1_1Block}{Block}} org.\+example.\+Blockchain.\+get\+Last\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the last block in the blockchain.
+
+\begin{DoxyReturn}{Returns}
+The last block in the blockchain. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Blockchain_a31e7c82cfd93ccff19da460cc852bcba}\label{classorg_1_1example_1_1Blockchain_a31e7c82cfd93ccff19da460cc852bcba}} 
+\index{org.example.Blockchain@{org.example.Blockchain}!getPendingTransactions@{getPendingTransactions}}
+\index{getPendingTransactions@{getPendingTransactions}!org.example.Blockchain@{org.example.Blockchain}}
+\doxysubsubsection{\texorpdfstring{getPendingTransactions()}{getPendingTransactions()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}}$>$ org.\+example.\+Blockchain.\+get\+Pending\+Transactions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the list of pending transactions.
+
+\begin{DoxyReturn}{Returns}
+The list of pending transactions. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Blockchain_a08af72f2a4f360708240d5b27b9632a4}\label{classorg_1_1example_1_1Blockchain_a08af72f2a4f360708240d5b27b9632a4}} 
+\index{org.example.Blockchain@{org.example.Blockchain}!minePendingTransactions@{minePendingTransactions}}
+\index{minePendingTransactions@{minePendingTransactions}!org.example.Blockchain@{org.example.Blockchain}}
+\doxysubsubsection{\texorpdfstring{minePendingTransactions()}{minePendingTransactions()}}
+{\footnotesize\ttfamily void org.\+example.\+Blockchain.\+mine\+Pending\+Transactions (\begin{DoxyParamCaption}\item[{Public\+Key}]{miner\+Public\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Mines pending transactions and adds a new block to the blockchain.
+
+
+\begin{DoxyParams}{Parameters}
+{\em miner\+Public\+Key} & The public key of the miner receiving the reward. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/org/example/Blockchain.\+java\end{DoxyCompactItemize}

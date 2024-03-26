@@ -1,0 +1,133 @@
+\hypertarget{classorg_1_1example_1_1Block}{}\doxysection{org.\+example.\+Block Class Reference}
+\label{classorg_1_1example_1_1Block}\index{org.example.Block@{org.example.Block}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classorg_1_1example_1_1Block_a65fbc7ad364bd94d52d0373c22461471}{Block}} (int index, String previous\+Hash, List$<$ \mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}} $>$ transactions, long timestamp)
+\item 
+String \mbox{\hyperlink{classorg_1_1example_1_1Block_a8dc9eb2c5b956646bb2c68274675df08}{calculate\+Hash}} ()
+\item 
+void \mbox{\hyperlink{classorg_1_1example_1_1Block_a83027532dbc9a28b6f60b7dde511b00a}{mine\+Block}} (int difficulty)
+\item 
+String \mbox{\hyperlink{classorg_1_1example_1_1Block_a14dbbcc38731be2eef86a443d0ccfd50}{get\+Hash}} ()
+\item 
+List$<$ \mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1Block_a9708becd52e348cd0c00f406304050e8}{get\+Transactions}} ()
+\item 
+String \mbox{\hyperlink{classorg_1_1example_1_1Block_ab033d5d8dce8cd97d5cb8effa4b137e3}{get\+Previous\+Hash}} ()
+\item 
+int \mbox{\hyperlink{classorg_1_1example_1_1Block_aa91a4c6e2a12a9ff32eb498ea5a43025}{get\+Index}} ()
+\item 
+long \mbox{\hyperlink{classorg_1_1example_1_1Block_aa3104e786fe6c8f7643152f45cd7645e}{get\+Timestamp}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classorg_1_1example_1_1Block}{Block}}\+: Represents a block in a blockchain. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_a65fbc7ad364bd94d52d0373c22461471}\label{classorg_1_1example_1_1Block_a65fbc7ad364bd94d52d0373c22461471}} 
+\index{org.example.Block@{org.example.Block}!Block@{Block}}
+\index{Block@{Block}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{Block()}{Block()}}
+{\footnotesize\ttfamily org.\+example.\+Block.\+Block (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{String}]{previous\+Hash,  }\item[{List$<$ \mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}} $>$}]{transactions,  }\item[{long}]{timestamp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a block with the given parameters and calculates its hash.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the block in the blockchain. \\
+\hline
+{\em previous\+Hash} & The hash of the previous block in the blockchain. \\
+\hline
+{\em transactions} & The list of transactions contained in the block. \\
+\hline
+{\em timestamp} & The timestamp indicating when the block was created. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_a8dc9eb2c5b956646bb2c68274675df08}\label{classorg_1_1example_1_1Block_a8dc9eb2c5b956646bb2c68274675df08}} 
+\index{org.example.Block@{org.example.Block}!calculateHash@{calculateHash}}
+\index{calculateHash@{calculateHash}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{calculateHash()}{calculateHash()}}
+{\footnotesize\ttfamily String org.\+example.\+Block.\+calculate\+Hash (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculates the hash of the block.
+
+\begin{DoxyReturn}{Returns}
+The calculated hash value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_a14dbbcc38731be2eef86a443d0ccfd50}\label{classorg_1_1example_1_1Block_a14dbbcc38731be2eef86a443d0ccfd50}} 
+\index{org.example.Block@{org.example.Block}!getHash@{getHash}}
+\index{getHash@{getHash}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{getHash()}{getHash()}}
+{\footnotesize\ttfamily String org.\+example.\+Block.\+get\+Hash (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the hash of the block.
+
+\begin{DoxyReturn}{Returns}
+The hash of the block. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_aa91a4c6e2a12a9ff32eb498ea5a43025}\label{classorg_1_1example_1_1Block_aa91a4c6e2a12a9ff32eb498ea5a43025}} 
+\index{org.example.Block@{org.example.Block}!getIndex@{getIndex}}
+\index{getIndex@{getIndex}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{getIndex()}{getIndex()}}
+{\footnotesize\ttfamily int org.\+example.\+Block.\+get\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the index of the block in the blockchain.
+
+\begin{DoxyReturn}{Returns}
+The index of the block. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_ab033d5d8dce8cd97d5cb8effa4b137e3}\label{classorg_1_1example_1_1Block_ab033d5d8dce8cd97d5cb8effa4b137e3}} 
+\index{org.example.Block@{org.example.Block}!getPreviousHash@{getPreviousHash}}
+\index{getPreviousHash@{getPreviousHash}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{getPreviousHash()}{getPreviousHash()}}
+{\footnotesize\ttfamily String org.\+example.\+Block.\+get\+Previous\+Hash (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the hash of the previous block in the blockchain.
+
+\begin{DoxyReturn}{Returns}
+The hash of the previous block. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_aa3104e786fe6c8f7643152f45cd7645e}\label{classorg_1_1example_1_1Block_aa3104e786fe6c8f7643152f45cd7645e}} 
+\index{org.example.Block@{org.example.Block}!getTimestamp@{getTimestamp}}
+\index{getTimestamp@{getTimestamp}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{getTimestamp()}{getTimestamp()}}
+{\footnotesize\ttfamily long org.\+example.\+Block.\+get\+Timestamp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the timestamp indicating when the block was created.
+
+\begin{DoxyReturn}{Returns}
+The timestamp of the block. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_a9708becd52e348cd0c00f406304050e8}\label{classorg_1_1example_1_1Block_a9708becd52e348cd0c00f406304050e8}} 
+\index{org.example.Block@{org.example.Block}!getTransactions@{getTransactions}}
+\index{getTransactions@{getTransactions}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{getTransactions()}{getTransactions()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classorg_1_1example_1_1Transaction}{Transaction}}$>$ org.\+example.\+Block.\+get\+Transactions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the list of transactions contained in the block.
+
+\begin{DoxyReturn}{Returns}
+The list of transactions. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Block_a83027532dbc9a28b6f60b7dde511b00a}\label{classorg_1_1example_1_1Block_a83027532dbc9a28b6f60b7dde511b00a}} 
+\index{org.example.Block@{org.example.Block}!mineBlock@{mineBlock}}
+\index{mineBlock@{mineBlock}!org.example.Block@{org.example.Block}}
+\doxysubsubsection{\texorpdfstring{mineBlock()}{mineBlock()}}
+{\footnotesize\ttfamily void org.\+example.\+Block.\+mine\+Block (\begin{DoxyParamCaption}\item[{int}]{difficulty }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Mines the block with the given difficulty.
+
+
+\begin{DoxyParams}{Parameters}
+{\em difficulty} & The difficulty level of mining. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/org/example/Block.\+java\end{DoxyCompactItemize}
