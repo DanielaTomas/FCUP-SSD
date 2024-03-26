@@ -27,7 +27,7 @@ resource "google_compute_firewall" "node-ports" {
 module "node" {
   source               = "./modules/node"
 
-
+  kademlia_jar_path = var.kademlia_jar_path
   gcp_default_machine_type = var.gcp_default_machine_type
   gcp_default_machine_image = var.gcp_default_machine_image
 }

@@ -28,3 +28,8 @@ variable "default_data_disk_type" {
   type    = string
   default = "pd-standard"
 }
+
+variable "kademlia_jar_path" {
+    type    = string
+  description = "path to file containing kademlia executable"
+}

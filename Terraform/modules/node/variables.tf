@@ -23,3 +23,8 @@ variable "node_pop_zone" {
   type = string
   default = "-c"
 }
+
+variable "kademlia_jar_path" {
+    type    = string
+  description = "path to file containing kademlia executable"
+}

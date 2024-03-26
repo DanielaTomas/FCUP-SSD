@@ -16,6 +16,11 @@ resource "google_compute_instance" "node_instance" {
 
   tags = ["node-ports"]
 
+  provisioner "file" {
+    source      = var.kademlia_jar_path
+    destination = "~/kademlia.jar"
+  }
+
 
 boot_disk {
         initialize_params {
