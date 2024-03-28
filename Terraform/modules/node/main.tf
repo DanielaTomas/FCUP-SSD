@@ -12,7 +12,9 @@ resource "google_compute_instance" "node_instance" {
   machine_type = var.gcp_default_machine_type
   zone  = "${var.node_pop_region}${var.node_pop_zone}"
 
-  metadata_startup_script = file("${path.module}/cloud-init.sh")
+  metadata_startup_script = templatefile("${path.module}/cloud-init.sh", {
+        bootstrap_ips = var.bootstrap_ips
+  })
 
   tags = ["node-ports"]
 
