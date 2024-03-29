@@ -29,3 +29,10 @@ variable "kademlia_jar_path" {
   description = "path to file containing kademlia executable"
 }
 
+variable "gce_ssh_user" {
+  type = string
+}
+
+variable "ssh_pub_key_path" {
+  type = string
+}

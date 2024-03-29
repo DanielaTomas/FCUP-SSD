@@ -33,3 +33,11 @@ variable "bootstrap_ips" {
   type = list(string)
   description = "A list containing the IPs of the original bootstrap nodes of the network"
 }
+
+variable "gce_ssh_user" {
+  type = string
+}
+
+variable "ssh_pub_key_path" {
+  type = string
+}

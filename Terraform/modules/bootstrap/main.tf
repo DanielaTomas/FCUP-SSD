@@ -12,6 +12,10 @@ resource "google_compute_instance" "bootstrap_node_instance" {
   machine_type = var.gcp_default_machine_type
   zone  = "${var.bootstrap_node_pop_region}${var.bootstrap_node_pop_zone}"
 
+  metadata = {
+    ssh-keys = "${var.gce_ssh_user}:${file(var.ssh_pub_key_path)}"
+  }
+
   metadata_startup_script = file("${path.module}/cloud-init.sh")
 
   tags = ["node-ports"]
@@ -20,14 +24,13 @@ resource "google_compute_instance" "bootstrap_node_instance" {
     source      = var.kademlia_jar_path
     destination = "~/kademlia.jar"
 
-    #connection {
-      #type        = "ssh"
-      #user        = google_compute_instance.bootstrap_node_instance[0].metadata["ssh-user"]
-      #user     = "root"
-      #host     = "${var.host}"
-      #host        = google_compute_instance.bootstrap_node_instance[0].network_interface[0].access_config[0].nat_ip
-      #password = "${var.root_password}"
-    #}
+    connection {
+      type        = "ssh"
+      user        = var.gce_ssh_user
+      private_key = file(var.ssh_pub_key_path)
+      agent = "false"
+      host = google_compute_address.bootstrap_node_reserved_external_ip[count.index].address
+    }
   }
 
 
