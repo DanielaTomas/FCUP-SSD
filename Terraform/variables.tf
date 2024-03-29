@@ -41,3 +41,7 @@ variable "gce_ssh_user" {
 variable "ssh_pub_key_path" {
   type = string
 }
+
+variable "ssh_private_key_path" {
+  type = string
+}

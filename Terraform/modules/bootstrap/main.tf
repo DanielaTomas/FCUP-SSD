@@ -18,7 +18,7 @@ resource "google_compute_instance" "bootstrap_node_instance" {
 
   metadata_startup_script = file("${path.module}/cloud-init.sh")
 
-  tags = ["node-ports"]
+  tags = ["node-ports","default-allow-ssh"]
 
   provisioner "file" {
     source      = var.kademlia_jar_path
@@ -27,7 +27,7 @@ resource "google_compute_instance" "bootstrap_node_instance" {
     connection {
       type        = "ssh"
       user        = var.gce_ssh_user
-      private_key = file(var.ssh_pub_key_path)
+      private_key = file(var.ssh_private_key_path)
       agent = "false"
       host = google_compute_address.bootstrap_node_reserved_external_ip[count.index].address
     }

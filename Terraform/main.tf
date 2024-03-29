@@ -27,6 +27,8 @@ resource "google_compute_firewall" "node-ports" {
 module "bootstrap_node" {
   source               = "./modules/bootstrap"
 
+  ssh_private_key_path = var.ssh_private_key_path
+
   ssh_pub_key_path = var.ssh_pub_key_path
   gce_ssh_user = var.gce_ssh_user
   
@@ -41,7 +43,9 @@ module "node" {
 
   bootstrap_ips     = module.bootstrap_node.bootstrap_node_ips
 
-    ssh_pub_key_path = var.ssh_pub_key_path
+  ssh_private_key_path = var.ssh_private_key_path
+
+  ssh_pub_key_path = var.ssh_pub_key_path
   gce_ssh_user = var.gce_ssh_user
 
   kademlia_jar_path = var.kademlia_jar_path

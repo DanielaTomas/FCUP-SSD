@@ -21,7 +21,7 @@ resource "google_compute_instance" "node_instance" {
   })
   
 
-  tags = ["node-ports"]
+  tags = ["node-ports","default-allow-ssh"]
 
   provisioner "file" {
     source      = var.kademlia_jar_path
