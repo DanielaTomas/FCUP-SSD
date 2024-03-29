@@ -13,7 +13,7 @@ resource "google_compute_instance" "node_instance" {
   zone  = "${var.node_pop_region}${var.node_pop_zone}"
 
   metadata_startup_script = templatefile("${path.module}/cloud-init.sh", {
-        bootstrap_ips = var.bootstrap_ips
+        bootstrap_ip = var.bootstrap_ips[0]
   })
 
   tags = ["node-ports"]

@@ -11,7 +11,7 @@ variable "gcp_default_machine_image"{
 
 variable "bootstrap_node_instance_count" {
   type    = string
-  default = "3"
+  default = "1"
 }
 
 variable "bootstrap_node_pop_region" {

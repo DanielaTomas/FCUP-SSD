@@ -11,7 +11,7 @@ variable "gcp_default_machine_image"{
 
 variable "node_instance_count" {
   type    = string
-  default = "10"
+  default = "6"
 }
 
 variable "node_pop_region" {

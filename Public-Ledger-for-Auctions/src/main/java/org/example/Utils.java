@@ -1,7 +1,5 @@
 package org.example;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,7 +30,6 @@ public class Utils {
      * @param hash The byte array to be converted.
      * @return The hexadecimal string representation of the byte array.
      */
-    @NotNull
     static String getHexString(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : hash) {

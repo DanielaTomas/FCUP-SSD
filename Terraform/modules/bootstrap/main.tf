@@ -19,6 +19,15 @@ resource "google_compute_instance" "bootstrap_node_instance" {
   provisioner "file" {
     source      = var.kademlia_jar_path
     destination = "~/kademlia.jar"
+
+    #connection {
+      #type        = "ssh"
+      #user        = google_compute_instance.bootstrap_node_instance[0].metadata["ssh-user"]
+      #user     = "root"
+      #host     = "${var.host}"
+      #host        = google_compute_instance.bootstrap_node_instance[0].network_interface[0].access_config[0].nat_ip
+      #password = "${var.root_password}"
+    #}
   }
 
 
