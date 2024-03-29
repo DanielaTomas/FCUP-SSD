@@ -30,7 +30,7 @@ resource "google_compute_instance" "node_instance" {
     connection {
       type        = "ssh"
       user        = var.gce_ssh_user
-      private_key = file(var.ssh_pub_key_path)
+      private_key = file(var.ssh_private_key_path)
       agent = "false"
       host = google_compute_address.node_reserved_external_ip[count.index].address
     }
