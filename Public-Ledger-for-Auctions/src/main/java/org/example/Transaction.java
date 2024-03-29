@@ -23,7 +23,6 @@ public class Transaction {
         this.signature = null;
     }
 
-
     /**
      * Signs the transaction using the provided private key.
      *

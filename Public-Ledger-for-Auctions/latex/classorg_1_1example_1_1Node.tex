@@ -3,37 +3,13 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classorg_1_1example_1_1Node_a907db8d2581d2f9056603c9b2497606a}{Node}} (String node\+Id, String ip\+Addr, int port)
+\mbox{\hyperlink{classorg_1_1example_1_1Node_a42bd73056f540571dd64bd06aefdbf68}{Node}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info)
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a65dae5689185f44ba8ccd19e7857d1a6}\label{classorg_1_1example_1_1Node_a65dae5689185f44ba8ccd19e7857d1a6}} 
-void {\bfseries join\+Network} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} bootstrap\+Node)
+void \mbox{\hyperlink{classorg_1_1example_1_1Node_ada8659be75ebc3911d947302e01d6cef}{update\+Routing\+Table}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info)
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_add10506d616f84afeea442d4746d61ff}\label{classorg_1_1example_1_1Node_add10506d616f84afeea442d4746d61ff}} 
-void {\bfseries update\+Routing\+Table} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node)
+\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} \mbox{\hyperlink{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}{get\+Node\+Info}} ()
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a284cf5d9bf43e2219b73e376db9e491e}\label{classorg_1_1example_1_1Node_a284cf5d9bf43e2219b73e376db9e491e}} 
-List$<$ \mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} $>$ {\bfseries find\+Node} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} target\+Node)
-\item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a6cbad419cec73d9414fcaa0c148d4415}\label{classorg_1_1example_1_1Node_a6cbad419cec73d9414fcaa0c148d4415}} 
-void {\bfseries ping} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} target\+Node)
-\item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a740ae8a7a509ad90e70d748efdc83067}\label{classorg_1_1example_1_1Node_a740ae8a7a509ad90e70d748efdc83067}} 
-void {\bfseries find\+Value} (String key)
-\item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a58375db9d166970104ce268909517224}\label{classorg_1_1example_1_1Node_a58375db9d166970104ce268909517224}} 
-void {\bfseries store} (String key, String value)
-\item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a00ba74cf607f7e6c64e0ef7389f4037d}\label{classorg_1_1example_1_1Node_a00ba74cf607f7e6c64e0ef7389f4037d}} 
-String {\bfseries get\+Node\+Id} ()
-\item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a27a3333e4ad0d1c6be63603a4aedb8ad}\label{classorg_1_1example_1_1Node_a27a3333e4ad0d1c6be63603a4aedb8ad}} 
-String {\bfseries get\+Ip\+Addr} ()
-\item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a34a6049082e33e6fa50e8c473cb47e68}\label{classorg_1_1example_1_1Node_a34a6049082e33e6fa50e8c473cb47e68}} 
-int {\bfseries get\+Port} ()
-\item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a42476dbb7927d22c8be0b6951bb3cad7}\label{classorg_1_1example_1_1Node_a42476dbb7927d22c8be0b6951bb3cad7}} 
-Map$<$ String, String $>$ {\bfseries get\+Routing\+Table} ()
+Map$<$ String, String $>$ \mbox{\hyperlink{classorg_1_1example_1_1Node_a42476dbb7927d22c8be0b6951bb3cad7}{get\+Routing\+Table}} ()
 \end{DoxyCompactItemize}
 
 
@@ -41,21 +17,55 @@ Map$<$ String, String $>$ {\bfseries get\+Routing\+Table} ()
 Class \mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}}\+: Represents a node in a peer-\/to-\/peer network. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classorg_1_1example_1_1Node_a907db8d2581d2f9056603c9b2497606a}\label{classorg_1_1example_1_1Node_a907db8d2581d2f9056603c9b2497606a}} 
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a42bd73056f540571dd64bd06aefdbf68}\label{classorg_1_1example_1_1Node_a42bd73056f540571dd64bd06aefdbf68}} 
 \index{org.example.Node@{org.example.Node}!Node@{Node}}
 \index{Node@{Node}!org.example.Node@{org.example.Node}}
 \doxysubsubsection{\texorpdfstring{Node()}{Node()}}
-{\footnotesize\ttfamily org.\+example.\+Node.\+Node (\begin{DoxyParamCaption}\item[{String}]{node\+Id,  }\item[{String}]{ip\+Addr,  }\item[{int}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily org.\+example.\+Node.\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Constructs a node with the specified parameters.
 
 
 \begin{DoxyParams}{Parameters}
-{\em node\+Id} & The ID of the node. \\
+{\em node\+Info} & id, ip and port of the node. \\
 \hline
-{\em ip\+Addr} & The IP address of the node. \\
-\hline
-{\em port} & The port on which the node listens. \\
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}\label{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}} 
+\index{org.example.Node@{org.example.Node}!getNodeInfo@{getNodeInfo}}
+\index{getNodeInfo@{getNodeInfo}!org.example.Node@{org.example.Node}}
+\doxysubsubsection{\texorpdfstring{getNodeInfo()}{getNodeInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} org.\+example.\+Node.\+get\+Node\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the information about this node.
+
+\begin{DoxyReturn}{Returns}
+Information about this node. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a42476dbb7927d22c8be0b6951bb3cad7}\label{classorg_1_1example_1_1Node_a42476dbb7927d22c8be0b6951bb3cad7}} 
+\index{org.example.Node@{org.example.Node}!getRoutingTable@{getRoutingTable}}
+\index{getRoutingTable@{getRoutingTable}!org.example.Node@{org.example.Node}}
+\doxysubsubsection{\texorpdfstring{getRoutingTable()}{getRoutingTable()}}
+{\footnotesize\ttfamily Map$<$String, String$>$ org.\+example.\+Node.\+get\+Routing\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the routing table of this node.
+
+\begin{DoxyReturn}{Returns}
+The routing table of this node. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_ada8659be75ebc3911d947302e01d6cef}\label{classorg_1_1example_1_1Node_ada8659be75ebc3911d947302e01d6cef}} 
+\index{org.example.Node@{org.example.Node}!updateRoutingTable@{updateRoutingTable}}
+\index{updateRoutingTable@{updateRoutingTable}!org.example.Node@{org.example.Node}}
+\doxysubsubsection{\texorpdfstring{updateRoutingTable()}{updateRoutingTable()}}
+{\footnotesize\ttfamily void org.\+example.\+Node.\+update\+Routing\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Updates the routing table with information about another node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Info} & Information about the node to be added to the routing table. \\
 \hline
 \end{DoxyParams}
 

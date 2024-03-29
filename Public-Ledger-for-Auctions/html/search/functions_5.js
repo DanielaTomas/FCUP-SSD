@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['node_53',['Node',['../classorg_1_1example_1_1Node.html#a907db8d2581d2f9056603c9b2497606a',1,'org::example::Node']]]
+  ['node_74',['Node',['../classorg_1_1example_1_1Node.html#a42bd73056f540571dd64bd06aefdbf68',1,'org::example::Node']]],
+  ['nodeinfo_75',['NodeInfo',['../classorg_1_1example_1_1NodeInfo.html#a4194f2e3e03372f28c99c546fc2b2115',1,'org::example::NodeInfo']]]
 ];
