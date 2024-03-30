@@ -21,7 +21,7 @@ variable "gcp_default_machine_type" {
 variable "gcp_default_machine_image"{
   type    = string
   description = "Default OS image for the VMs"
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "ubuntu-os-cloud/ubuntu-2204-lts"
 }
 
 variable "default_data_disk_type" {

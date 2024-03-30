@@ -25,7 +25,7 @@ resource "google_compute_instance" "node_instance" {
 
   provisioner "file" {
     source      = var.kademlia_jar_path
-    destination = "~/kademlia.jar"
+    destination = "/home/${var.gce_ssh_user}/kademlia.jar"
 
     connection {
       type        = "ssh"

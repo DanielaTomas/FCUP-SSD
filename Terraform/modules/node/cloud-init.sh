@@ -1,6 +1,7 @@
 #!/bin/bash
 
-apt-get update
-apt-get install openjdk-8-jdk -y
+sudo apt-get update
 
-#java Public-Ledger-for-Auctions-1.0-SNAPSHOT.jar 21391 $bootstrap_ip
+sudo apt install openjdk-18-jre -y
+
+#java -cp kademlia.jar org.example.Main 21391 $bootstrap_ip
