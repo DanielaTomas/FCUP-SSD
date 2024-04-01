@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['signtransaction_76',['signTransaction',['../classorg_1_1example_1_1Transaction.html#ab28c6115e55c56795a31b7d41c72f568',1,'org::example::Transaction']]]
+  ['mineblock_89',['mineBlock',['../classorg_1_1example_1_1Block.html#a83027532dbc9a28b6f60b7dde511b00a',1,'org::example::Block']]],
+  ['minependingtransactions_90',['minePendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a08af72f2a4f360708240d5b27b9632a4',1,'org::example::Blockchain']]]
 ];

@@ -8,6 +8,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +38,7 @@ public class Kademlia { //TODO testar tudo
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
+            logger.info("Connecting to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(group)
                     .channel(NioSocketChannel.class)
@@ -44,18 +46,22 @@ public class Kademlia { //TODO testar tudo
                     .handler(new ChannelInitializer<Channel>() {
                         @Override
                         protected void initChannel(Channel ch) throws Exception {
-                            ch.pipeline().addLast(new SimpleChannelInboundHandler<NodeInfo>() {
-                                @Override
-                                protected void channelRead0(ChannelHandlerContext ctx, NodeInfo nodeInfo) throws Exception {
-                                    nearNodesInfo.add(nodeInfo);
-                                }
-                            });
+                            ClientHandler clientHandler = new ClientHandler(node,targetNodeInfo);
+                            nearNodesInfo.addAll(clientHandler.getNearNodesInfo());
+                            ch.pipeline().addLast(clientHandler);
                         }
                     });
 
-            ChannelFuture channelFuture = bootstrap.connect().sync();
-            channelFuture.channel().writeAndFlush(node.getNodeInfo());
-            channelFuture.channel().closeFuture().sync();
+            ChannelFuture cf = bootstrap.connect(targetNodeInfo.getIpAddr(),targetNodeInfo.getPort()).sync();
+            logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+            try {
+                if (!cf.channel().closeFuture().await(5, TimeUnit.SECONDS)) {
+                    System.err.println("Channel did not close within 5 seconds.");
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            logger.info("Connection closed with node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             logger.severe("Interrupted while connecting to node: " + e.getMessage());

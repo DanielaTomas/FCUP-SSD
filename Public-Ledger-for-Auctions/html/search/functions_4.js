@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mineblock_72',['mineBlock',['../classorg_1_1example_1_1Block.html#a83027532dbc9a28b6f60b7dde511b00a',1,'org::example::Block']]],
-  ['minependingtransactions_73',['minePendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a08af72f2a4f360708240d5b27b9632a4',1,'org::example::Blockchain']]]
+  ['exceptioncaught_67',['exceptionCaught',['../classorg_1_1example_1_1ClientHandler.html#a1ada4b73d4a71284d12ff05aad1d3789',1,'org::example::ClientHandler']]]
 ];

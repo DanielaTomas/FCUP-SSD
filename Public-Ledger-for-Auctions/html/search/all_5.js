@@ -1,6 +1,24 @@
 var searchData=
 [
-  ['main_26',['Main',['../classorg_1_1example_1_1Main.html',1,'org::example']]],
-  ['mineblock_27',['mineBlock',['../classorg_1_1example_1_1Block.html#a83027532dbc9a28b6f60b7dde511b00a',1,'org::example::Block']]],
-  ['minependingtransactions_28',['minePendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a08af72f2a4f360708240d5b27b9632a4',1,'org::example::Blockchain']]]
+  ['generatekeypair_10',['generateKeyPair',['../classorg_1_1example_1_1Transaction.html#a9a309ff763dcc972ab5f6a22082e0b27',1,'org::example::Transaction']]],
+  ['generatenodeid_11',['generateNodeId',['../classorg_1_1example_1_1NodeInfo.html#a6ae100ec0c77e77cec61a16ebb155e73',1,'org::example::NodeInfo']]],
+  ['getaddress_12',['getAddress',['../classorg_1_1example_1_1Utils.html#aba23013b81f2c878d82ce356bc1e6d8c',1,'org::example::Utils']]],
+  ['getamount_13',['getAmount',['../classorg_1_1example_1_1Transaction.html#a97559266069da53e28a671b65368b29c',1,'org::example::Transaction']]],
+  ['getchain_14',['getChain',['../classorg_1_1example_1_1Blockchain.html#aecb2c26a2eba70fa629d1c0f1ea26bec',1,'org::example::Blockchain']]],
+  ['gethash_15',['getHash',['../classorg_1_1example_1_1Block.html#a14dbbcc38731be2eef86a443d0ccfd50',1,'org::example::Block']]],
+  ['getindex_16',['getIndex',['../classorg_1_1example_1_1Block.html#aa91a4c6e2a12a9ff32eb498ea5a43025',1,'org::example::Block']]],
+  ['getipaddr_17',['getIpAddr',['../classorg_1_1example_1_1NodeInfo.html#a6ba5447f4b2d607465797c12ab09a7ff',1,'org::example::NodeInfo']]],
+  ['getlastblock_18',['getLastBlock',['../classorg_1_1example_1_1Blockchain.html#ad3c05a61129095fe6c8c4130ceb556d2',1,'org::example::Blockchain']]],
+  ['getnearnodesinfo_19',['getNearNodesInfo',['../classorg_1_1example_1_1ClientHandler.html#aedd303aeed5354637ba1315cd169e6db',1,'org::example::ClientHandler']]],
+  ['getnodeid_20',['getNodeId',['../classorg_1_1example_1_1NodeInfo.html#a2472b25c7188cf1c4b6b00158497f50d',1,'org::example::NodeInfo']]],
+  ['getnodeinfo_21',['getNodeInfo',['../classorg_1_1example_1_1Node.html#a355e258f48c0eb60590a15be8f43746c',1,'org::example::Node']]],
+  ['getpendingtransactions_22',['getPendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a31e7c82cfd93ccff19da460cc852bcba',1,'org::example::Blockchain']]],
+  ['getport_23',['getPort',['../classorg_1_1example_1_1NodeInfo.html#addaa34afe0ded1fd2ecfc7aba9a88430',1,'org::example::NodeInfo']]],
+  ['getprevioushash_24',['getPreviousHash',['../classorg_1_1example_1_1Block.html#ab033d5d8dce8cd97d5cb8effa4b137e3',1,'org::example::Block']]],
+  ['getreceiverpublickey_25',['getReceiverPublicKey',['../classorg_1_1example_1_1Transaction.html#a96ac4a235290959a0b758cd34b95290e',1,'org::example::Transaction']]],
+  ['getroutingtable_26',['getRoutingTable',['../classorg_1_1example_1_1Node.html#a42476dbb7927d22c8be0b6951bb3cad7',1,'org::example::Node']]],
+  ['getsenderpublickey_27',['getSenderPublicKey',['../classorg_1_1example_1_1Transaction.html#a4ec130fb54e446a8f89bbc887980426c',1,'org::example::Transaction']]],
+  ['getsignature_28',['getSignature',['../classorg_1_1example_1_1Transaction.html#a386b5e6abb576b6f4d93b6c909ee96d8',1,'org::example::Transaction']]],
+  ['gettimestamp_29',['getTimestamp',['../classorg_1_1example_1_1Block.html#aa3104e786fe6c8f7643152f45cd7645e',1,'org::example::Block']]],
+  ['gettransactions_30',['getTransactions',['../classorg_1_1example_1_1Block.html#a9708becd52e348cd0c00f406304050e8',1,'org::example::Block']]]
 ];

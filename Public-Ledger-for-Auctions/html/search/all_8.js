@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['tostring_33',['toString',['../classorg_1_1example_1_1Transaction.html#a184754aa8d76632fb48e6f065ed5aa93',1,'org::example::Transaction']]],
-  ['transaction_34',['Transaction',['../classorg_1_1example_1_1Transaction.html',1,'org.example.Transaction'],['../classorg_1_1example_1_1Transaction.html#af7bb00d173934bd5a45088c22a0e1c92',1,'org.example.Transaction.Transaction()']]]
+  ['node_35',['Node',['../classorg_1_1example_1_1Node.html#a42bd73056f540571dd64bd06aefdbf68',1,'org.example.Node.Node()'],['../classorg_1_1example_1_1Node.html',1,'org.example.Node']]],
+  ['nodeinfo_36',['NodeInfo',['../classorg_1_1example_1_1NodeInfo.html#a4194f2e3e03372f28c99c546fc2b2115',1,'org.example.NodeInfo.NodeInfo()'],['../classorg_1_1example_1_1NodeInfo.html',1,'org.example.NodeInfo']]],
+  ['nodetest_37',['NodeTest',['../classorg_1_1example_1_1NodeTest.html',1,'org::example']]]
 ];

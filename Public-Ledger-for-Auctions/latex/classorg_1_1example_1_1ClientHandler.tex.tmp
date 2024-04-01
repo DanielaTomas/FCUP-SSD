@@ -1,0 +1,111 @@
+\hypertarget{classorg_1_1example_1_1ClientHandler}{}\doxysection{org.\+example.\+Client\+Handler Class Reference}
+\label{classorg_1_1example_1_1ClientHandler}\index{org.example.ClientHandler@{org.example.ClientHandler}}
+
+
+Inheritance diagram for org.\+example.\+Client\+Handler\+:
+% FIG 0
+
+
+Collaboration diagram for org.\+example.\+Client\+Handler\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_adda2efc668e422129710411535971f8f}{Client\+Handler}} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info)
+\item 
+void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_a9f6f031893e58e00a57857e47c93209f}{channel\+Active}} (Channel\+Handler\+Context ctx)  throws IOException 
+\item 
+void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af7a790916e49b}{channel\+Read}} (Channel\+Handler\+Context ctx, Object msg)
+\item 
+void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}{exception\+Caught}} (Channel\+Handler\+Context ctx, Throwable cause)
+\item 
+List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_aedd303aeed5354637ba1315cd169e6db}{get\+Near\+Nodes\+Info}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler}{Client\+Handler}}\+: Handles the client-\/side channel events 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_adda2efc668e422129710411535971f8f}\label{classorg_1_1example_1_1ClientHandler_adda2efc668e422129710411535971f8f}} 
+\index{org.example.ClientHandler@{org.example.ClientHandler}!ClientHandler@{ClientHandler}}
+\index{ClientHandler@{ClientHandler}!org.example.ClientHandler@{org.example.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{ClientHandler()}{ClientHandler()}}
+{\footnotesize\ttfamily org.\+example.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}}}]{node,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a new \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler}{Client\+Handler}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The local node. \\
+\hline
+{\em target\+Node\+Info} & Information about the target node. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_a9f6f031893e58e00a57857e47c93209f}\label{classorg_1_1example_1_1ClientHandler_a9f6f031893e58e00a57857e47c93209f}} 
+\index{org.example.ClientHandler@{org.example.ClientHandler}!channelActive@{channelActive}}
+\index{channelActive@{channelActive}!org.example.ClientHandler@{org.example.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{channelActive()}{channelActive()}}
+{\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+channel\+Active (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx }\end{DoxyParamCaption}) throws IOException\hspace{0.3cm}{\ttfamily [inline]}}
+
+Called when the channel becomes active.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The channel handler context. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & If an I/O error occurs. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af7a790916e49b}\label{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af7a790916e49b}} 
+\index{org.example.ClientHandler@{org.example.ClientHandler}!channelRead@{channelRead}}
+\index{channelRead@{channelRead}!org.example.ClientHandler@{org.example.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{channelRead()}{channelRead()}}
+{\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+channel\+Read (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Object}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Called when a message is received from the server.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The channel handler context. \\
+\hline
+{\em msg} & The received message. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}\label{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}} 
+\index{org.example.ClientHandler@{org.example.ClientHandler}!exceptionCaught@{exceptionCaught}}
+\index{exceptionCaught@{exceptionCaught}!org.example.ClientHandler@{org.example.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{exceptionCaught()}{exceptionCaught()}}
+{\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+exception\+Caught (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Throwable}]{cause }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Called when an exception is caught in the channel.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The channel handler context. \\
+\hline
+{\em cause} & The exception caught. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_aedd303aeed5354637ba1315cd169e6db}\label{classorg_1_1example_1_1ClientHandler_aedd303aeed5354637ba1315cd169e6db}} 
+\index{org.example.ClientHandler@{org.example.ClientHandler}!getNearNodesInfo@{getNearNodesInfo}}
+\index{getNearNodesInfo@{getNearNodesInfo}!org.example.ClientHandler@{org.example.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{getNearNodesInfo()}{getNearNodesInfo()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}$>$ org.\+example.\+Client\+Handler.\+get\+Near\+Nodes\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the list of near nodes information.
+
+\begin{DoxyReturn}{Returns}
+The list of near nodes information. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/org/example/Client\+Handler.\+java\end{DoxyCompactItemize}
