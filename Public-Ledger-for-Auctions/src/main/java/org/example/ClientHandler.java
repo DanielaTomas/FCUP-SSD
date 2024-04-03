@@ -17,6 +17,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private Node node;
     private NodeInfo targetNodeInfo;
     private List<NodeInfo> nearNodesInfo;
+    //private Kademlia.MessageType messageType;
 
     /**
      * Constructs a new ClientHandler.
@@ -28,6 +29,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
         this.targetNodeInfo = targetNodeInfo;
         this.node = node;
         this.nearNodesInfo = new ArrayList<>();
+        //this.messageType = messageType;
     }
 
     /**
@@ -41,6 +43,26 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
         ByteBuf msg = Utils.serialize(node.getNodeInfo());
         ctx.writeAndFlush(msg);
         logger.info("Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+        /*TODO
+        int nodeInfoSerializedLength = Utils.serialize(node.getNodeInfo()).readableBytes();
+        int requiredBytes = nodeInfoSerializedLength + Integer.BYTES; // Calculate required bytes for the additional integer
+        // Ensure the ByteBuf has enough capacity
+        ByteBuf msg = ctx.alloc().buffer(requiredBytes);
+        msg.writeInt(messageType.ordinal());
+        msg.writeBytes(Utils.serialize(node.getNodeInfo()));
+        msg.writeInt(messageType.ordinal());
+        switch (messageType) {
+            case FIND_NODE:
+                break;
+            case PING:
+                ctx.writeAndFlush("PING");
+                logger.info("Pinging " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+                break;
+            default:
+                logger.warning("Received unknown message type: " + messageType);
+                break;
+        }
+        msg.release();*/
     }
 
     /**
@@ -48,13 +70,23 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      *
      * @param ctx The channel handler context.
      * @param msg The received message.
+     * @throws IOException            If an I/O error occurs.
+     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
      */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        if (msg instanceof NodeInfo nodeInfo) {
-            logger.info("Received node info from server: " + nodeInfo);
-            nearNodesInfo.add(nodeInfo);
-        } else {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException {
+        if (msg instanceof ByteBuf bytebuf) {
+            Object deserializedObject = Utils.deserialize(bytebuf);
+            if (deserializedObject instanceof ArrayList) {
+                ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
+                logger.info("Received near nodes info from server: " + nodeInfoList);
+                nearNodesInfo.addAll(nodeInfoList);
+            }
+            else {
+                logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
+            }
+        }
+        else {
             logger.warning("Received unknown message type from server: " + msg.getClass().getName());
         }
     }
@@ -72,36 +104,11 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     * Gets the list of near nodes information.
+     * Gets the list of near nodes' information.
      *
-     * @return The list of near nodes information.
+     * @return The list of near nodes' information.
      */
     public List<NodeInfo> getNearNodesInfo() {
         return this.nearNodesInfo;
     }
 }
-
-/*
-public class ClientHandler  extends ChannelInboundHandlerAdapter {
-    private static final Logger logger = Logger.getLogger(ClientHandler.class.getName());
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        ByteBuf message = Unpooled.copiedBuffer("Hello, Netty!", StandardCharsets.UTF_8);
-        ctx.writeAndFlush(message);
-    }
-
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf byteBuf = (ByteBuf) msg;
-        logger.info("Received from server: " + byteBuf.toString(StandardCharsets.UTF_8));
-        byteBuf.release();
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        logger.log(Level.SEVERE, "Exception caught in client channel", cause);
-        ctx.close();
-    }
-}
- */

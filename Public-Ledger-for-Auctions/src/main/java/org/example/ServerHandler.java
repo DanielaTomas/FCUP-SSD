@@ -5,8 +5,12 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.example.Kademlia.MessageType;
 
 /** Class ServerHandler: Handles the client-side channel events */
 class ServerHandler extends ChannelInboundHandlerAdapter {
@@ -35,11 +39,37 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         if (msg instanceof ByteBuf bytebuf) {
             NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(bytebuf);
             logger.info("Received node info from client: " + nodeInfo);
+
+            List<NodeInfo> nearNodes = dummyFindClosestNodes(nodeInfo);
+            ByteBuf responseBuffer = Utils.serialize(nearNodes);
+            ctx.writeAndFlush(responseBuffer);
             //TODO Process the received node info here
-            //ctx.writeAndFlush(response);
+            /*
+            MessageType messageType = MessageType.values()[bytebuf.readInt()];
+            switch (messageType) {
+                case FIND_NODE:
+                    //responseBuffer.release();
+                    break;
+                case PING:
+                    //TODO
+                    break;
+                default:
+                    logger.warning("Received unknown message type: " + messageType);
+                    break;
+            }
+            */
+            ctx.close();
         } else {
             logger.warning("Received unknown message type from client: " + msg.getClass().getName());
         }
+    }
+
+    private List<NodeInfo> dummyFindClosestNodes(NodeInfo requestedNode) {
+        List<NodeInfo> closestNodes = new ArrayList<>();
+        closestNodes.add(new NodeInfo("192.168.0.1", 1234));
+        closestNodes.add(new NodeInfo("192.168.0.2", 1235));
+
+        return closestNodes;
     }
 
     /**

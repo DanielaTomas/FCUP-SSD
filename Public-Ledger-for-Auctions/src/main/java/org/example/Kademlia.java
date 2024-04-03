@@ -4,6 +4,7 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -13,7 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /** Class Kademlia */
-public class Kademlia { //TODO testar tudo
+public class Kademlia {
+    public enum MessageType {
+        PING, FIND_NODE, FIND_VALUE, STORE
+    }
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
 
     public void joinNetwork(Node node, NodeInfo bootstrapNodeInfo) {
@@ -34,34 +38,13 @@ public class Kademlia { //TODO testar tudo
     }
 
     private List<NodeInfo> findNode(Node node, NodeInfo targetNodeInfo) {
-        //TODO update targetNode routing table
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
-            logger.info("Connecting to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
-            Bootstrap bootstrap = new Bootstrap();
-            bootstrap.group(group)
-                    .channel(NioSocketChannel.class)
-                    .remoteAddress(new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()))
-                    .handler(new ChannelInitializer<Channel>() {
-                        @Override
-                        protected void initChannel(Channel ch) throws Exception {
-                            ClientHandler clientHandler = new ClientHandler(node,targetNodeInfo);
-                            nearNodesInfo.addAll(clientHandler.getNearNodesInfo());
-                            ch.pipeline().addLast(clientHandler);
-                        }
-                    });
-
-            ChannelFuture cf = bootstrap.connect(targetNodeInfo.getIpAddr(),targetNodeInfo.getPort()).sync();
-            logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
-            try {
-                if (!cf.channel().closeFuture().await(5, TimeUnit.SECONDS)) {
-                    System.err.println("Channel did not close within 5 seconds.");
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            logger.info("Connection closed with node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+            connectToNode(targetNodeInfo, group, channel -> {
+                ClientHandler clientHandler = new ClientHandler(node, targetNodeInfo);
+                channel.pipeline().addLast(clientHandler);
+            });
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             logger.severe("Interrupted while connecting to node: " + e.getMessage());
@@ -77,23 +60,13 @@ public class Kademlia { //TODO testar tudo
         return nearNodesInfo;
     }
 
-    public void ping(NodeInfo targetNode) {
+    public void ping(NodeInfo targetNodeInfo) {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
-            Bootstrap bootstrap = new Bootstrap();
-            bootstrap.group(group)
-                    .channel(NioSocketChannel.class)
-                    .option(ChannelOption.SO_KEEPALIVE, true)
-                    .handler(new ChannelInitializer<Channel>() {
-                        @Override
-                        protected void initChannel(Channel ch) throws Exception {
-                        }
-                    });
-            ChannelFuture future = bootstrap.connect(targetNode.getIpAddr(), targetNode.getPort()).sync(); // connect to the target node
-            Channel channel = future.channel();
-            channel.writeAndFlush("PING"); // send ping message
-
-            channel.closeFuture().sync(); // close the channel
+            connectToNode(targetNodeInfo, group, channel -> {
+                ClientHandler clientHandler = new ClientHandler(null, targetNodeInfo);
+                channel.pipeline().addLast(clientHandler);
+            });
         } catch (InterruptedException e) {
             logger.log(Level.WARNING, "Interrupted while sending ping to node", e);
             Thread.currentThread().interrupt();
@@ -112,5 +85,29 @@ public class Kademlia { //TODO testar tudo
     }
 
     public void store(String key, String value) {
+    }
+
+    private void connectToNode(NodeInfo targetNodeInfo, EventLoopGroup group, MessagePassingQueue.Consumer<Channel> channelConsumer) throws InterruptedException {
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(group)
+                .channel(NioSocketChannel.class)
+                .option(ChannelOption.SO_KEEPALIVE, true)
+                .handler(new ChannelInitializer<Channel>() {
+                    @Override
+                    protected void initChannel(Channel ch) throws Exception {
+                        channelConsumer.accept(ch);
+                    }
+                });
+
+        ChannelFuture cf = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
+        logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+        try {
+            if (!cf.channel().closeFuture().await(8, TimeUnit.SECONDS)) {
+                System.err.println("Error: Channel did not close within 8 seconds.");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        logger.info("Connection closed with node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
     }
 }

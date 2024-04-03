@@ -15,7 +15,7 @@ Collaboration diagram for org.\+example.\+Client\+Handler\+:
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_a9f6f031893e58e00a57857e47c93209f}{channel\+Active}} (Channel\+Handler\+Context ctx)  throws IOException 
 \item 
-void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af7a790916e49b}{channel\+Read}} (Channel\+Handler\+Context ctx, Object msg)
+void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af7a790916e49b}{channel\+Read}} (Channel\+Handler\+Context ctx, Object msg)  throws IOException, Class\+Not\+Found\+Exception 
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}{exception\+Caught}} (Channel\+Handler\+Context ctx, Throwable cause)
 \item 
@@ -67,7 +67,7 @@ Called when the channel becomes active.
 \index{org.example.ClientHandler@{org.example.ClientHandler}!channelRead@{channelRead}}
 \index{channelRead@{channelRead}!org.example.ClientHandler@{org.example.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{channelRead()}{channelRead()}}
-{\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+channel\+Read (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Object}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+channel\+Read (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Object}]{msg }\end{DoxyParamCaption}) throws IOException, Class\+Not\+Found\+Exception\hspace{0.3cm}{\ttfamily [inline]}}
 
 Called when a message is received from the server.
 
@@ -78,6 +78,13 @@ Called when a message is received from the server.
 {\em msg} & The received message. \\
 \hline
 \end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & If an I/O error occurs. \\
+\hline
+{\em Class\+Not\+Found\+Exception} & If the class of the serialized object cannot be found. \\
+\hline
+\end{DoxyExceptions}
 \mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}\label{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}} 
 \index{org.example.ClientHandler@{org.example.ClientHandler}!exceptionCaught@{exceptionCaught}}
 \index{exceptionCaught@{exceptionCaught}!org.example.ClientHandler@{org.example.ClientHandler}}
@@ -99,10 +106,10 @@ Called when an exception is caught in the channel.
 \doxysubsubsection{\texorpdfstring{getNearNodesInfo()}{getNearNodesInfo()}}
 {\footnotesize\ttfamily List$<$\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}$>$ org.\+example.\+Client\+Handler.\+get\+Near\+Nodes\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-Gets the list of near nodes information.
+Gets the list of near nodes\textquotesingle{} information.
 
 \begin{DoxyReturn}{Returns}
-The list of near nodes information. 
+The list of near nodes\textquotesingle{} information. 
 \end{DoxyReturn}
 
 

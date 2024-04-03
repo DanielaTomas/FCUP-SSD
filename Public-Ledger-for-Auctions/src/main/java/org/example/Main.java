@@ -20,19 +20,19 @@ public class Main {
             port = Integer.parseInt(args[0]);
             //System.setProperty("filename", port + ".log");
             Node node = new Node(new NodeInfo(ip, port));
-            if (args.length == 1) { //TODO iniciar server para todos os nós
-                try {
-                    new Server(port).start();
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error starting the server", e);
-                }
-            }
 
             if (args.length == 2) { // Node
                 NodeInfo bootstrapNodeInfo = new NodeInfo(args[1], port);
                 node.updateRoutingTable(bootstrapNodeInfo);
                 new Kademlia().joinNetwork(node, bootstrapNodeInfo);
             }
+
+            try {
+                new Server(port).start();
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, "Error starting the server", e);
+            }
+
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Invalid port number", e);
         } catch (Exception e) {
