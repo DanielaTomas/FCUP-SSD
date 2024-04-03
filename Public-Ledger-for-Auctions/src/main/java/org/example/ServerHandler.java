@@ -1,10 +1,12 @@
 package org.example;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,31 +39,48 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException { // handle incoming messages
         if (msg instanceof ByteBuf bytebuf) {
-            NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(bytebuf);
-            logger.info("Received node info from client: " + nodeInfo);
-
-            List<NodeInfo> nearNodes = dummyFindClosestNodes(nodeInfo);
-            ByteBuf responseBuffer = Utils.serialize(nearNodes);
-            ctx.writeAndFlush(responseBuffer);
-            //TODO Process the received node info here
-            /*
             MessageType messageType = MessageType.values()[bytebuf.readInt()];
             switch (messageType) {
                 case FIND_NODE:
-                    //responseBuffer.release();
+                    findNodeHandler(ctx, bytebuf, messageType);
                     break;
                 case PING:
+                    pingHandler(ctx, bytebuf, messageType);
+                    break;
+                case FIND_VALUE:
+                    //TODO
+                    break;
+                case STORE:
                     //TODO
                     break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
                     break;
             }
-            */
+            bytebuf.release();
             ctx.close();
         } else {
             logger.warning("Received unknown message type from client: " + msg.getClass().getName());
         }
+    }
+
+    private void findNodeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) throws IOException, ClassNotFoundException {
+        int nodeInfoLength = bytebuf.readInt();
+        ByteBuf nodeInfoBytes = bytebuf.readBytes(nodeInfoLength);
+        NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(nodeInfoBytes);
+        logger.info("Received node info from client: " + nodeInfo);
+
+        List<NodeInfo> nearNodes = dummyFindClosestNodes(nodeInfo);
+
+        ByteBuf responseMsg = ctx.alloc().buffer();
+        responseMsg.writeInt(messageType.ordinal());
+        ByteBuf responseBuf = Utils.serialize(nearNodes);
+        responseMsg.writeInt(responseBuf.readableBytes());
+        responseMsg.writeBytes(responseBuf);
+        ctx.writeAndFlush(responseMsg);
+        logger.info("Sent near nodes info to client " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort());
+
+        nodeInfoBytes.release();
     }
 
     private List<NodeInfo> dummyFindClosestNodes(NodeInfo requestedNode) {
@@ -70,6 +89,22 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         closestNodes.add(new NodeInfo("192.168.0.2", 1235));
 
         return closestNodes;
+    }
+
+    private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) {
+        int pingLength = bytebuf.readInt();
+        ByteBuf pingBytes = bytebuf.readBytes(pingLength);
+        String pingStr = pingBytes.toString(StandardCharsets.UTF_8);
+        logger.info("Received " + pingStr + " from client " + ctx.channel().remoteAddress());
+
+        ByteBuf responseMsg = ctx.alloc().buffer();
+        responseMsg.writeInt(messageType.ordinal());
+        ByteBuf responseBuf = Unpooled.wrappedBuffer("PINGACK".getBytes());
+        responseMsg.writeInt(responseBuf.readableBytes());
+        responseMsg.writeBytes(responseBuf);
+        ctx.writeAndFlush(responseMsg);
+        logger.info("Responded to ping from client " + ctx.channel().remoteAddress());
+        pingBytes.release();
     }
 
     /**

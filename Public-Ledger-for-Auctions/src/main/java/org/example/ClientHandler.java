@@ -1,10 +1,12 @@
 package org.example;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,7 +19,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private Node node;
     private NodeInfo targetNodeInfo;
     private List<NodeInfo> nearNodesInfo;
-    //private Kademlia.MessageType messageType;
+    private Kademlia.MessageType messageType;
 
     /**
      * Constructs a new ClientHandler.
@@ -25,11 +27,11 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      * @param node           The local node.
      * @param targetNodeInfo Information about the target node.
      */
-    public ClientHandler(Node node, NodeInfo targetNodeInfo) {
+    public ClientHandler(Node node, NodeInfo targetNodeInfo, Kademlia.MessageType messageType) {
         this.targetNodeInfo = targetNodeInfo;
         this.node = node;
         this.nearNodesInfo = new ArrayList<>();
-        //this.messageType = messageType;
+        this.messageType = messageType;
     }
 
     /**
@@ -40,29 +42,33 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
-        ByteBuf msg = Utils.serialize(node.getNodeInfo());
-        ctx.writeAndFlush(msg);
-        logger.info("Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
-        /*TODO
-        int nodeInfoSerializedLength = Utils.serialize(node.getNodeInfo()).readableBytes();
-        int requiredBytes = nodeInfoSerializedLength + Integer.BYTES; // Calculate required bytes for the additional integer
-        // Ensure the ByteBuf has enough capacity
-        ByteBuf msg = ctx.alloc().buffer(requiredBytes);
+        ByteBuf msg = ctx.alloc().buffer();
         msg.writeInt(messageType.ordinal());
-        msg.writeBytes(Utils.serialize(node.getNodeInfo()));
-        msg.writeInt(messageType.ordinal());
-        switch (messageType) {
+        switch(messageType) {
             case FIND_NODE:
+                ByteBuf nodeInfoBuf = Utils.serialize(node.getNodeInfo());
+                msg.writeInt(nodeInfoBuf.readableBytes());
+                msg.writeBytes(nodeInfoBuf);
+                ctx.writeAndFlush(msg);
+                logger.info("Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
                 break;
             case PING:
-                ctx.writeAndFlush("PING");
+                ByteBuf pingBuf = Unpooled.wrappedBuffer("PING".getBytes());
+                msg.writeInt(pingBuf.readableBytes());
+                msg.writeBytes(pingBuf);
+                ctx.writeAndFlush(msg);
                 logger.info("Pinging " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+                break;
+            case FIND_VALUE:
+                //TODO
+                break;
+            case STORE:
+                //TODO
                 break;
             default:
                 logger.warning("Received unknown message type: " + messageType);
                 break;
         }
-        msg.release();*/
     }
 
     /**
@@ -76,18 +82,46 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException {
         if (msg instanceof ByteBuf bytebuf) {
-            Object deserializedObject = Utils.deserialize(bytebuf);
-            if (deserializedObject instanceof ArrayList) {
-                ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
-                logger.info("Received near nodes info from server: " + nodeInfoList);
-                nearNodesInfo.addAll(nodeInfoList);
+            Kademlia.MessageType messageType = Kademlia.MessageType.values()[bytebuf.readInt()];
+            switch (messageType) {
+                case FIND_NODE:
+                    findNodeHandler(bytebuf);
+                    break;
+                case PING:
+                    int pingAckLength = bytebuf.readInt();
+                    ByteBuf pingAckBytes = bytebuf.readBytes(pingAckLength);
+                    String pingAck = pingAckBytes.toString(StandardCharsets.UTF_8);;
+                    logger.info("Received " + pingAck + " from " + ctx.channel().remoteAddress());
+                    pingAckBytes.release();
+                    break;
+                case FIND_VALUE:
+                    //TODO
+                    break;
+                case STORE:
+                    //TODO
+                    break;
+                default:
+                    logger.warning("Received unknown message type: " + messageType);
+                    break;
             }
-            else {
-                logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
-            }
+            bytebuf.release();
         }
         else {
             logger.warning("Received unknown message type from server: " + msg.getClass().getName());
+        }
+    }
+
+    private void findNodeHandler(ByteBuf bytebuf) throws IOException, ClassNotFoundException {
+        int nodeInfoListLength = bytebuf.readInt();
+        ByteBuf nodeInfoListBytes = bytebuf.readBytes(nodeInfoListLength);
+        Object deserializedObject = Utils.deserialize(nodeInfoListBytes);
+        if (deserializedObject instanceof ArrayList) {
+            ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
+            logger.info("Received near nodes info from server: " + nodeInfoList);
+            nearNodesInfo.addAll(nodeInfoList);
+            nodeInfoListBytes.release();
+        } else {
+            logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
         }
     }
 

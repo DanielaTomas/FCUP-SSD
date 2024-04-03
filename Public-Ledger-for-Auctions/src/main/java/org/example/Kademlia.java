@@ -6,7 +6,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +41,7 @@ public class Kademlia {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             connectToNode(targetNodeInfo, group, channel -> {
-                ClientHandler clientHandler = new ClientHandler(node, targetNodeInfo);
+                ClientHandler clientHandler = new ClientHandler(node, targetNodeInfo, MessageType.FIND_NODE);
                 channel.pipeline().addLast(clientHandler);
             });
         } catch (InterruptedException e) {
@@ -64,7 +63,7 @@ public class Kademlia {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             connectToNode(targetNodeInfo, group, channel -> {
-                ClientHandler clientHandler = new ClientHandler(null, targetNodeInfo);
+                ClientHandler clientHandler = new ClientHandler(null, targetNodeInfo, MessageType.PING);
                 channel.pipeline().addLast(clientHandler);
             });
         } catch (InterruptedException e) {
@@ -98,7 +97,6 @@ public class Kademlia {
                         channelConsumer.accept(ch);
                     }
                 });
-
         ChannelFuture cf = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         try {
