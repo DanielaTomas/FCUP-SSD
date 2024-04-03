@@ -15,14 +15,17 @@ import java.util.logging.Logger;
 public class Server {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private final int port;
+    private Node myNode;
 
     /**
      * Constructs a new Server instance.
      *
      * @param port The port on which the server listens.
+     * @param node The local node.
      */
-    public Server(int port) {
+    public Server(int port, Node node) {
         this.port = port;
+        this.myNode = node;
     }
 
     /**
@@ -41,7 +44,7 @@ public class Server {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new ServerHandler());
+                            ch.pipeline().addLast(new ServerHandler(myNode));
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)

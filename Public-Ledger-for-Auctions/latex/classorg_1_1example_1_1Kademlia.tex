@@ -8,11 +8,9 @@ enum \mbox{\hyperlink{enumorg_1_1example_1_1Kademlia_1_1MessageType}{Message\+Ty
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}\label{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}} 
-void {\bfseries join\+Network} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} bootstrap\+Node\+Info)
+void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}{join\+Network}} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} bootstrap\+Node\+Info)
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}\label{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}} 
-void {\bfseries ping} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info)
+void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}{ping}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info)
 \item 
 \mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}\label{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}} 
 void {\bfseries find\+Value} (String key)
@@ -24,6 +22,37 @@ void {\bfseries store} (String key, String value)
 
 \doxysubsection{Detailed Description}
 Class \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}\label{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}} 
+\index{org.example.Kademlia@{org.example.Kademlia}!joinNetwork@{joinNetwork}}
+\index{joinNetwork@{joinNetwork}!org.example.Kademlia@{org.example.Kademlia}}
+\doxysubsubsection{\texorpdfstring{joinNetwork()}{joinNetwork()}}
+{\footnotesize\ttfamily void org.\+example.\+Kademlia.\+join\+Network (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}}}]{node,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{bootstrap\+Node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Joins the \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} network.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The local node. \\
+\hline
+{\em bootstrap\+Node\+Info} & Information about the bootstrap node. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}\label{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}} 
+\index{org.example.Kademlia@{org.example.Kademlia}!ping@{ping}}
+\index{ping@{ping}!org.example.Kademlia@{org.example.Kademlia}}
+\doxysubsubsection{\texorpdfstring{ping()}{ping()}}
+{\footnotesize\ttfamily void org.\+example.\+Kademlia.\+ping (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sends a ping message to the target node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Node\+Info} & Information about the target node. \\
+\hline
+\end{DoxyParams}
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

@@ -6,9 +6,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +17,19 @@ import static org.example.Kademlia.MessageType;
 /** Class ServerHandler: Handles the client-side channel events */
 class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ServerHandler.class.getName());
+
+    private Node myNode;
+
+    private static final int K = 1; //TODO mudar valor para >1
+
+    /**
+     * Constructor for ServerHandler.
+     *
+     * @param node The local node.
+     */
+    public ServerHandler(Node node) {
+        this.myNode = node;
+    }
 
     /**
      * Called when a new client connects to the server.
@@ -64,13 +77,23 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         }
     }
 
+    /**
+     * Handles FIND_NODE messages from the client.
+     *
+     * @param ctx          The channel handler context.
+     * @param bytebuf      The received ByteBuf.
+     * @param messageType  The type of the message.
+     * @throws IOException            If an I/O error occurs.
+     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
+     */
     private void findNodeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) throws IOException, ClassNotFoundException {
         int nodeInfoLength = bytebuf.readInt();
         ByteBuf nodeInfoBytes = bytebuf.readBytes(nodeInfoLength);
         NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(nodeInfoBytes);
         logger.info("Received node info from client: " + nodeInfo);
 
-        List<NodeInfo> nearNodes = dummyFindClosestNodes(nodeInfo);
+        myNode.updateRoutingTable(nodeInfo);
+        List<NodeInfo> nearNodes = findClosestNodes(nodeInfo);
 
         ByteBuf responseMsg = ctx.alloc().buffer();
         responseMsg.writeInt(messageType.ordinal());
@@ -83,14 +106,56 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         nodeInfoBytes.release();
     }
 
-    private List<NodeInfo> dummyFindClosestNodes(NodeInfo requestedNode) {
-        List<NodeInfo> closestNodes = new ArrayList<>();
-        closestNodes.add(new NodeInfo("192.168.0.1", 1234));
-        closestNodes.add(new NodeInfo("192.168.0.2", 1235));
+    /**
+     * Finds the closest nodes to the requested node information.
+     *
+     * @param requestedNodeInfo The requested node information.
+     * @return List of closest nodes.
+     */
+    private List<NodeInfo> findClosestNodes(NodeInfo requestedNodeInfo) {
+        List<NodeInfo> myRoutingTable = myNode.getRoutingTable();
+        List<NodeInfo> nearNodes = new ArrayList<>();
+        Map<NodeInfo, Integer> distanceMap = new HashMap<>();
 
-        return closestNodes;
+        for (NodeInfo nodeInfo : myRoutingTable) {
+            if(!nodeInfo.equals(requestedNodeInfo)) {
+                int distance = calculateDistance(requestedNodeInfo.getNodeId(), nodeInfo.getNodeId());
+                distanceMap.put(nodeInfo, distance);
+            }
+        }
+
+        List<Map.Entry<NodeInfo, Integer>> sortedEntries = new ArrayList<>(distanceMap.entrySet());
+        sortedEntries.sort(Map.Entry.comparingByValue());
+
+        int k = Math.min(K, sortedEntries.size());
+        for (int i = 0; i < k; i++) {
+            nearNodes.add(sortedEntries.get(i).getKey());
+        }
+
+        return nearNodes;
     }
 
+    /**
+     * Calculates the distance between two node IDs.
+     *
+     * @param nodeId1 The first node ID.
+     * @param nodeId2 The second node ID.
+     * @return The distance between the node IDs.
+     */
+    private int calculateDistance(String nodeId1, String nodeId2) {
+        BigInteger nodeId1BigInt = new BigInteger(nodeId1, 16);
+        BigInteger nodeId2BigInt = new BigInteger(nodeId2, 16);
+        BigInteger distance = nodeId1BigInt.xor(nodeId2BigInt);
+        return distance.bitCount();
+    }
+
+    /**
+     * Handles PING messages from the client.
+     *
+     * @param ctx          The channel handler context.
+     * @param bytebuf      The received ByteBuf.
+     * @param messageType  The type of the message.
+     */
     private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) {
         int pingLength = bytebuf.readInt();
         ByteBuf pingBytes = bytebuf.readBytes(pingLength);

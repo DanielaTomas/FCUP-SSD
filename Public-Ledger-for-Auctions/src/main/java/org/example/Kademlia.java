@@ -14,11 +14,21 @@ import java.util.logging.Logger;
 
 /** Class Kademlia */
 public class Kademlia {
+
+    /**
+     * Enum for message types used in Kademlia.
+     */
     public enum MessageType {
         PING, FIND_NODE, FIND_VALUE, STORE
     }
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
 
+    /**
+     * Joins the Kademlia network.
+     *
+     * @param node             The local node.
+     * @param bootstrapNodeInfo Information about the bootstrap node.
+     */
     public void joinNetwork(Node node, NodeInfo bootstrapNodeInfo) {
         List<NodeInfo> nearNodes = findNode(node, bootstrapNodeInfo);
         for(NodeInfo nearNodeInfo : nearNodes) {
@@ -36,6 +46,13 @@ public class Kademlia {
         }
     }
 
+    /**
+     * Finds the closest nodes to the target node.
+     *
+     * @param node           The local node.
+     * @param targetNodeInfo Information about the target node.
+     * @return List of near nodes.
+     */
     private List<NodeInfo> findNode(Node node, NodeInfo targetNodeInfo) {
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
         EventLoopGroup group = new NioEventLoopGroup();
@@ -59,6 +76,11 @@ public class Kademlia {
         return nearNodesInfo;
     }
 
+    /**
+     * Sends a ping message to the target node.
+     *
+     * @param targetNodeInfo Information about the target node.
+     */
     public void ping(NodeInfo targetNodeInfo) {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -86,6 +108,14 @@ public class Kademlia {
     public void store(String key, String value) {
     }
 
+    /**
+     * Connects to a target node and sets up the channel.
+     *
+     * @param targetNodeInfo Information about the target node.
+     * @param group          The event loop group.
+     * @param channelConsumer Consumer function to set up the channel pipeline.
+     * @throws InterruptedException If the connection is interrupted.
+     */
     private void connectToNode(NodeInfo targetNodeInfo, EventLoopGroup group, MessagePassingQueue.Consumer<Channel> channelConsumer) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)

@@ -5,7 +5,7 @@ import java.util.*;
 /** Class Node: Represents a node in a peer-to-peer network. */
 public class Node {
     private NodeInfo nodeInfo;
-    private Map<String, String> routingTable;
+    private List<NodeInfo> routingTable;
     private Set<String> storage;
 
 
@@ -16,7 +16,7 @@ public class Node {
      */
     public Node(NodeInfo nodeInfo) {
         this.nodeInfo = nodeInfo;
-        this.routingTable = new HashMap<>();
+        this.routingTable = new ArrayList<>();
         this.storage = new HashSet<>();
     }
 
@@ -26,7 +26,7 @@ public class Node {
      * @param nodeInfo Information about the node to be added to the routing table.
      */
     public void updateRoutingTable(NodeInfo nodeInfo) {
-        routingTable.put(nodeInfo.getNodeId(), nodeInfo.getIpAddr() + ":" + nodeInfo.getPort());
+        routingTable.add(nodeInfo);
     }
 
     /**
@@ -43,7 +43,7 @@ public class Node {
      *
      * @return The routing table of this node.
      */
-    public Map<String, String> getRoutingTable() {
+    public List<NodeInfo> getRoutingTable() {
         return routingTable;
     }
 }

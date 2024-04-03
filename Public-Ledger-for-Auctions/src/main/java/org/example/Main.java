@@ -28,7 +28,7 @@ public class Main {
             }
 
             try {
-                new Server(port).start();
+                new Server(port, node).start();
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error starting the server", e);
             }

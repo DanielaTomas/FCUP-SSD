@@ -75,16 +75,16 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a687e7e01ed73f7d0442562900c2bd65c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Server.html#a687e7e01ed73f7d0442562900c2bd65c">Server</a> (int port)</td></tr>
-<tr class="separator:a687e7e01ed73f7d0442562900c2bd65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fff0014515f1cc98383d655f0b4b56a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Server.html#a6fff0014515f1cc98383d655f0b4b56a">Server</a> (int port, <a class="el" href="classorg_1_1example_1_1Node.html">Node</a> node)</td></tr>
+<tr class="separator:a6fff0014515f1cc98383d655f0b4b56a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5c8b41dbb2cd3ffcc800926f279bfef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Server.html#ae5c8b41dbb2cd3ffcc800926f279bfef">start</a> ()  throws Exception </td></tr>
 <tr class="separator:ae5c8b41dbb2cd3ffcc800926f279bfef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classorg_1_1example_1_1Server.html">Server</a>: Represents a Netty server. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a687e7e01ed73f7d0442562900c2bd65c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a687e7e01ed73f7d0442562900c2bd65c">&#9670;&nbsp;</a></span>Server()</h2>
+<a id="a6fff0014515f1cc98383d655f0b4b56a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fff0014515f1cc98383d655f0b4b56a">&#9670;&nbsp;</a></span>Server()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -96,8 +96,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">org.example.Server.Server </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>port</em></td><td>)</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classorg_1_1example_1_1Node.html">Node</a>&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -110,6 +120,7 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">port</td><td>The port on which the server listens. </td></tr>
+    <tr><td class="paramname">node</td><td>The local node. </td></tr>
   </table>
   </dd>
 </dl>

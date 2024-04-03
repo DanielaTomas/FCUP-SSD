@@ -105,12 +105,20 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                     break;
             }
             bytebuf.release();
+            ctx.close();
         }
         else {
             logger.warning("Received unknown message type from server: " + msg.getClass().getName());
         }
     }
 
+    /**
+     * Handles the response from the server for FIND_NODE messages.
+     *
+     * @param bytebuf The received ByteBuf.
+     * @throws IOException            If an I/O error occurs.
+     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
+     */
     private void findNodeHandler(ByteBuf bytebuf) throws IOException, ClassNotFoundException {
         int nodeInfoListLength = bytebuf.readInt();
         ByteBuf nodeInfoListBytes = bytebuf.readBytes(nodeInfoListLength);

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mineblock_91',['mineBlock',['../classorg_1_1example_1_1Block.html#a83027532dbc9a28b6f60b7dde511b00a',1,'org::example::Block']]],
-  ['minependingtransactions_92',['minePendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a08af72f2a4f360708240d5b27b9632a4',1,'org::example::Blockchain']]]
+  ['joinnetwork_91',['joinNetwork',['../classorg_1_1example_1_1Kademlia.html#a43e8b3a618e66b7ff834c496757486b3',1,'org::example::Kademlia']]]
 ];

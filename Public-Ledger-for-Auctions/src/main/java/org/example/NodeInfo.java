@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /** Class NodeInfo: Represents information about a node in the network */
-public class NodeInfo implements Serializable {
+public class NodeInfo implements Serializable, Comparable<NodeInfo> {
     private static final Logger logger = Logger.getLogger(NodeInfo.class.getName());
     private String nodeId;
     private String ipAddr;
@@ -57,6 +57,11 @@ public class NodeInfo implements Serializable {
                 ", ipAddr='" + ipAddr + '\'' +
                 ", port=" + port +
                 '}';
+    }
+
+    @Override
+    public int compareTo(NodeInfo o ) {
+        return this.nodeId.compareTo(o.getNodeId());
     }
 
     /**

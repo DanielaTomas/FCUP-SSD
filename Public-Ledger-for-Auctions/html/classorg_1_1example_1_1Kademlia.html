@@ -81,11 +81,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a43e8b3a618e66b7ff834c496757486b3"><td class="memItemLeft" align="right" valign="top"><a id="a43e8b3a618e66b7ff834c496757486b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>joinNetwork</b> (<a class="el" href="classorg_1_1example_1_1Node.html">Node</a> node, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> bootstrapNodeInfo)</td></tr>
+<tr class="memitem:a43e8b3a618e66b7ff834c496757486b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Kademlia.html#a43e8b3a618e66b7ff834c496757486b3">joinNetwork</a> (<a class="el" href="classorg_1_1example_1_1Node.html">Node</a> node, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> bootstrapNodeInfo)</td></tr>
 <tr class="separator:a43e8b3a618e66b7ff834c496757486b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaffba9afadea61049aee84f3d5a3a4b3"><td class="memItemLeft" align="right" valign="top"><a id="aaffba9afadea61049aee84f3d5a3a4b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ping</b> (<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo)</td></tr>
+<tr class="memitem:aaffba9afadea61049aee84f3d5a3a4b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Kademlia.html#aaffba9afadea61049aee84f3d5a3a4b3">ping</a> (<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo)</td></tr>
 <tr class="separator:aaffba9afadea61049aee84f3d5a3a4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42aaabddb93e04e3b928079cb2d014d7"><td class="memItemLeft" align="right" valign="top"><a id="a42aaabddb93e04e3b928079cb2d014d7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>findValue</b> (String key)</td></tr>
@@ -96,7 +94,85 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>store</b> (String key
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classorg_1_1example_1_1Kademlia.html">Kademlia</a> </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a43e8b3a618e66b7ff834c496757486b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43e8b3a618e66b7ff834c496757486b3">&#9670;&nbsp;</a></span>joinNetwork()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.example.Kademlia.joinNetwork </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1example_1_1Node.html">Node</a>&#160;</td>
+          <td class="paramname"><em>node</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&#160;</td>
+          <td class="paramname"><em>bootstrapNodeInfo</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Joins the <a class="el" href="classorg_1_1example_1_1Kademlia.html">Kademlia</a> network.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The local node. </td></tr>
+    <tr><td class="paramname">bootstrapNodeInfo</td><td>Information about the bootstrap node. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aaffba9afadea61049aee84f3d5a3a4b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaffba9afadea61049aee84f3d5a3a4b3">&#9670;&nbsp;</a></span>ping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.example.Kademlia.ping </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&#160;</td>
+          <td class="paramname"><em>targetNodeInfo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sends a ping message to the target node.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetNodeInfo</td><td>Information about the target node. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/main/java/org/example/Kademlia.java</li>
 </ul>
 </div><!-- contents -->

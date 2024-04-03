@@ -85,8 +85,8 @@ Collaboration diagram for org.example.ClientHandler:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adda2efc668e422129710411535971f8f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#adda2efc668e422129710411535971f8f">ClientHandler</a> (<a class="el" href="classorg_1_1example_1_1Node.html">Node</a> node, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo)</td></tr>
-<tr class="separator:adda2efc668e422129710411535971f8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a263986c25ed336b262e40d2f67d87594"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#a263986c25ed336b262e40d2f67d87594">ClientHandler</a> (<a class="el" href="classorg_1_1example_1_1Node.html">Node</a> node, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo, Kademlia.MessageType messageType)</td></tr>
+<tr class="separator:a263986c25ed336b262e40d2f67d87594"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f6f031893e58e00a57857e47c93209f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#a9f6f031893e58e00a57857e47c93209f">channelActive</a> (ChannelHandlerContext ctx)  throws IOException </td></tr>
 <tr class="separator:a9f6f031893e58e00a57857e47c93209f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf26b234869a7b0ce5af7a790916e49b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#adf26b234869a7b0ce5af7a790916e49b">channelRead</a> (ChannelHandlerContext ctx, Object msg)  throws IOException, ClassNotFoundException </td></tr>
@@ -99,8 +99,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classorg_1_1example_1_1ClientHandler.html">ClientHandler</a>: Handles the client-side channel events </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="adda2efc668e422129710411535971f8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adda2efc668e422129710411535971f8f">&#9670;&nbsp;</a></span>ClientHandler()</h2>
+<a id="a263986c25ed336b262e40d2f67d87594"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a263986c25ed336b262e40d2f67d87594">&#9670;&nbsp;</a></span>ClientHandler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -118,7 +118,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&#160;</td>
-          <td class="paramname"><em>targetNodeInfo</em>&#160;</td>
+          <td class="paramname"><em>targetNodeInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Kademlia.MessageType&#160;</td>
+          <td class="paramname"><em>messageType</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

@@ -3,7 +3,7 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classorg_1_1example_1_1Server_a687e7e01ed73f7d0442562900c2bd65c}{Server}} (int port)
+\mbox{\hyperlink{classorg_1_1example_1_1Server_a6fff0014515f1cc98383d655f0b4b56a}{Server}} (int port, \mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node)
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1Server_ae5c8b41dbb2cd3ffcc800926f279bfef}{start}} ()  throws Exception 
 \end{DoxyCompactItemize}
@@ -13,17 +13,19 @@ void \mbox{\hyperlink{classorg_1_1example_1_1Server_ae5c8b41dbb2cd3ffcc800926f27
 Class \mbox{\hyperlink{classorg_1_1example_1_1Server}{Server}}\+: Represents a Netty server. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classorg_1_1example_1_1Server_a687e7e01ed73f7d0442562900c2bd65c}\label{classorg_1_1example_1_1Server_a687e7e01ed73f7d0442562900c2bd65c}} 
+\mbox{\Hypertarget{classorg_1_1example_1_1Server_a6fff0014515f1cc98383d655f0b4b56a}\label{classorg_1_1example_1_1Server_a6fff0014515f1cc98383d655f0b4b56a}} 
 \index{org.example.Server@{org.example.Server}!Server@{Server}}
 \index{Server@{Server}!org.example.Server@{org.example.Server}}
 \doxysubsubsection{\texorpdfstring{Server()}{Server()}}
-{\footnotesize\ttfamily org.\+example.\+Server.\+Server (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily org.\+example.\+Server.\+Server (\begin{DoxyParamCaption}\item[{int}]{port,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}}}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Constructs a new \mbox{\hyperlink{classorg_1_1example_1_1Server}{Server}} instance.
 
 
 \begin{DoxyParams}{Parameters}
 {\em port} & The port on which the server listens. \\
+\hline
+{\em node} & The local node. \\
 \hline
 \end{DoxyParams}
 

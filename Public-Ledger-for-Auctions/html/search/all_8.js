@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['node_36',['Node',['../classorg_1_1example_1_1Node.html#a42bd73056f540571dd64bd06aefdbf68',1,'org.example.Node.Node()'],['../classorg_1_1example_1_1Node.html',1,'org.example.Node']]],
-  ['nodeinfo_37',['NodeInfo',['../classorg_1_1example_1_1NodeInfo.html#a4194f2e3e03372f28c99c546fc2b2115',1,'org.example.NodeInfo.NodeInfo()'],['../classorg_1_1example_1_1NodeInfo.html',1,'org.example.NodeInfo']]],
-  ['nodetest_38',['NodeTest',['../classorg_1_1example_1_1NodeTest.html',1,'org::example']]]
+  ['main_33',['Main',['../classorg_1_1example_1_1Main.html',1,'org::example']]],
+  ['messagetype_34',['MessageType',['../enumorg_1_1example_1_1Kademlia_1_1MessageType.html',1,'org::example::Kademlia']]],
+  ['mineblock_35',['mineBlock',['../classorg_1_1example_1_1Block.html#a83027532dbc9a28b6f60b7dde511b00a',1,'org::example::Block']]],
+  ['minependingtransactions_36',['minePendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a08af72f2a4f360708240d5b27b9632a4',1,'org::example::Blockchain']]]
 ];
