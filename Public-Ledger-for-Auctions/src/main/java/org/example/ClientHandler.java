@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ClientHandler.class.getName());
 
-    private Node node;
+    private NodeInfo nodeInfo;
     private NodeInfo targetNodeInfo;
     private List<NodeInfo> nearNodesInfo;
     private Kademlia.MessageType messageType;
@@ -24,12 +24,12 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     /**
      * Constructs a new ClientHandler.
      *
-     * @param node           The local node.
+     * @param nodeInfo       The local node info.
      * @param targetNodeInfo Information about the target node.
      */
-    public ClientHandler(Node node, NodeInfo targetNodeInfo, Kademlia.MessageType messageType) {
+    public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, Kademlia.MessageType messageType) {
         this.targetNodeInfo = targetNodeInfo;
-        this.node = node;
+        this.nodeInfo = nodeInfo;
         this.nearNodesInfo = new ArrayList<>();
         this.messageType = messageType;
     }
@@ -46,7 +46,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
         msg.writeInt(messageType.ordinal());
         switch(messageType) {
             case FIND_NODE:
-                ByteBuf nodeInfoBuf = Utils.serialize(node.getNodeInfo());
+                ByteBuf nodeInfoBuf = Utils.serialize(nodeInfo);
                 msg.writeInt(nodeInfoBuf.readableBytes());
                 msg.writeBytes(nodeInfoBuf);
                 ctx.writeAndFlush(msg);
@@ -88,11 +88,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                     findNodeHandler(bytebuf);
                     break;
                 case PING:
-                    int pingAckLength = bytebuf.readInt();
-                    ByteBuf pingAckBytes = bytebuf.readBytes(pingAckLength);
-                    String pingAck = pingAckBytes.toString(StandardCharsets.UTF_8);;
-                    logger.info("Received " + pingAck + " from " + ctx.channel().remoteAddress());
-                    pingAckBytes.release();
+                    pingHandler(ctx,bytebuf);
                     break;
                 case FIND_VALUE:
                     //TODO
@@ -131,6 +127,20 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
         } else {
             logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
         }
+    }
+
+    /**
+     * Handles the response from the server for PING messages.
+     *
+     * @param ctx     The channel handler context.
+     * @param bytebuf The received ByteBuf.
+     */
+    private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf) {
+        int pingAckLength = bytebuf.readInt();
+        ByteBuf pingAckBytes = bytebuf.readBytes(pingAckLength);
+        String pingAck = pingAckBytes.toString(StandardCharsets.UTF_8);;
+        logger.info("Received " + pingAck + " from " + ctx.channel().remoteAddress());
+        pingAckBytes.release();
     }
 
     /**
