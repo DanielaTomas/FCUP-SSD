@@ -85,8 +85,8 @@ Collaboration diagram for org.example.ClientHandler:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a47b09419c154d4a57edf3248e0344aab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#a47b09419c154d4a57edf3248e0344aab">ClientHandler</a> (<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> nodeInfo, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo, Kademlia.MessageType messageType)</td></tr>
-<tr class="separator:a47b09419c154d4a57edf3248e0344aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4dc8f7b7d4d7fb1b80b95f800c69339"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#ad4dc8f7b7d4d7fb1b80b95f800c69339">ClientHandler</a> (<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> nodeInfo, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo, Kademlia.MessageType messageType, List&lt; <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> &gt; nearNodesInfo)</td></tr>
+<tr class="separator:ad4dc8f7b7d4d7fb1b80b95f800c69339"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f6f031893e58e00a57857e47c93209f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#a9f6f031893e58e00a57857e47c93209f">channelActive</a> (ChannelHandlerContext ctx)  throws IOException </td></tr>
 <tr class="separator:a9f6f031893e58e00a57857e47c93209f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf26b234869a7b0ce5af7a790916e49b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1ClientHandler.html#adf26b234869a7b0ce5af7a790916e49b">channelRead</a> (ChannelHandlerContext ctx, Object msg)  throws IOException, ClassNotFoundException </td></tr>
@@ -99,8 +99,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classorg_1_1example_1_1ClientHandler.html">ClientHandler</a>: Handles the client-side channel events </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a47b09419c154d4a57edf3248e0344aab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47b09419c154d4a57edf3248e0344aab">&#9670;&nbsp;</a></span>ClientHandler()</h2>
+<a id="ad4dc8f7b7d4d7fb1b80b95f800c69339"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4dc8f7b7d4d7fb1b80b95f800c69339">&#9670;&nbsp;</a></span>ClientHandler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -124,7 +124,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Kademlia.MessageType&#160;</td>
-          <td class="paramname"><em>messageType</em>&#160;</td>
+          <td class="paramname"><em>messageType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">List&lt; <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td>
+          <td class="paramname"><em>nearNodesInfo</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -143,6 +149,8 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">nodeInfo</td><td>The local node info. </td></tr>
     <tr><td class="paramname">targetNodeInfo</td><td>Information about the target node. </td></tr>
+    <tr><td class="paramname">messageType</td><td>The type of the message. </td></tr>
+    <tr><td class="paramname">nearNodesInfo</td><td>Information about the near nodes. </td></tr>
   </table>
   </dd>
 </dl>

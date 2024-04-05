@@ -26,11 +26,14 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      *
      * @param nodeInfo       The local node info.
      * @param targetNodeInfo Information about the target node.
+     * @param messageType    The type of the message.
+     * @param nearNodesInfo  Information about the near nodes.
+     *
      */
-    public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, Kademlia.MessageType messageType) {
+    public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, Kademlia.MessageType messageType, List<NodeInfo> nearNodesInfo) {
         this.targetNodeInfo = targetNodeInfo;
         this.nodeInfo = nodeInfo;
-        this.nearNodesInfo = new ArrayList<>();
+        this.nearNodesInfo = nearNodesInfo;
         this.messageType = messageType;
     }
 

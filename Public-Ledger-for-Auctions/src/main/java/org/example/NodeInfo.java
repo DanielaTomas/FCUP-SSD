@@ -3,6 +3,7 @@ package org.example;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,9 +60,43 @@ public class NodeInfo implements Serializable, Comparable<NodeInfo> {
                 '}';
     }
 
+    /**
+     * Compares this NodeInfo object with another NodeInfo object based on nodeId.
+     *
+     * @param o The NodeInfo object to compare with.
+     * @return An integer value indicating the comparison result.
+     */
     @Override
     public int compareTo(NodeInfo o ) {
         return this.nodeId.compareTo(o.getNodeId());
+    }
+
+    /**
+     * Checks if this NodeInfo object is equal to another object.
+     *
+     * @param obj The object to compare with.
+     * @return true if the objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        NodeInfo other = (NodeInfo) obj;
+        return Objects.equals(nodeId, other.nodeId);
+    }
+
+    /**
+     * Generates a hash code for this NodeInfo object.
+     *
+     * @return The hash code value for this object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(nodeId);
     }
 
     /**

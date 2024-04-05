@@ -6,15 +6,15 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /** Class Kademlia */
 public class Kademlia {
+
+    private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
 
     /**
      * Enum for message types used in Kademlia.
@@ -22,7 +22,6 @@ public class Kademlia {
     public enum MessageType {
         PING, FIND_NODE, FIND_VALUE, STORE
     }
-    private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
 
     /**
      * Joins the Kademlia network.
@@ -34,15 +33,17 @@ public class Kademlia {
         List<NodeInfo> nearNodes = findNode(node.getNodeInfo(), bootstrapNodeInfo);
         for(NodeInfo nearNodeInfo : nearNodes) {
             node.updateRoutingTable(nearNodeInfo);
-            List<NodeInfo> additionalNearNodes = findNode(node.getNodeInfo(), nearNodeInfo);
-            while(!additionalNearNodes.isEmpty()) {
+            List<NodeInfo> additionalNearNodesInfo = findNode(node.getNodeInfo(), nearNodeInfo);
+            while(!additionalNearNodesInfo.isEmpty()) {
                 List<NodeInfo> nextNearNodes = new ArrayList<>();
-                for (NodeInfo nextNearNodeInfo : additionalNearNodes) {
-                    node.updateRoutingTable(nextNearNodeInfo);
-                    List<NodeInfo> nextAdditionalNearNodes = findNode(node.getNodeInfo(), nextNearNodeInfo);
-                    nextNearNodes.addAll(nextAdditionalNearNodes);
+                for (NodeInfo nextNearNodeInfo : additionalNearNodesInfo) {
+                    if(!node.getRoutingTable().contains(nextNearNodeInfo)) {
+                        node.updateRoutingTable(nextNearNodeInfo);
+                        List<NodeInfo> nextAdditionalNearNodes = findNode(node.getNodeInfo(), nextNearNodeInfo);
+                        nextNearNodes.addAll(nextAdditionalNearNodes);
+                    }
                 }
-                additionalNearNodes = nextNearNodes;
+                additionalNearNodesInfo = nextNearNodes;
             }
         }
     }
@@ -87,7 +88,7 @@ public class Kademlia {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             connectToNode(nodeInfo, targetNodeInfo, group, channel -> {
-                ClientHandler clientHandler = new ClientHandler(nodeInfo, targetNodeInfo, messageType);
+                ClientHandler clientHandler = new ClientHandler(nodeInfo, targetNodeInfo, messageType, nearNodesInfo);
                 channel.pipeline().addLast(clientHandler);
             });
         } catch (InterruptedException e) {
@@ -130,8 +131,8 @@ public class Kademlia {
         ChannelFuture cf = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         try {
-            if (!cf.channel().closeFuture().await(8, TimeUnit.SECONDS)) {
-                System.err.println("Error: Channel did not close within 8 seconds.");
+            if (!cf.channel().closeFuture().await(5, TimeUnit.SECONDS)) {
+                System.err.println("Error: Channel did not close within 5 seconds.");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

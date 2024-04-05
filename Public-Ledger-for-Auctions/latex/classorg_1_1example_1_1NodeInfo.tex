@@ -15,8 +15,11 @@ Collaboration diagram for org.\+example.\+Node\+Info\+:
 \item 
 String \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo_ae6f9c099fbef8228bd735598b0beee22}{to\+String}} ()
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1NodeInfo_a196c1fd5d9852f2c9ded4de270580014}\label{classorg_1_1example_1_1NodeInfo_a196c1fd5d9852f2c9ded4de270580014}} 
-int {\bfseries compare\+To} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} o)
+int \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo_a196c1fd5d9852f2c9ded4de270580014}{compare\+To}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} o)
+\item 
+boolean \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo_a7954f8a678f3c140f67ac9a999a13a30}{equals}} (Object obj)
+\item 
+int \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo_a75c00eb425054f509735d42c98f1d35e}{hash\+Code}} ()
 \item 
 String \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo_a2472b25c7188cf1c4b6b00158497f50d}{get\+Node\+Id}} ()
 \item 
@@ -53,6 +56,38 @@ Constructs a node with the specified parameters.
 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1NodeInfo_a196c1fd5d9852f2c9ded4de270580014}\label{classorg_1_1example_1_1NodeInfo_a196c1fd5d9852f2c9ded4de270580014}} 
+\index{org.example.NodeInfo@{org.example.NodeInfo}!compareTo@{compareTo}}
+\index{compareTo@{compareTo}!org.example.NodeInfo@{org.example.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{compareTo()}{compareTo()}}
+{\footnotesize\ttfamily int org.\+example.\+Node\+Info.\+compare\+To (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{o }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Compares this \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} object with another \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} object based on node\+Id.
+
+
+\begin{DoxyParams}{Parameters}
+{\em o} & The \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} object to compare with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An integer value indicating the comparison result. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1NodeInfo_a7954f8a678f3c140f67ac9a999a13a30}\label{classorg_1_1example_1_1NodeInfo_a7954f8a678f3c140f67ac9a999a13a30}} 
+\index{org.example.NodeInfo@{org.example.NodeInfo}!equals@{equals}}
+\index{equals@{equals}!org.example.NodeInfo@{org.example.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{equals()}{equals()}}
+{\footnotesize\ttfamily boolean org.\+example.\+Node\+Info.\+equals (\begin{DoxyParamCaption}\item[{Object}]{obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Checks if this \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} object is equal to another object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to compare with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the objects are equal, false otherwise. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classorg_1_1example_1_1NodeInfo_a6ae100ec0c77e77cec61a16ebb155e73}\label{classorg_1_1example_1_1NodeInfo_a6ae100ec0c77e77cec61a16ebb155e73}} 
 \index{org.example.NodeInfo@{org.example.NodeInfo}!generateNodeId@{generateNodeId}}
 \index{generateNodeId@{generateNodeId}!org.example.NodeInfo@{org.example.NodeInfo}}
@@ -103,6 +138,17 @@ Gets the port on which the node listens.
 
 \begin{DoxyReturn}{Returns}
 The port number. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1NodeInfo_a75c00eb425054f509735d42c98f1d35e}\label{classorg_1_1example_1_1NodeInfo_a75c00eb425054f509735d42c98f1d35e}} 
+\index{org.example.NodeInfo@{org.example.NodeInfo}!hashCode@{hashCode}}
+\index{hashCode@{hashCode}!org.example.NodeInfo@{org.example.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{hashCode()}{hashCode()}}
+{\footnotesize\ttfamily int org.\+example.\+Node\+Info.\+hash\+Code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Generates a hash code for this \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} object.
+
+\begin{DoxyReturn}{Returns}
+The hash code value for this object. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classorg_1_1example_1_1NodeInfo_ae6f9c099fbef8228bd735598b0beee22}\label{classorg_1_1example_1_1NodeInfo_ae6f9c099fbef8228bd735598b0beee22}} 
 \index{org.example.NodeInfo@{org.example.NodeInfo}!toString@{toString}}

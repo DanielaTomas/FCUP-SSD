@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['updateroutingtable_46',['updateRoutingTable',['../classorg_1_1example_1_1Node.html#ada8659be75ebc3911d947302e01d6cef',1,'org::example::Node']]],
-  ['utils_47',['Utils',['../classorg_1_1example_1_1Utils.html',1,'org::example']]]
+  ['tostring_47',['toString',['../classorg_1_1example_1_1NodeInfo.html#ae6f9c099fbef8228bd735598b0beee22',1,'org.example.NodeInfo.toString()'],['../classorg_1_1example_1_1Transaction.html#a184754aa8d76632fb48e6f065ed5aa93',1,'org.example.Transaction.toString()']]],
+  ['transaction_48',['Transaction',['../classorg_1_1example_1_1Transaction.html',1,'org.example.Transaction'],['../classorg_1_1example_1_1Transaction.html#af7bb00d173934bd5a45088c22a0e1c92',1,'org.example.Transaction.Transaction()']]]
 ];

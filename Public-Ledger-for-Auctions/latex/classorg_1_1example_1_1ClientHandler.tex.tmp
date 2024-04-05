@@ -11,7 +11,7 @@ Collaboration diagram for org.\+example.\+Client\+Handler\+:
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_a47b09419c154d4a57edf3248e0344aab}{Client\+Handler}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info, Kademlia.\+Message\+Type message\+Type)
+\mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_ad4dc8f7b7d4d7fb1b80b95f800c69339}{Client\+Handler}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info, Kademlia.\+Message\+Type message\+Type, List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ near\+Nodes\+Info)
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_a9f6f031893e58e00a57857e47c93209f}{channel\+Active}} (Channel\+Handler\+Context ctx)  throws IOException 
 \item 
@@ -27,11 +27,11 @@ List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ \mbox
 Class \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler}{Client\+Handler}}\+: Handles the client-\/side channel events 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_a47b09419c154d4a57edf3248e0344aab}\label{classorg_1_1example_1_1ClientHandler_a47b09419c154d4a57edf3248e0344aab}} 
+\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_ad4dc8f7b7d4d7fb1b80b95f800c69339}\label{classorg_1_1example_1_1ClientHandler_ad4dc8f7b7d4d7fb1b80b95f800c69339}} 
 \index{org.example.ClientHandler@{org.example.ClientHandler}!ClientHandler@{ClientHandler}}
 \index{ClientHandler@{ClientHandler}!org.example.ClientHandler@{org.example.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{ClientHandler()}{ClientHandler()}}
-{\footnotesize\ttfamily org.\+example.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{node\+Info,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info,  }\item[{Kademlia.\+Message\+Type}]{message\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily org.\+example.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{node\+Info,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info,  }\item[{Kademlia.\+Message\+Type}]{message\+Type,  }\item[{List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$}]{near\+Nodes\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Constructs a new \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler}{Client\+Handler}}.
 
@@ -40,6 +40,10 @@ Constructs a new \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler}{Client\+
 {\em node\+Info} & The local node info. \\
 \hline
 {\em target\+Node\+Info} & Information about the target node. \\
+\hline
+{\em message\+Type} & The type of the message. \\
+\hline
+{\em near\+Nodes\+Info} & Information about the near nodes. \\
 \hline
 \end{DoxyParams}
 
