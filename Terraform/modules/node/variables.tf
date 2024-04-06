@@ -11,7 +11,7 @@ variable "gcp_default_machine_image"{
 
 variable "node_instance_count" {
   type    = string
-  default = "3"
+  default = "5"
 }
 
 variable "node_pop_region" {
@@ -21,7 +21,7 @@ variable "node_pop_region" {
 
 variable "node_pop_zone" {
   type = string
-  default = "-c"
+  default = "-d"
 }
 
 variable "kademlia_jar_path" {

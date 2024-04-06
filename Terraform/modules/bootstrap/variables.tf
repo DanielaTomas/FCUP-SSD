@@ -21,7 +21,7 @@ variable "bootstrap_node_pop_region" {
 
 variable "bootstrap_node_pop_zone" {
   type = string
-  default = "-c"
+  default = "-d"
 }
 
 variable "kademlia_jar_path" {
