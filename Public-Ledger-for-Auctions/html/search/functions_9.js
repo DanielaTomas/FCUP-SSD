@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['node_100',['Node',['../classorg_1_1example_1_1Node.html#a42bd73056f540571dd64bd06aefdbf68',1,'org::example::Node']]],
-  ['nodeinfo_101',['NodeInfo',['../classorg_1_1example_1_1NodeInfo.html#a4194f2e3e03372f28c99c546fc2b2115',1,'org::example::NodeInfo']]]
+  ['mineblock_108',['mineBlock',['../classorg_1_1example_1_1Block.html#a83027532dbc9a28b6f60b7dde511b00a',1,'org::example::Block']]],
+  ['minependingtransactions_109',['minePendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a08af72f2a4f360708240d5b27b9632a4',1,'org::example::Blockchain']]]
 ];

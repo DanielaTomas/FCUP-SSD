@@ -8,6 +8,10 @@ static String \mbox{\hyperlink{classorg_1_1example_1_1Utils_aba23013b81f2c878d82
 static Byte\+Buf \mbox{\hyperlink{classorg_1_1example_1_1Utils_a3a7037d37b06189592ab2d5ff63c28af}{serialize}} (Object obj)  throws IOException 
 \item 
 static Object \mbox{\hyperlink{classorg_1_1example_1_1Utils_a612616f574e352cd596b0a089a873c21}{deserialize}} (Byte\+Buf byte\+Buf)  throws IOException, Class\+Not\+Found\+Exception 
+\item 
+static List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1Utils_af87378fb6d7737774a91bbb394d87811}{find\+Closest\+Nodes}} (List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ my\+Routing\+Table, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} requested\+Node\+Info, final int K)
+\item 
+static int \mbox{\hyperlink{classorg_1_1example_1_1Utils_a9ab0a2fbef96e30d57b4b2de7b2dacc2}{calculate\+Distance}} (String node\+Id1, String node\+Id2)
 \end{DoxyCompactItemize}
 
 
@@ -15,6 +19,24 @@ static Object \mbox{\hyperlink{classorg_1_1example_1_1Utils_a612616f574e352cd596
 Class \mbox{\hyperlink{classorg_1_1example_1_1Utils}{Utils}} 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Utils_a9ab0a2fbef96e30d57b4b2de7b2dacc2}\label{classorg_1_1example_1_1Utils_a9ab0a2fbef96e30d57b4b2de7b2dacc2}} 
+\index{org.example.Utils@{org.example.Utils}!calculateDistance@{calculateDistance}}
+\index{calculateDistance@{calculateDistance}!org.example.Utils@{org.example.Utils}}
+\doxysubsubsection{\texorpdfstring{calculateDistance()}{calculateDistance()}}
+{\footnotesize\ttfamily static int org.\+example.\+Utils.\+calculate\+Distance (\begin{DoxyParamCaption}\item[{String}]{node\+Id1,  }\item[{String}]{node\+Id2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Calculates the distance between two node IDs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id1} & The first node ID. \\
+\hline
+{\em node\+Id2} & The second node ID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The distance between the node IDs. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classorg_1_1example_1_1Utils_a612616f574e352cd596b0a089a873c21}\label{classorg_1_1example_1_1Utils_a612616f574e352cd596b0a089a873c21}} 
 \index{org.example.Utils@{org.example.Utils}!deserialize@{deserialize}}
 \index{deserialize@{deserialize}!org.example.Utils@{org.example.Utils}}
@@ -38,6 +60,22 @@ The deserialized object.
 {\em Class\+Not\+Found\+Exception} & If the class of the serialized object cannot be found. \\
 \hline
 \end{DoxyExceptions}
+\mbox{\Hypertarget{classorg_1_1example_1_1Utils_af87378fb6d7737774a91bbb394d87811}\label{classorg_1_1example_1_1Utils_af87378fb6d7737774a91bbb394d87811}} 
+\index{org.example.Utils@{org.example.Utils}!findClosestNodes@{findClosestNodes}}
+\index{findClosestNodes@{findClosestNodes}!org.example.Utils@{org.example.Utils}}
+\doxysubsubsection{\texorpdfstring{findClosestNodes()}{findClosestNodes()}}
+{\footnotesize\ttfamily static List$<$\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}$>$ org.\+example.\+Utils.\+find\+Closest\+Nodes (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$}]{my\+Routing\+Table,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{requested\+Node\+Info,  }\item[{final int}]{K }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Finds the closest nodes to the requested node information.
+
+
+\begin{DoxyParams}{Parameters}
+{\em requested\+Node\+Info} & The requested node information. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of closest nodes. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classorg_1_1example_1_1Utils_aba23013b81f2c878d82ce356bc1e6d8c}\label{classorg_1_1example_1_1Utils_aba23013b81f2c878d82ce356bc1e6d8c}} 
 \index{org.example.Utils@{org.example.Utils}!getAddress@{getAddress}}
 \index{getAddress@{getAddress}!org.example.Utils@{org.example.Utils}}

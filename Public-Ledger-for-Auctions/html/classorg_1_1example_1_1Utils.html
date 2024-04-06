@@ -81,10 +81,59 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a3a7037d37b06189592ab2d5ff63c28af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a612616f574e352cd596b0a089a873c21"><td class="memItemLeft" align="right" valign="top">static Object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Utils.html#a612616f574e352cd596b0a089a873c21">deserialize</a> (ByteBuf byteBuf)  throws IOException, ClassNotFoundException </td></tr>
 <tr class="separator:a612616f574e352cd596b0a089a873c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af87378fb6d7737774a91bbb394d87811"><td class="memItemLeft" align="right" valign="top">static List&lt; <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Utils.html#af87378fb6d7737774a91bbb394d87811">findClosestNodes</a> (List&lt; <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> &gt; myRoutingTable, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> requestedNodeInfo, final int K)</td></tr>
+<tr class="separator:af87378fb6d7737774a91bbb394d87811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ab0a2fbef96e30d57b4b2de7b2dacc2"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Utils.html#a9ab0a2fbef96e30d57b4b2de7b2dacc2">calculateDistance</a> (String nodeId1, String nodeId2)</td></tr>
+<tr class="separator:a9ab0a2fbef96e30d57b4b2de7b2dacc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classorg_1_1example_1_1Utils.html">Utils</a> </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9ab0a2fbef96e30d57b4b2de7b2dacc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ab0a2fbef96e30d57b4b2de7b2dacc2">&#9670;&nbsp;</a></span>calculateDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int org.example.Utils.calculateDistance </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>nodeId1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>nodeId2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Calculates the distance between two node IDs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeId1</td><td>The first node ID. </td></tr>
+    <tr><td class="paramname">nodeId2</td><td>The second node ID. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The distance between the node IDs. </dd></dl>
+
+</div>
+</div>
 <a id="a612616f574e352cd596b0a089a873c21"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a612616f574e352cd596b0a089a873c21">&#9670;&nbsp;</a></span>deserialize()</h2>
 
@@ -123,6 +172,56 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="af87378fb6d7737774a91bbb394d87811"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af87378fb6d7737774a91bbb394d87811">&#9670;&nbsp;</a></span>findClosestNodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static List&lt;<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&gt; org.example.Utils.findClosestNodes </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td>
+          <td class="paramname"><em>myRoutingTable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&#160;</td>
+          <td class="paramname"><em>requestedNodeInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">final int&#160;</td>
+          <td class="paramname"><em>K</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Finds the closest nodes to the requested node information.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">requestedNodeInfo</td><td>The requested node information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>List of closest nodes. </dd></dl>
 
 </div>
 </div>

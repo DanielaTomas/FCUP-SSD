@@ -4,7 +4,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /** Class Utils */
 public class Utils {
@@ -72,5 +77,47 @@ public class Utils {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
         return objectInputStream.readObject();
+    }
+
+    /**
+     * Finds the closest nodes to the requested node information.
+     *
+     * @param requestedNodeInfo The requested node information.
+     * @return List of closest nodes.
+     */
+    public static List<NodeInfo> findClosestNodes(List<NodeInfo> myRoutingTable, NodeInfo requestedNodeInfo, final int K) {
+        List<NodeInfo> nearNodes = new ArrayList<>();
+        Map<NodeInfo, Integer> distanceMap = new HashMap<>();
+
+        for (NodeInfo nodeInfo : myRoutingTable) {
+            if(!nodeInfo.equals(requestedNodeInfo)) {
+                int distance = Utils.calculateDistance(requestedNodeInfo.getNodeId(), nodeInfo.getNodeId());
+                distanceMap.put(nodeInfo, distance);
+            }
+        }
+
+        List<Map.Entry<NodeInfo, Integer>> sortedEntries = new ArrayList<>(distanceMap.entrySet());
+        sortedEntries.sort(Map.Entry.comparingByValue());
+
+        int k = Math.min(K, sortedEntries.size());
+        for (int i = 0; i < k; i++) {
+            nearNodes.add(sortedEntries.get(i).getKey());
+        }
+
+        return nearNodes;
+    }
+
+    /**
+     * Calculates the distance between two node IDs.
+     *
+     * @param nodeId1 The first node ID.
+     * @param nodeId2 The second node ID.
+     * @return The distance between the node IDs.
+     */
+    public static int calculateDistance(String nodeId1, String nodeId2) {
+        BigInteger nodeId1BigInt = new BigInteger(nodeId1, 16);
+        BigInteger nodeId2BigInt = new BigInteger(nodeId2, 16);
+        BigInteger distance = nodeId1BigInt.xor(nodeId2BigInt);
+        return distance.bitCount();
     }
 }

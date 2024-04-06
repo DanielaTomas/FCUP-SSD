@@ -6,7 +6,7 @@ import java.util.*;
 public class Node {
     private NodeInfo nodeInfo;
     private List<NodeInfo> routingTable;
-    private Set<String> storage;
+    private Map<String,String> storage;
 
 
     /**
@@ -17,7 +17,22 @@ public class Node {
     public Node(NodeInfo nodeInfo) {
         this.nodeInfo = nodeInfo;
         this.routingTable = new ArrayList<>();
-        this.storage = new HashSet<>();
+        this.storage = new HashMap<String, String>();
+    }
+
+    /**
+     * Find a NodeInfo in the routing table by ID.
+     *
+     * @param nodeId The ID of the NodeInfo to find.
+     * @return The NodeInfo with the given ID, or null if not found.
+     */
+    public NodeInfo findNodeById(String nodeId) {
+        for (NodeInfo nodeInfo : routingTable) {
+            if (nodeInfo.getNodeId().equals(nodeId)) {
+                return nodeInfo;
+            }
+        }
+        return null;
     }
 
     /**
@@ -27,6 +42,16 @@ public class Node {
      */
     public void updateRoutingTable(NodeInfo nodeInfo) {
         routingTable.add(nodeInfo);
+    }
+
+    /**
+     * Stores a key-value pair in the storage.
+     *
+     * @param key   The key to store.
+     * @param value The value corresponding to the key.
+     */
+    public void storeKeyValue(String key, String value) {
+        storage.put(key,value);
     }
 
     /**

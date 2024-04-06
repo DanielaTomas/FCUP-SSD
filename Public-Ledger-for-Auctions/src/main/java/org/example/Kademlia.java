@@ -6,6 +6,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 public class Kademlia {
 
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
+    private static final int K = 2; //TODO ajustar valor
 
     /**
      * Enum for message types used in Kademlia.
@@ -56,7 +58,7 @@ public class Kademlia {
      * @return List of near nodes.
      */
     private List<NodeInfo> findNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
-        return connectAndHandle(nodeInfo, targetNodeInfo, MessageType.FIND_NODE);
+        return connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE);
     }
 
     /**
@@ -66,13 +68,65 @@ public class Kademlia {
      * @param targetNodeInfo Information about the target node.
      */
     public void ping(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
-        connectAndHandle(nodeInfo, targetNodeInfo, MessageType.PING);
+        connectAndHandle(null, targetNodeInfo, null, null, MessageType.PING);
     }
 
+
+    /**
+     * Finds the value corresponding to a key in the Kademlia network.
+     *
+     * @param key The key to find.
+     */
     public void findValue(String key) { //TODO
     }
 
-    public void store(String key, String value) { //TODO
+    /**
+     * Stores a key-value pair in the Kademlia network.
+     *
+     * @param node  The local node.
+     * @param key   The key to store.
+     * @param value The value corresponding to the key.
+     */
+    public void store(Node node, String key, String value) {
+        NodeInfo keyInfo = node.findNodeById(key);
+        NodeInfo targetNodeInfo = findNodeForKey(node, keyInfo);
+        if (targetNodeInfo != null) {
+            connectAndHandle(node.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
+        } else {
+            System.err.println("Error: Unable to find a node to store the key-value pair.");
+        }
+    }
+
+    /**
+     * Finds the node in the network that is closest to the given key.
+     * This method is used for key-based routing in the Kademlia DHT protocol.
+     *
+     * @param node       The local node performing the search.
+     * @param keyInfo    Information about the key (usually represented as a NodeInfo object).
+     * @return The NodeInfo object representing the node closest to the given key, or null if the keyInfo parameter is null or the routing table is empty.
+     */
+    private NodeInfo findNodeForKey(Node node, NodeInfo keyInfo) {
+        if(keyInfo == null) return null;
+        NodeInfo closestNode = node.getNodeInfo();
+        int closestDistance = Utils.calculateDistance(node.getNodeInfo().getNodeId(), keyInfo.getNodeId());
+        List<NodeInfo> routingTable = node.getRoutingTable();
+
+        List<NodeInfo> nearNodesInfo = Utils.findClosestNodes(routingTable, keyInfo, K);
+
+        for (NodeInfo nearNodeInfo : nearNodesInfo) {
+            List<NodeInfo> keyNearNodes = findNode(keyInfo, nearNodeInfo);
+            for(NodeInfo keyNearNode : keyNearNodes) {
+                if(!routingTable.contains(keyNearNode)) {
+                    node.updateRoutingTable(keyNearNode);
+                }
+                int distance = Utils.calculateDistance(keyNearNode.getNodeId(), keyInfo.getNodeId());
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestNode = nearNodeInfo;
+                }
+            }
+        }
+        return closestNode;
     }
 
     /**
@@ -80,15 +134,17 @@ public class Kademlia {
      *
      * @param nodeInfo        Information about the local node.
      * @param targetNodeInfo  Information about the target node.
+     * @param key             The key for the message (optional, used in STORE message).
+     * @param value           The value for the message (optional, used in STORE message).
      * @param messageType     The type of message to send.
      * @return List of near nodes.
      */
-    private List<NodeInfo> connectAndHandle(NodeInfo nodeInfo, NodeInfo targetNodeInfo, MessageType messageType) {
+    private List<NodeInfo> connectAndHandle(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, String value, MessageType messageType) {
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             connectToNode(nodeInfo, targetNodeInfo, group, channel -> {
-                ClientHandler clientHandler = new ClientHandler(nodeInfo, targetNodeInfo, messageType, nearNodesInfo);
+                ClientHandler clientHandler = new ClientHandler(nodeInfo, targetNodeInfo, key, value, messageType, nearNodesInfo);
                 channel.pipeline().addLast(clientHandler);
             });
         } catch (InterruptedException e) {
@@ -137,6 +193,6 @@ public class Kademlia {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        logger.info("Connection closed with node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+        logger.info("Connection closed with node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort() + "\n");
     }
 }

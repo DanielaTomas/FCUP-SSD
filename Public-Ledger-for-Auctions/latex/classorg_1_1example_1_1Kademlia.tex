@@ -12,11 +12,9 @@ void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c4967
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a3985cfdae07f5256220976959989b2d6}{ping}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info)
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}\label{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}} 
-void {\bfseries find\+Value} (String key)
+void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}{find\+Value}} (String key)
 \item 
-\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a8e95ab0c46063f400d10e163d2d4ddcb}\label{classorg_1_1example_1_1Kademlia_a8e95ab0c46063f400d10e163d2d4ddcb}} 
-void {\bfseries store} (String key, String value)
+void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a9b996551914965063ac80e3e9a92a3ba}{store}} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node, String key, String value)
 \end{DoxyCompactItemize}
 
 
@@ -24,6 +22,19 @@ void {\bfseries store} (String key, String value)
 Class \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}\label{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}} 
+\index{org.example.Kademlia@{org.example.Kademlia}!findValue@{findValue}}
+\index{findValue@{findValue}!org.example.Kademlia@{org.example.Kademlia}}
+\doxysubsubsection{\texorpdfstring{findValue()}{findValue()}}
+{\footnotesize\ttfamily void org.\+example.\+Kademlia.\+find\+Value (\begin{DoxyParamCaption}\item[{String}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Finds the value corresponding to a key in the \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} network.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to find. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}\label{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}} 
 \index{org.example.Kademlia@{org.example.Kademlia}!joinNetwork@{joinNetwork}}
 \index{joinNetwork@{joinNetwork}!org.example.Kademlia@{org.example.Kademlia}}
@@ -52,6 +63,23 @@ Sends a ping message to the target node.
 {\em node\+Info} & Information about the local node. \\
 \hline
 {\em target\+Node\+Info} & Information about the target node. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a9b996551914965063ac80e3e9a92a3ba}\label{classorg_1_1example_1_1Kademlia_a9b996551914965063ac80e3e9a92a3ba}} 
+\index{org.example.Kademlia@{org.example.Kademlia}!store@{store}}
+\index{store@{store}!org.example.Kademlia@{org.example.Kademlia}}
+\doxysubsubsection{\texorpdfstring{store()}{store()}}
+{\footnotesize\ttfamily void org.\+example.\+Kademlia.\+store (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}}}]{node,  }\item[{String}]{key,  }\item[{String}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Stores a key-\/value pair in the \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} network.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The local node. \\
+\hline
+{\em key} & The key to store. \\
+\hline
+{\em value} & The value corresponding to the key. \\
 \hline
 \end{DoxyParams}
 

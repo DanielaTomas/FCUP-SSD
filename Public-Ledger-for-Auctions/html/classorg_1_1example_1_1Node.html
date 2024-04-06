@@ -77,8 +77,12 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a42bd73056f540571dd64bd06aefdbf68"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#a42bd73056f540571dd64bd06aefdbf68">Node</a> (<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> nodeInfo)</td></tr>
 <tr class="separator:a42bd73056f540571dd64bd06aefdbf68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6f3b3ef55945572a14aba7bb02e272b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#aa6f3b3ef55945572a14aba7bb02e272b">findNodeById</a> (String nodeId)</td></tr>
+<tr class="separator:aa6f3b3ef55945572a14aba7bb02e272b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada8659be75ebc3911d947302e01d6cef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#ada8659be75ebc3911d947302e01d6cef">updateRoutingTable</a> (<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> nodeInfo)</td></tr>
 <tr class="separator:ada8659be75ebc3911d947302e01d6cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a649eac097cb9d97e325d5d8d1c18a0f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#a649eac097cb9d97e325d5d8d1c18a0f5">storeKeyValue</a> (String key, String value)</td></tr>
+<tr class="separator:a649eac097cb9d97e325d5d8d1c18a0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a355e258f48c0eb60590a15be8f43746c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#a355e258f48c0eb60590a15be8f43746c">getNodeInfo</a> ()</td></tr>
 <tr class="separator:a355e258f48c0eb60590a15be8f43746c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5e42daffbe225e315cdc139b739b795"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#af5e42daffbe225e315cdc139b739b795">getRoutingTable</a> ()</td></tr>
@@ -121,6 +125,40 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa6f3b3ef55945572a14aba7bb02e272b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f3b3ef55945572a14aba7bb02e272b">&#9670;&nbsp;</a></span>findNodeById()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> org.example.Node.findNodeById </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>nodeId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Find a <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> in the routing table by ID.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeId</td><td>The ID of the <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> to find. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> with the given ID, or null if not found. </dd></dl>
+
+</div>
+</div>
 <a id="a355e258f48c0eb60590a15be8f43746c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a355e258f48c0eb60590a15be8f43746c">&#9670;&nbsp;</a></span>getNodeInfo()</h2>
 
@@ -172,6 +210,50 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the routing table of this node.</p>
 <dl class="section return"><dt>Returns</dt><dd>The routing table of this node. </dd></dl>
+
+</div>
+</div>
+<a id="a649eac097cb9d97e325d5d8d1c18a0f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a649eac097cb9d97e325d5d8d1c18a0f5">&#9670;&nbsp;</a></span>storeKeyValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.example.Node.storeKeyValue </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Stores a key-value pair in the storage.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to store. </td></tr>
+    <tr><td class="paramname">value</td><td>The value corresponding to the key. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

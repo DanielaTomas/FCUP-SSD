@@ -5,7 +5,11 @@
 \item 
 \mbox{\hyperlink{classorg_1_1example_1_1Node_a42bd73056f540571dd64bd06aefdbf68}{Node}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info)
 \item 
+\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} \mbox{\hyperlink{classorg_1_1example_1_1Node_aa6f3b3ef55945572a14aba7bb02e272b}{find\+Node\+By\+Id}} (String node\+Id)
+\item 
 void \mbox{\hyperlink{classorg_1_1example_1_1Node_ada8659be75ebc3911d947302e01d6cef}{update\+Routing\+Table}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info)
+\item 
+void \mbox{\hyperlink{classorg_1_1example_1_1Node_a649eac097cb9d97e325d5d8d1c18a0f5}{store\+Key\+Value}} (String key, String value)
 \item 
 \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} \mbox{\hyperlink{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}{get\+Node\+Info}} ()
 \item 
@@ -33,6 +37,22 @@ Constructs a node with the specified parameters.
 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_aa6f3b3ef55945572a14aba7bb02e272b}\label{classorg_1_1example_1_1Node_aa6f3b3ef55945572a14aba7bb02e272b}} 
+\index{org.example.Node@{org.example.Node}!findNodeById@{findNodeById}}
+\index{findNodeById@{findNodeById}!org.example.Node@{org.example.Node}}
+\doxysubsubsection{\texorpdfstring{findNodeById()}{findNodeById()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} org.\+example.\+Node.\+find\+Node\+By\+Id (\begin{DoxyParamCaption}\item[{String}]{node\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Find a \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} in the routing table by ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & The ID of the \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} with the given ID, or null if not found. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}\label{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}} 
 \index{org.example.Node@{org.example.Node}!getNodeInfo@{getNodeInfo}}
 \index{getNodeInfo@{getNodeInfo}!org.example.Node@{org.example.Node}}
@@ -55,6 +75,21 @@ Gets the routing table of this node.
 \begin{DoxyReturn}{Returns}
 The routing table of this node. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_a649eac097cb9d97e325d5d8d1c18a0f5}\label{classorg_1_1example_1_1Node_a649eac097cb9d97e325d5d8d1c18a0f5}} 
+\index{org.example.Node@{org.example.Node}!storeKeyValue@{storeKeyValue}}
+\index{storeKeyValue@{storeKeyValue}!org.example.Node@{org.example.Node}}
+\doxysubsubsection{\texorpdfstring{storeKeyValue()}{storeKeyValue()}}
+{\footnotesize\ttfamily void org.\+example.\+Node.\+store\+Key\+Value (\begin{DoxyParamCaption}\item[{String}]{key,  }\item[{String}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Stores a key-\/value pair in the storage.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to store. \\
+\hline
+{\em value} & The value corresponding to the key. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classorg_1_1example_1_1Node_ada8659be75ebc3911d947302e01d6cef}\label{classorg_1_1example_1_1Node_ada8659be75ebc3911d947302e01d6cef}} 
 \index{org.example.Node@{org.example.Node}!updateRoutingTable@{updateRoutingTable}}
 \index{updateRoutingTable@{updateRoutingTable}!org.example.Node@{org.example.Node}}

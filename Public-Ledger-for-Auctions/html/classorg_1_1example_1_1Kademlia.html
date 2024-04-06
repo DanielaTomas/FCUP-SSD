@@ -85,16 +85,47 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a43e8b3a618e66b7ff834c496757486b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3985cfdae07f5256220976959989b2d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Kademlia.html#a3985cfdae07f5256220976959989b2d6">ping</a> (<a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> nodeInfo, <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo)</td></tr>
 <tr class="separator:a3985cfdae07f5256220976959989b2d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42aaabddb93e04e3b928079cb2d014d7"><td class="memItemLeft" align="right" valign="top"><a id="a42aaabddb93e04e3b928079cb2d014d7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>findValue</b> (String key)</td></tr>
+<tr class="memitem:a42aaabddb93e04e3b928079cb2d014d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Kademlia.html#a42aaabddb93e04e3b928079cb2d014d7">findValue</a> (String key)</td></tr>
 <tr class="separator:a42aaabddb93e04e3b928079cb2d014d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e95ab0c46063f400d10e163d2d4ddcb"><td class="memItemLeft" align="right" valign="top"><a id="a8e95ab0c46063f400d10e163d2d4ddcb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>store</b> (String key, String value)</td></tr>
-<tr class="separator:a8e95ab0c46063f400d10e163d2d4ddcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b996551914965063ac80e3e9a92a3ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Kademlia.html#a9b996551914965063ac80e3e9a92a3ba">store</a> (<a class="el" href="classorg_1_1example_1_1Node.html">Node</a> node, String key, String value)</td></tr>
+<tr class="separator:a9b996551914965063ac80e3e9a92a3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classorg_1_1example_1_1Kademlia.html">Kademlia</a> </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a42aaabddb93e04e3b928079cb2d014d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42aaabddb93e04e3b928079cb2d014d7">&#9670;&nbsp;</a></span>findValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.example.Kademlia.findValue </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Finds the value corresponding to a key in the <a class="el" href="classorg_1_1example_1_1Kademlia.html">Kademlia</a> network.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to find. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a43e8b3a618e66b7ff834c496757486b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a43e8b3a618e66b7ff834c496757486b3">&#9670;&nbsp;</a></span>joinNetwork()</h2>
 
@@ -177,6 +208,57 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>store</b> (String key
   <table class="params">
     <tr><td class="paramname">nodeInfo</td><td>Information about the local node. </td></tr>
     <tr><td class="paramname">targetNodeInfo</td><td>Information about the target node. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9b996551914965063ac80e3e9a92a3ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b996551914965063ac80e3e9a92a3ba">&#9670;&nbsp;</a></span>store()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void org.example.Kademlia.store </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classorg_1_1example_1_1Node.html">Node</a>&#160;</td>
+          <td class="paramname"><em>node</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Stores a key-value pair in the <a class="el" href="classorg_1_1example_1_1Kademlia.html">Kademlia</a> network.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node</td><td>The local node. </td></tr>
+    <tr><td class="paramname">key</td><td>The key to store. </td></tr>
+    <tr><td class="paramname">value</td><td>The value corresponding to the key. </td></tr>
   </table>
   </dd>
 </dl>

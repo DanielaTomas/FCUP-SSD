@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,11 +22,18 @@ public class Main {
             port = Integer.parseInt(args[0]);
             //System.setProperty("filename", port + ".log");
             Node node = new Node(new NodeInfo(ip, port));
+            Kademlia kademlia = new Kademlia();
 
             if (args.length == 2) { // Node
                 NodeInfo bootstrapNodeInfo = new NodeInfo(args[1], port);
                 node.updateRoutingTable(bootstrapNodeInfo);
-                new Kademlia().joinNetwork(node, bootstrapNodeInfo);
+                kademlia.joinNetwork(node, bootstrapNodeInfo);
+                Scanner in = new Scanner(System.in);
+                System.out.println("Store? 'y' or 'n'");
+                String n = in.nextLine();
+                if(n.equals("y")) {
+                    kademlia.store(node, "fd643adf39fe4118213594b1922713f565f579de", "gaaaaaas");
+                }
             }
 
             try {

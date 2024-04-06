@@ -20,7 +20,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
 
     private Node myNode;
 
-    private static final int K = 1; //TODO mudar valor para >1
+    private static final int K = 2; //TODO ajustar valor
 
     /**
      * Constructor for ServerHandler.
@@ -38,6 +38,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
+        System.out.println("\n");
         logger.info("Client connected: " + ctx.channel().remoteAddress());
     }
 
@@ -64,7 +65,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
                     //TODO
                     break;
                 case STORE:
-                    //TODO
+                    storeHandler(ctx,bytebuf,messageType);
                     break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
@@ -75,6 +76,32 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         } else {
             logger.warning("Received unknown message type from client: " + msg.getClass().getName());
         }
+    }
+
+    /**
+     * Handles STORE messages from the client.
+     *
+     * @param ctx          The channel handler context.
+     * @param bytebuf      The received ByteBuf.
+     * @param messageType  The type of the message.
+     */
+    private void storeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) {
+        int keyLength = bytebuf.readInt();
+        String key = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
+        int valueLength = bytebuf.readInt();
+        String value = bytebuf.readCharSequence(valueLength, StandardCharsets.UTF_8).toString();
+        logger.info("Received STORE request for key: " + key + ", value: " + value);
+
+        myNode.storeKeyValue(key,value);
+        logger.info("key: " + key + ", value: " + value + " stored");
+
+        ByteBuf responseMsg = ctx.alloc().buffer();
+        responseMsg.writeInt(messageType.ordinal());
+        ByteBuf responseBuf = Unpooled.wrappedBuffer("STOREACK".getBytes());
+        responseMsg.writeInt(responseBuf.readableBytes());
+        responseMsg.writeBytes(responseBuf);
+        ctx.writeAndFlush(responseMsg);
+        logger.info("Responded to STORE from client " + ctx.channel().remoteAddress());
     }
 
     /**
@@ -93,7 +120,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         logger.info("Received node info from client: " + nodeInfo);
 
         myNode.updateRoutingTable(nodeInfo);
-        List<NodeInfo> nearNodes = findClosestNodes(nodeInfo);
+        List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo, K);
 
         ByteBuf responseMsg = ctx.alloc().buffer();
         responseMsg.writeInt(messageType.ordinal());
@@ -104,49 +131,6 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         logger.info("Sent near nodes info to client " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort());
 
         nodeInfoBytes.release();
-    }
-
-    /**
-     * Finds the closest nodes to the requested node information.
-     *
-     * @param requestedNodeInfo The requested node information.
-     * @return List of closest nodes.
-     */
-    private List<NodeInfo> findClosestNodes(NodeInfo requestedNodeInfo) {
-        List<NodeInfo> myRoutingTable = myNode.getRoutingTable();
-        List<NodeInfo> nearNodes = new ArrayList<>();
-        Map<NodeInfo, Integer> distanceMap = new HashMap<>();
-
-        for (NodeInfo nodeInfo : myRoutingTable) {
-            if(!nodeInfo.equals(requestedNodeInfo)) {
-                int distance = calculateDistance(requestedNodeInfo.getNodeId(), nodeInfo.getNodeId());
-                distanceMap.put(nodeInfo, distance);
-            }
-        }
-
-        List<Map.Entry<NodeInfo, Integer>> sortedEntries = new ArrayList<>(distanceMap.entrySet());
-        sortedEntries.sort(Map.Entry.comparingByValue());
-
-        int k = Math.min(K, sortedEntries.size());
-        for (int i = 0; i < k; i++) {
-            nearNodes.add(sortedEntries.get(i).getKey());
-        }
-
-        return nearNodes;
-    }
-
-    /**
-     * Calculates the distance between two node IDs.
-     *
-     * @param nodeId1 The first node ID.
-     * @param nodeId2 The second node ID.
-     * @return The distance between the node IDs.
-     */
-    private int calculateDistance(String nodeId1, String nodeId2) {
-        BigInteger nodeId1BigInt = new BigInteger(nodeId1, 16);
-        BigInteger nodeId2BigInt = new BigInteger(nodeId2, 16);
-        BigInteger distance = nodeId1BigInt.xor(nodeId2BigInt);
-        return distance.bitCount();
     }
 
     /**

@@ -20,21 +20,26 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private NodeInfo targetNodeInfo;
     private List<NodeInfo> nearNodesInfo;
     private Kademlia.MessageType messageType;
+    private String key;
+    private String value;
 
     /**
      * Constructs a new ClientHandler.
      *
      * @param nodeInfo       The local node info.
      * @param targetNodeInfo Information about the target node.
+     * @param key            The key for the message.
+     * @param value          The value for the message.
      * @param messageType    The type of the message.
      * @param nearNodesInfo  Information about the near nodes.
-     *
      */
-    public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, Kademlia.MessageType messageType, List<NodeInfo> nearNodesInfo) {
+    public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, String value, Kademlia.MessageType messageType, List<NodeInfo> nearNodesInfo) {
         this.targetNodeInfo = targetNodeInfo;
         this.nodeInfo = nodeInfo;
         this.nearNodesInfo = nearNodesInfo;
         this.messageType = messageType;
+        this.key = key;
+        this.value = value;
     }
 
     /**
@@ -66,7 +71,12 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 //TODO
                 break;
             case STORE:
-                //TODO
+                msg.writeInt(key.length());
+                msg.writeCharSequence(key, StandardCharsets.UTF_8);
+                msg.writeInt(value.length());
+                msg.writeCharSequence(value, StandardCharsets.UTF_8);
+                ctx.writeAndFlush(msg);
+                logger.info("Sent STORE request for key: " + key + ", value: " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
                 break;
             default:
                 logger.warning("Received unknown message type: " + messageType);
@@ -90,13 +100,10 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 case FIND_NODE:
                     findNodeHandler(bytebuf);
                     break;
-                case PING:
-                    pingHandler(ctx,bytebuf);
+                case PING, STORE:
+                    pingAndStoreHandler(ctx,bytebuf);
                     break;
                 case FIND_VALUE:
-                    //TODO
-                    break;
-                case STORE:
                     //TODO
                     break;
                 default:
@@ -133,17 +140,17 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     * Handles the response from the server for PING messages.
+     * Handles the response from the server for PING and STORE messages.
      *
      * @param ctx     The channel handler context.
      * @param bytebuf The received ByteBuf.
      */
-    private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf) {
-        int pingAckLength = bytebuf.readInt();
-        ByteBuf pingAckBytes = bytebuf.readBytes(pingAckLength);
-        String pingAck = pingAckBytes.toString(StandardCharsets.UTF_8);;
-        logger.info("Received " + pingAck + " from " + ctx.channel().remoteAddress());
-        pingAckBytes.release();
+    private void pingAndStoreHandler(ChannelHandlerContext ctx, ByteBuf bytebuf) {
+        int ackLength = bytebuf.readInt();
+        ByteBuf ackBytes = bytebuf.readBytes(ackLength);
+        String ack = ackBytes.toString(StandardCharsets.UTF_8);;
+        logger.info("Received " + ack + " from " + ctx.channel().remoteAddress());
+        ackBytes.release();
     }
 
     /**
