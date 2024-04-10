@@ -32,7 +32,7 @@ public class Main {
                 System.out.println("Store? 'y' or 'n'");
                 String n = in.nextLine();
                 if(n.equals("y")) {
-                    kademlia.store(node, "fd643adf39fe4118213594b1922713f565f579de", "gaaaaaas");
+                    kademlia.store(node, "174be1b78723cf02995324f3985134a4227c920d", "gaaaaaas");
                 }
             }
 

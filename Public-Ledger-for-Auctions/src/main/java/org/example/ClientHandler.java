@@ -4,8 +4,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.socket.DatagramPacket;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +59,14 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 ByteBuf nodeInfoBuf = Utils.serialize(nodeInfo);
                 msg.writeInt(nodeInfoBuf.readableBytes());
                 msg.writeBytes(nodeInfoBuf);
-                ctx.writeAndFlush(msg);
+                ctx.writeAndFlush(new DatagramPacket(msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort())));
                 logger.info("Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
                 break;
             case PING:
                 ByteBuf pingBuf = Unpooled.wrappedBuffer("PING".getBytes());
                 msg.writeInt(pingBuf.readableBytes());
                 msg.writeBytes(pingBuf);
-                ctx.writeAndFlush(msg);
+                ctx.writeAndFlush(new DatagramPacket(msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort())));
                 logger.info("Pinging " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
                 break;
             case FIND_VALUE:
@@ -75,7 +77,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 msg.writeCharSequence(key, StandardCharsets.UTF_8);
                 msg.writeInt(value.length());
                 msg.writeCharSequence(value, StandardCharsets.UTF_8);
-                ctx.writeAndFlush(msg);
+                ctx.writeAndFlush(new DatagramPacket(msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort())));
                 logger.info("Sent STORE request for key: " + key + ", value: " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
                 break;
             default:
@@ -94,7 +96,8 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException {
-        if (msg instanceof ByteBuf bytebuf) {
+        if (msg instanceof DatagramPacket packet) {
+            ByteBuf bytebuf = packet.content();
             Kademlia.MessageType messageType = Kademlia.MessageType.values()[bytebuf.readInt()];
             switch (messageType) {
                 case FIND_NODE:
@@ -111,7 +114,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                     break;
             }
             bytebuf.release();
-            ctx.close();
+            //ctx.close();
         }
         else {
             logger.warning("Received unknown message type from server: " + msg.getClass().getName());

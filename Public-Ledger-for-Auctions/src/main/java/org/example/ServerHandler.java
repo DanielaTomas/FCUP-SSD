@@ -4,9 +4,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.socket.DatagramPacket;
 
 import java.io.IOException;
-import java.math.BigInteger;
+import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
@@ -32,17 +33,6 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     * Called when a new client connects to the server.
-     *
-     * @param ctx The channel handler context.
-     */
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        System.out.println("\n");
-        logger.info("Client connected: " + ctx.channel().remoteAddress());
-    }
-
-    /**
      * Called when a message is received from a client.
      *
      * @param ctx The channel handler context.
@@ -52,27 +42,29 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException { // handle incoming messages
-        if (msg instanceof ByteBuf bytebuf) {
+        if (msg instanceof DatagramPacket packet) {
+            ByteBuf bytebuf = packet.content();
+            logger.info("Received packet from: " + packet.sender());
             MessageType messageType = MessageType.values()[bytebuf.readInt()];
             switch (messageType) {
                 case FIND_NODE:
-                    findNodeHandler(ctx, bytebuf, messageType);
+                    findNodeHandler(ctx, bytebuf, messageType, packet.sender());
                     break;
                 case PING:
-                    pingHandler(ctx, bytebuf, messageType);
+                    pingHandler(ctx, bytebuf, messageType, packet.sender());
                     break;
                 case FIND_VALUE:
                     //TODO
                     break;
                 case STORE:
-                    storeHandler(ctx,bytebuf,messageType);
+                    storeHandler(ctx,bytebuf,messageType, packet.sender());
                     break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
                     break;
             }
             bytebuf.release();
-            ctx.close();
+            //ctx.close();
         } else {
             logger.warning("Received unknown message type from client: " + msg.getClass().getName());
         }
@@ -85,7 +77,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param bytebuf      The received ByteBuf.
      * @param messageType  The type of the message.
      */
-    private void storeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) {
+    private void storeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) {
         int keyLength = bytebuf.readInt();
         String key = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
         int valueLength = bytebuf.readInt();
@@ -100,8 +92,8 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf responseBuf = Unpooled.wrappedBuffer("STOREACK".getBytes());
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
-        ctx.writeAndFlush(responseMsg);
-        logger.info("Responded to STORE from client " + ctx.channel().remoteAddress());
+        ctx.writeAndFlush(new DatagramPacket(responseMsg, sender));
+        logger.info("Responded to STORE from client " + sender);
     }
 
     /**
@@ -113,7 +105,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
      * @throws IOException            If an I/O error occurs.
      * @throws ClassNotFoundException If the class of the serialized object cannot be found.
      */
-    private void findNodeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) throws IOException, ClassNotFoundException {
+    private void findNodeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) throws IOException, ClassNotFoundException {
         int nodeInfoLength = bytebuf.readInt();
         ByteBuf nodeInfoBytes = bytebuf.readBytes(nodeInfoLength);
         NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(nodeInfoBytes);
@@ -127,7 +119,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf responseBuf = Utils.serialize(nearNodes);
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
-        ctx.writeAndFlush(responseMsg);
+        ctx.writeAndFlush(new DatagramPacket(responseMsg, sender));
         logger.info("Sent near nodes info to client " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort());
 
         nodeInfoBytes.release();
@@ -140,7 +132,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param bytebuf      The received ByteBuf.
      * @param messageType  The type of the message.
      */
-    private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType) {
+    private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) {
         int pingLength = bytebuf.readInt();
         ByteBuf pingBytes = bytebuf.readBytes(pingLength);
         String pingStr = pingBytes.toString(StandardCharsets.UTF_8);
@@ -151,8 +143,8 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf responseBuf = Unpooled.wrappedBuffer("PINGACK".getBytes());
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
-        ctx.writeAndFlush(responseMsg);
-        logger.info("Responded to ping from client " + ctx.channel().remoteAddress());
+        ctx.writeAndFlush(new DatagramPacket(responseMsg, sender));
+        logger.info("Responded to ping from client " + sender);
         pingBytes.release();
     }
 

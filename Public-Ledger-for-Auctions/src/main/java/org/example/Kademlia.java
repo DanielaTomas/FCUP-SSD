@@ -3,6 +3,7 @@ package org.example;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
@@ -172,19 +173,18 @@ public class Kademlia {
      * @throws InterruptedException If the connection is interrupted.
      */
     private void connectToNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo, EventLoopGroup group, MessagePassingQueue.Consumer<Channel> channelConsumer) throws InterruptedException {
-        Bootstrap bootstrap = new Bootstrap();
-        bootstrap.group(group)
-                .channel(NioSocketChannel.class)
-                .option(ChannelOption.SO_KEEPALIVE, true)
-                .handler(new ChannelInitializer<Channel>() {
+        Bootstrap b = new Bootstrap();
+        b.group(group)
+                .channel(NioDatagramChannel.class)
+                .handler(new ChannelInitializer<NioDatagramChannel>() {
                     @Override
-                    protected void initChannel(Channel ch) throws Exception {
+                    protected void initChannel(NioDatagramChannel ch) throws Exception {
                         channelConsumer.accept(ch);
                     }
                 });
 
-        bootstrap.localAddress(nodeInfo.getPort());
-        ChannelFuture cf = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
+        b.localAddress(nodeInfo.getPort());
+        ChannelFuture cf = b.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         try {
             if (!cf.channel().closeFuture().await(5, TimeUnit.SECONDS)) {
