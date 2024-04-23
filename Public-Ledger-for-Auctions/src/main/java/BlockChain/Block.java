@@ -1,4 +1,4 @@
-package org.example;
+package BlockChain;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -43,7 +43,7 @@ public class Block {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            return Utils.getHexString(hash);
+            return BlockChainUtils.getHexString(hash);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

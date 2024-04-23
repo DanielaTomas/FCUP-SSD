@@ -1,4 +1,7 @@
 package org.example;
+import BlockChain.Block;
+import BlockChain.Blockchain;
+import BlockChain.Transaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
