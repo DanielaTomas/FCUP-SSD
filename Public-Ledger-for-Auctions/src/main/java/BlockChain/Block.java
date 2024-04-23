@@ -1,5 +1,7 @@
 package BlockChain;
 
+import org.example.Utils;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.List;
@@ -106,5 +108,34 @@ public class Block {
      */
     public long getTimestamp() {
         return this.timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "index:"+this.index+"\n" +
+                "Previous Hash:"+this.previousHash+"\n" +
+                "Time:"+this.timestamp+"\n" +
+                "Hash:"+this.hash+"\n" +
+                "Nonce:"+this.nonce+"\n" +
+                "" + this.transactions + "\n";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Block other = (Block) obj;
+
+        if(!this.hash.equals(other.hash)){
+            return false;
+        }
+
+        return true;
     }
 }

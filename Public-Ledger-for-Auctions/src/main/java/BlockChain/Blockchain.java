@@ -89,4 +89,12 @@ public class Blockchain {
     public List<Transaction> getPendingTransactions() {
         return this.pendingTransactions;
     }
+
+    @Override
+    public String toString() {
+        String blockChain = "";
+        for(Block block : this.chain)
+            blockChain+=block.toString()+"\n";
+        return blockChain;
+    }
 }
