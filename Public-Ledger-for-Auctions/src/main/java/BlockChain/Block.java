@@ -31,7 +31,7 @@ public class Block {
         this.transactions = transactions;
         this.timestamp = timestamp;
         //this.data = data;
-        this.hash = calculateHash();
+        calculateHash();
         this.nonce = 0;
     }
 
@@ -40,29 +40,15 @@ public class Block {
      *
      * @return The calculated hash value.
      */
-    public String calculateHash() {
+    public void calculateHash() {
         String input = previousHash + timestamp + nonce + transactions.toString();
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            return BlockChainUtils.getHexString(hash);
+            this.hash = BlockChainUtils.getHexString(hash);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Mines the block with the given difficulty.
-     *
-     * @param difficulty The difficulty level of mining.
-     */
-    public void mineBlock(int difficulty) {
-        String target = new String(new char[difficulty]).replace('\0', '0');
-        while (!hash.substring(0, difficulty).equals(target)) {
-            nonce++;
-            hash = calculateHash();
-        }
-        System.out.println("Block mined: " + hash);
     }
 
     /**
@@ -109,6 +95,8 @@ public class Block {
     public long getTimestamp() {
         return this.timestamp;
     }
+
+    public void incrementNonce() {this.nonce++}
 
     @Override
     public String toString() {
