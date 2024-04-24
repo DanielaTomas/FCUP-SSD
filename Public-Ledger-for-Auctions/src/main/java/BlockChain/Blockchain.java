@@ -17,7 +17,7 @@ public class Blockchain {
     public Blockchain() {
         this.chain = new ArrayList<>();
         this.pendingTransactions = new ArrayList<>();
-        this.difficulty = 3;
+        this.difficulty = Constants.DIFICULTY;
         Block genesisBlock = createGenesisBlock();
         this.chain.add(genesisBlock);
     }
@@ -34,7 +34,7 @@ public class Blockchain {
         Transaction transaction = new Transaction(senderKeyPair.getPublic(), receiverKeyPair.getPublic(), 0);
         transaction.signTransaction(senderKeyPair.getPrivate());
         transactions.add(transaction);
-        return new Block(0, "0", transactions, System.currentTimeMillis());
+        return new Block(0, Constants.GENESIS_PREV_HASH, transactions);
     }
 
     /**
@@ -45,22 +45,6 @@ public class Blockchain {
     public void addTransaction(Transaction transaction) {
         if(transaction == null || !transaction.verifySignature()) return;
         pendingTransactions.add(transaction);
-    }
-
-    /**
-     * Mines pending transactions and adds a new block to the blockchain.
-     *
-     * @param minerPublicKey The public key of the miner receiving the reward.
-     */
-    public void minePendingTransactions(PublicKey minerPublicKey) {
-        Block block = new Block(chain.size(), getLastBlock().getHash(), pendingTransactions, System.currentTimeMillis());
-        block.mineBlock(difficulty);
-        chain.add(block);
-        pendingTransactions.clear();
-        KeyPair rewardKeyPair = Transaction.generateKeyPair();
-        Transaction transaction = new Transaction(rewardKeyPair.getPublic(), minerPublicKey, 10);
-        transaction.signTransaction(rewardKeyPair.getPrivate());
-        addTransaction(transaction);
     }
 
     /**
@@ -79,6 +63,14 @@ public class Blockchain {
      */
     public List<Block> getChain() {
         return this.chain;
+    }
+
+    /**
+     * Adds the given block to the chain
+     *
+     */
+    public void addBlock(Block block) {
+        this.chain.add(block);
     }
 
     /**

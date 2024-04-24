@@ -4,6 +4,7 @@ import org.example.Utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Date;
 import java.util.List;
 
 /** Class Block: Represents a block in a blockchain. */
@@ -23,13 +24,12 @@ public class Block {
      * @param index         The index of the block in the blockchain.
      * @param previousHash  The hash of the previous block in the blockchain.
      * @param transactions  The list of transactions contained in the block.
-     * @param timestamp     The timestamp indicating when the block was created.
      */
-    public Block(int index, String previousHash, List<Transaction> transactions, long timestamp) {
+    public Block(int index, String previousHash, List<Transaction> transactions) {
         this.index = index;
         this.previousHash = previousHash;
         this.transactions = transactions;
-        this.timestamp = timestamp;
+        this.timestamp = new Date().getTime();
         //this.data = data;
         calculateHash();
         this.nonce = 0;
@@ -96,7 +96,7 @@ public class Block {
         return this.timestamp;
     }
 
-    public void incrementNonce() {this.nonce++}
+    public void incrementNonce() {this.nonce++; }
 
     @Override
     public String toString() {
