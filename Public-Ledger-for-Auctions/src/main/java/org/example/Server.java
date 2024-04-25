@@ -1,15 +1,12 @@
 package org.example;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.util.logging.Logger;
 
@@ -39,9 +36,10 @@ public class Server {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
 
         try {
-            Bootstrap b = new Bootstrap();
-            b.group(bossGroup)
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.group(bossGroup)
                     .channel(NioDatagramChannel.class)
+                    .option(ChannelOption.SO_BROADCAST, true)
                     .handler(new ChannelInitializer<NioDatagramChannel>() {
                         @Override
                         public void initChannel(NioDatagramChannel ch) throws Exception {
@@ -50,9 +48,9 @@ public class Server {
                     })
                     .option(ChannelOption.SO_REUSEADDR, true);
 
-            ChannelFuture cf = b.bind(port).sync();
+            ChannelFuture channelFuture = bootstrap.bind(port).sync();
             logger.info("Server started and listening on port " + port);
-            cf.channel().closeFuture().sync();
+            channelFuture.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
         }

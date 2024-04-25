@@ -85,6 +85,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:af87378fb6d7737774a91bbb394d87811"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ab0a2fbef96e30d57b4b2de7b2dacc2"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Utils.html#a9ab0a2fbef96e30d57b4b2de7b2dacc2">calculateDistance</a> (String nodeId1, String nodeId2)</td></tr>
 <tr class="separator:a9ab0a2fbef96e30d57b4b2de7b2dacc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32ba598b3ea57284a7e3f977a52501c7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Utils.html#a32ba598b3ea57284a7e3f977a52501c7">sendPacket</a> (ChannelHandlerContext ctx, ByteBuf msg, InetSocketAddress sender, Kademlia.MessageType messageType, String success)</td></tr>
+<tr class="separator:a32ba598b3ea57284a7e3f977a52501c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classorg_1_1example_1_1Utils.html">Utils</a> </p>
@@ -252,6 +254,71 @@ Static Public Member Functions</h2></td></tr>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">RuntimeException</td><td>if an error occurs during the retrieval process. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a32ba598b3ea57284a7e3f977a52501c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32ba598b3ea57284a7e3f977a52501c7">&#9670;&nbsp;</a></span>sendPacket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void org.example.Utils.sendPacket </td>
+          <td>(</td>
+          <td class="paramtype">ChannelHandlerContext&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ByteBuf&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">InetSocketAddress&#160;</td>
+          <td class="paramname"><em>sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Kademlia.MessageType&#160;</td>
+          <td class="paramname"><em>messageType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>success</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sends a packet.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>The ChannelHandlerContext for sending the packet. </td></tr>
+    <tr><td class="paramname">msg</td><td>The ByteBuf containing the packet data to send. </td></tr>
+    <tr><td class="paramname">sender</td><td>The InetSocketAddress of the packet sender. </td></tr>
+    <tr><td class="paramname">messageType</td><td>The type of the message being sent. </td></tr>
+    <tr><td class="paramname">success</td><td>The success message to log upon successful packet send. </td></tr>
   </table>
   </dd>
 </dl>

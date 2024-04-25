@@ -3,11 +3,10 @@ package org.example;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -92,8 +91,13 @@ public class Kademlia {
         NodeInfo keyInfo = node.findNodeById(key);
         NodeInfo targetNodeInfo = findNodeForKey(node, keyInfo);
         if (targetNodeInfo != null) {
-            connectAndHandle(node.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
-        } else {
+            if (targetNodeInfo.getNodeId().equals(node.getNodeInfo().getNodeId())) {
+                node.storeKeyValue(key, value);
+            } else {
+                connectAndHandle(node.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
+            }
+        }
+        else {
             System.err.println("Error: Unable to find a node to store the key-value pair.");
         }
     }
@@ -173,8 +177,8 @@ public class Kademlia {
      * @throws InterruptedException If the connection is interrupted.
      */
     private void connectToNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo, EventLoopGroup group, MessagePassingQueue.Consumer<Channel> channelConsumer) throws InterruptedException {
-        Bootstrap b = new Bootstrap();
-        b.group(group)
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(group)
                 .channel(NioDatagramChannel.class)
                 .handler(new ChannelInitializer<NioDatagramChannel>() {
                     @Override
@@ -183,16 +187,9 @@ public class Kademlia {
                     }
                 });
 
-        b.localAddress(nodeInfo.getPort());
-        ChannelFuture cf = b.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
+        bootstrap.localAddress(nodeInfo.getPort());
+        ChannelFuture channelFuture = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
-        try {
-            if (!cf.channel().closeFuture().await(5, TimeUnit.SECONDS)) {
-                System.err.println("Error: Channel did not close within 5 seconds.");
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        logger.info("Connection closed with node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort() + "\n");
+        channelFuture.channel().closeFuture().await(3, TimeUnit.SECONDS);
     }
 }

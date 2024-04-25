@@ -2,6 +2,7 @@ package org.example;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.DatagramPacket;
@@ -92,8 +93,8 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf responseBuf = Unpooled.wrappedBuffer("STOREACK".getBytes());
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
-        ctx.writeAndFlush(new DatagramPacket(responseMsg, sender));
-        logger.info("Responded to STORE from client " + sender);
+        String success = "Responded to STORE from client " + sender;
+        Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
     }
 
     /**
@@ -119,10 +120,10 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf responseBuf = Utils.serialize(nearNodes);
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
-        ctx.writeAndFlush(new DatagramPacket(responseMsg, sender));
-        logger.info("Sent near nodes info to client " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort());
+        String success = "Sent near nodes info to client " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort();
+        Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
 
-        nodeInfoBytes.release();
+        //nodeInfoBytes.release();
     }
 
     /**
@@ -143,9 +144,9 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf responseBuf = Unpooled.wrappedBuffer("PINGACK".getBytes());
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
-        ctx.writeAndFlush(new DatagramPacket(responseMsg, sender));
-        logger.info("Responded to ping from client " + sender);
-        pingBytes.release();
+        String success = "Responded to PING from client " + sender;
+        Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
+        //pingBytes.release();
     }
 
     /**

@@ -2,6 +2,7 @@ package org.example;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.DatagramPacket;
@@ -54,20 +55,21 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         ByteBuf msg = ctx.alloc().buffer();
         msg.writeInt(messageType.ordinal());
+        String success;
         switch(messageType) {
             case FIND_NODE:
                 ByteBuf nodeInfoBuf = Utils.serialize(nodeInfo);
                 msg.writeInt(nodeInfoBuf.readableBytes());
                 msg.writeBytes(nodeInfoBuf);
-                ctx.writeAndFlush(new DatagramPacket(msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort())));
-                logger.info("Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+                success = "Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             case PING:
                 ByteBuf pingBuf = Unpooled.wrappedBuffer("PING".getBytes());
                 msg.writeInt(pingBuf.readableBytes());
                 msg.writeBytes(pingBuf);
-                ctx.writeAndFlush(new DatagramPacket(msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort())));
-                logger.info("Pinging " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+                success = "Pinging " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             case FIND_VALUE:
                 //TODO
@@ -77,8 +79,8 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 msg.writeCharSequence(key, StandardCharsets.UTF_8);
                 msg.writeInt(value.length());
                 msg.writeCharSequence(value, StandardCharsets.UTF_8);
-                ctx.writeAndFlush(new DatagramPacket(msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort())));
-                logger.info("Sent STORE request for key: " + key + ", value: " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
+                success = "Sent STORE request for key: " + key + ", value: " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             default:
                 logger.warning("Received unknown message type: " + messageType);
@@ -136,7 +138,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
             ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
             logger.info("Received near nodes info from server: " + nodeInfoList);
             nearNodesInfo.addAll(nodeInfoList);
-            nodeInfoListBytes.release();
+            //nodeInfoListBytes.release();
         } else {
             logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
         }
@@ -153,7 +155,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
         ByteBuf ackBytes = bytebuf.readBytes(ackLength);
         String ack = ackBytes.toString(StandardCharsets.UTF_8);;
         logger.info("Received " + ack + " from " + ctx.channel().remoteAddress());
-        ackBytes.release();
+        //ackBytes.release();
     }
 
     /**
