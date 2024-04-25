@@ -118,12 +118,12 @@ public class Block {
             return false;
         }
 
-        Block other = (Block) obj;
+        final Block other = (Block) obj;
 
-        if(!this.hash.equals(other.hash)){
-            return false;
-        }
-
-        return true;
+        return index == other.index
+                && timestamp == other.timestamp
+                && hash.equals(other.hash)
+                && previousHash.equals(other.previousHash)
+                && transactions.equals(other.transactions);
     }
 }

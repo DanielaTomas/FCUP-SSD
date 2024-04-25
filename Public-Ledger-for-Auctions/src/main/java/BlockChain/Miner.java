@@ -41,7 +41,7 @@ public class Miner {
             b.calculateHash();
         }
 
-        blockchain.addBlock(b);
+        //blockchain.addBlock(b);
 
         reward += Constants.MINER_REWARD;
 
