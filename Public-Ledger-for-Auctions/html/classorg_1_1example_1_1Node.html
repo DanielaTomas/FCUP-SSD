@@ -83,6 +83,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ada8659be75ebc3911d947302e01d6cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a649eac097cb9d97e325d5d8d1c18a0f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#a649eac097cb9d97e325d5d8d1c18a0f5">storeKeyValue</a> (String key, String value)</td></tr>
 <tr class="separator:a649eac097cb9d97e325d5d8d1c18a0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9d0f257dd906523bde06b5bf4d6b166"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#ae9d0f257dd906523bde06b5bf4d6b166">findValueByKey</a> (String key)</td></tr>
+<tr class="separator:ae9d0f257dd906523bde06b5bf4d6b166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a355e258f48c0eb60590a15be8f43746c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#a355e258f48c0eb60590a15be8f43746c">getNodeInfo</a> ()</td></tr>
 <tr class="separator:a355e258f48c0eb60590a15be8f43746c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5e42daffbe225e315cdc139b739b795"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classorg_1_1example_1_1Node.html#af5e42daffbe225e315cdc139b739b795">getRoutingTable</a> ()</td></tr>
@@ -156,6 +158,40 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="classorg_1_1example_1_1NodeInfo.html">NodeInfo</a> with the given ID, or null if not found. </dd></dl>
+
+</div>
+</div>
+<a id="ae9d0f257dd906523bde06b5bf4d6b166"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9d0f257dd906523bde06b5bf4d6b166">&#9670;&nbsp;</a></span>findValueByKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">String org.example.Node.findValueByKey </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Finds the value associated with the given key in the storage.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to search for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value associated with the given key, or null if the key is not found. </dd></dl>
 
 </div>
 </div>

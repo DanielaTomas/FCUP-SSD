@@ -2,7 +2,6 @@ package org.example;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.DatagramPacket;
@@ -22,6 +21,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private NodeInfo nodeInfo;
     private NodeInfo targetNodeInfo;
     private List<NodeInfo> nearNodesInfo;
+    private String storedValue;
     private Kademlia.MessageType messageType;
     private String key;
     private String value;
@@ -57,7 +57,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
         msg.writeInt(messageType.ordinal());
         String success;
         switch(messageType) {
-            case FIND_NODE:
+            case FIND_NODE, FIND_VALUE:
                 ByteBuf nodeInfoBuf = Utils.serialize(nodeInfo);
                 msg.writeInt(nodeInfoBuf.readableBytes());
                 msg.writeBytes(nodeInfoBuf);
@@ -70,9 +70,6 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 msg.writeBytes(pingBuf);
                 success = "Pinging " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
-                break;
-            case FIND_VALUE:
-                //TODO
                 break;
             case STORE:
                 msg.writeInt(key.length());
@@ -102,14 +99,11 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
             ByteBuf bytebuf = packet.content();
             Kademlia.MessageType messageType = Kademlia.MessageType.values()[bytebuf.readInt()];
             switch (messageType) {
-                case FIND_NODE:
+                case FIND_NODE, FIND_VALUE:
                     findNodeHandler(bytebuf);
                     break;
                 case PING, STORE:
                     pingAndStoreHandler(ctx,bytebuf);
-                    break;
-                case FIND_VALUE:
-                    //TODO
                     break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
@@ -177,5 +171,14 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      */
     public List<NodeInfo> getNearNodesInfo() {
         return this.nearNodesInfo;
+    }
+
+    /**
+     * Gets the stored value.
+     *
+     * @return The stored value.
+     */
+    public String getStoredValue() {
+        return this.storedValue;
     }
 }

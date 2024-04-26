@@ -48,14 +48,11 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
             logger.info("Received packet from: " + packet.sender());
             MessageType messageType = MessageType.values()[bytebuf.readInt()];
             switch (messageType) {
-                case FIND_NODE:
+                case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx, bytebuf, messageType, packet.sender());
                     break;
                 case PING:
                     pingHandler(ctx, bytebuf, messageType, packet.sender());
-                    break;
-                case FIND_VALUE:
-                    //TODO
                     break;
                 case STORE:
                     storeHandler(ctx,bytebuf,messageType, packet.sender());

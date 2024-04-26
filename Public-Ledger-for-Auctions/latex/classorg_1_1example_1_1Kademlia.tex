@@ -10,9 +10,9 @@ enum \mbox{\hyperlink{enumorg_1_1example_1_1Kademlia_1_1MessageType}{Message\+Ty
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a43e8b3a618e66b7ff834c496757486b3}{join\+Network}} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} bootstrap\+Node\+Info)
 \item 
-void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a3985cfdae07f5256220976959989b2d6}{ping}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} node\+Info, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info)
+void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}{ping}} (\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} target\+Node\+Info)
 \item 
-void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}{find\+Value}} (String key)
+Object \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_aae7ac3c66c28a82309e8ca4944724924}{find\+Value}} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node, String key)
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a9b996551914965063ac80e3e9a92a3ba}{store}} (\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}} node, String key, String value)
 \end{DoxyCompactItemize}
@@ -22,16 +22,18 @@ void \mbox{\hyperlink{classorg_1_1example_1_1Kademlia_a9b996551914965063ac80e3e9
 Class \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}\label{classorg_1_1example_1_1Kademlia_a42aaabddb93e04e3b928079cb2d014d7}} 
+\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_aae7ac3c66c28a82309e8ca4944724924}\label{classorg_1_1example_1_1Kademlia_aae7ac3c66c28a82309e8ca4944724924}} 
 \index{org.example.Kademlia@{org.example.Kademlia}!findValue@{findValue}}
 \index{findValue@{findValue}!org.example.Kademlia@{org.example.Kademlia}}
 \doxysubsubsection{\texorpdfstring{findValue()}{findValue()}}
-{\footnotesize\ttfamily void org.\+example.\+Kademlia.\+find\+Value (\begin{DoxyParamCaption}\item[{String}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily Object org.\+example.\+Kademlia.\+find\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1Node}{Node}}}]{node,  }\item[{String}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Finds the value corresponding to a key in the \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} network.
 
 
 \begin{DoxyParams}{Parameters}
+{\em node} & The local node. \\
+\hline
 {\em key} & The key to find. \\
 \hline
 \end{DoxyParams}
@@ -50,18 +52,16 @@ Joins the \mbox{\hyperlink{classorg_1_1example_1_1Kademlia}{Kademlia}} network.
 {\em bootstrap\+Node\+Info} & Information about the bootstrap node. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_a3985cfdae07f5256220976959989b2d6}\label{classorg_1_1example_1_1Kademlia_a3985cfdae07f5256220976959989b2d6}} 
+\mbox{\Hypertarget{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}\label{classorg_1_1example_1_1Kademlia_aaffba9afadea61049aee84f3d5a3a4b3}} 
 \index{org.example.Kademlia@{org.example.Kademlia}!ping@{ping}}
 \index{ping@{ping}!org.example.Kademlia@{org.example.Kademlia}}
 \doxysubsubsection{\texorpdfstring{ping()}{ping()}}
-{\footnotesize\ttfamily void org.\+example.\+Kademlia.\+ping (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{node\+Info,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily void org.\+example.\+Kademlia.\+ping (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Sends a ping message to the target node.
 
 
 \begin{DoxyParams}{Parameters}
-{\em node\+Info} & Information about the local node. \\
-\hline
 {\em target\+Node\+Info} & Information about the target node. \\
 \hline
 \end{DoxyParams}
