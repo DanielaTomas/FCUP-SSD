@@ -1,6 +1,5 @@
 package org.example;
 
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +31,9 @@ public class Main {
                 System.out.println("Store? 'y' or 'n'");
                 String n = in.nextLine();
                 if(n.equals("y")) {
-                    kademlia.store(node, "fd643adf39fe4118213594b1922713f565f579de", "gaaaaaas");
+                    //mudar id e value
+                    //kademlia.store(node, "b9b98f4de460b9da7db4547e4b2ca68d84b97a17", "gaaaaaas");
+                    kademlia.store(node, "174be1b78723cf02995324f3985134a4227c920d", "gaaaaaas");
                 }
             }
 

@@ -55,6 +55,16 @@ public class Node {
     }
 
     /**
+     * Finds the value associated with the given key in the storage.
+     *
+     * @param key The key to search for.
+     * @return The value associated with the given key, or null if the key is not found.
+     */
+    public String findValueByKey(String key) {
+        return storage.get(key);
+    }
+
+    /**
      * Gets the information about this node.
      *
      * @return Information about this node.

@@ -3,13 +3,13 @@ package org.example;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
 /** Class Kademlia */
@@ -58,16 +58,15 @@ public class Kademlia {
      * @return List of near nodes.
      */
     private List<NodeInfo> findNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
-        return connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE);
+        return (List<NodeInfo>) connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE);
     }
 
     /**
      * Sends a ping message to the target node.
      *
-     * @param nodeInfo       Information about the local node.
      * @param targetNodeInfo Information about the target node.
      */
-    public void ping(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
+    public void ping(NodeInfo targetNodeInfo) {
         connectAndHandle(null, targetNodeInfo, null, null, MessageType.PING);
     }
 
@@ -75,9 +74,19 @@ public class Kademlia {
     /**
      * Finds the value corresponding to a key in the Kademlia network.
      *
+     * @param node The local node.
      * @param key The key to find.
      */
-    public void findValue(String key) { //TODO
+    public Object findValue(Node node, String key) { //FIXME ?
+        String storedValue = node.findValueByKey(key);
+        if(storedValue != null) {
+            logger.info("Stored value: " + storedValue);
+            return storedValue;
+        }
+
+        NodeInfo keyInfo = node.findNodeById(key);
+        if(keyInfo != null) return findNode(node.getNodeInfo(), keyInfo);
+        return null;
     }
 
     /**
@@ -87,12 +96,18 @@ public class Kademlia {
      * @param key   The key to store.
      * @param value The value corresponding to the key.
      */
-    public void store(Node node, String key, String value) {
+    public void store(Node node, String key, String value) { //FIXME ?
         NodeInfo keyInfo = node.findNodeById(key);
         NodeInfo targetNodeInfo = findNodeForKey(node, keyInfo);
         if (targetNodeInfo != null) {
-            connectAndHandle(node.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
-        } else {
+            if (targetNodeInfo.getNodeId().equals(node.getNodeInfo().getNodeId())) {
+                node.storeKeyValue(key, value);
+                logger.info("key: " + key + ", value: " + value + " stored");
+            } else {
+                connectAndHandle(node.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
+            }
+        }
+        else {
             System.err.println("Error: Unable to find a node to store the key-value pair.");
         }
     }
@@ -139,13 +154,15 @@ public class Kademlia {
      * @param messageType     The type of message to send.
      * @return List of near nodes.
      */
-    private List<NodeInfo> connectAndHandle(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, String value, MessageType messageType) {
+    private Object connectAndHandle(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, String value, MessageType messageType) {
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
+        AtomicReference<String> storedValue = new AtomicReference<>(null);;
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             connectToNode(nodeInfo, targetNodeInfo, group, channel -> {
                 ClientHandler clientHandler = new ClientHandler(nodeInfo, targetNodeInfo, key, value, messageType, nearNodesInfo);
                 channel.pipeline().addLast(clientHandler);
+                if (messageType == MessageType.FIND_VALUE) storedValue.set(clientHandler.getStoredValue());
             });
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -159,7 +176,9 @@ public class Kademlia {
                 }
             });
         }
-        return nearNodesInfo;
+        if(messageType == MessageType.FIND_NODE) return nearNodesInfo;
+        else if(messageType == MessageType.FIND_VALUE) return storedValue;
+        return null;
     }
 
     /**
@@ -174,25 +193,17 @@ public class Kademlia {
     private void connectToNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo, EventLoopGroup group, MessagePassingQueue.Consumer<Channel> channelConsumer) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)
-                .channel(NioSocketChannel.class)
-                .option(ChannelOption.SO_KEEPALIVE, true)
-                .handler(new ChannelInitializer<Channel>() {
+                .channel(NioDatagramChannel.class)
+                .handler(new ChannelInitializer<NioDatagramChannel>() {
                     @Override
-                    protected void initChannel(Channel ch) throws Exception {
+                    protected void initChannel(NioDatagramChannel ch) throws Exception {
                         channelConsumer.accept(ch);
                     }
                 });
 
         bootstrap.localAddress(nodeInfo.getPort());
-        ChannelFuture cf = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
+        ChannelFuture channelFuture = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
-        try {
-            if (!cf.channel().closeFuture().await(5, TimeUnit.SECONDS)) {
-                System.err.println("Error: Channel did not close within 5 seconds.");
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        logger.info("Connection closed with node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort() + "\n");
+        channelFuture.channel().closeFuture().await(3, TimeUnit.SECONDS);
     }
 }

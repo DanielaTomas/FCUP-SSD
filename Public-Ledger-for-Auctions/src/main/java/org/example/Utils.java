@@ -2,17 +2,24 @@ package org.example;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.socket.DatagramPacket;
 
 import java.io.*;
 import java.math.BigInteger;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /** Class Utils */
 public class Utils {
+
+    private static final Logger logger = Logger.getLogger(Utils.class.getName());
 
     /**
      * Retrieves the public IP address of the local machine.
@@ -119,5 +126,29 @@ public class Utils {
         BigInteger nodeId2BigInt = new BigInteger(nodeId2, 16);
         BigInteger distance = nodeId1BigInt.xor(nodeId2BigInt);
         return distance.bitCount();
+    }
+
+    /**
+     * Sends a packet.
+     *
+     * @param ctx The ChannelHandlerContext for sending the packet.
+     * @param msg The ByteBuf containing the packet data to send.
+     * @param sender The InetSocketAddress of the packet sender.
+     * @param messageType The type of the message being sent.
+     * @param success The success message to log upon successful packet send.
+     */
+    public static void sendPacket(ChannelHandlerContext ctx, ByteBuf msg, InetSocketAddress sender, Kademlia.MessageType messageType, String success) {
+        ctx.writeAndFlush(new DatagramPacket(msg, sender)).addListener(future -> {
+            if (!future.isSuccess()) {
+                ChannelFuture closeFuture = ctx.channel().close();
+                if (closeFuture.isSuccess()) {
+                    System.err.println(messageType + " failed, Channel close successfully");
+                } else {
+                    System.err.println(messageType + " failed, Channel close failed " + closeFuture.cause());
+                }
+            } else {
+                logger.info(success);
+            }
+        });
     }
 }

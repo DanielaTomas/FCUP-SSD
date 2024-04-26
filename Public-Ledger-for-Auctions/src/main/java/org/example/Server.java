@@ -1,13 +1,12 @@
 package org.example;
 
-import io.netty.bootstrap.ServerBootstrap;
+import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.socket.nio.NioDatagramChannel;
 
 import java.util.logging.Logger;
 
@@ -34,29 +33,25 @@ public class Server {
      * @throws Exception If an error occurs while starting the server.
      */
     public void start() throws Exception {
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
 
         try {
-            ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.group(bossGroup)
+                    .channel(NioDatagramChannel.class)
+                    .option(ChannelOption.SO_BROADCAST, true)
+                    .handler(new ChannelInitializer<NioDatagramChannel>() {
                         @Override
-                        public void initChannel(SocketChannel ch) throws Exception {
+                        public void initChannel(NioDatagramChannel ch) throws Exception {
                             ch.pipeline().addLast(new ServerHandler(myNode));
                         }
                     })
-                    .option(ChannelOption.SO_BACKLOG, 128)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true);
+                    .option(ChannelOption.SO_REUSEADDR, true);
 
-            ChannelFuture cf = b.bind(port).sync();
-
+            ChannelFuture channelFuture = bootstrap.bind(port).sync();
             logger.info("Server started and listening on port " + port);
-
-            cf.channel().closeFuture().sync();
+            channelFuture.channel().closeFuture().sync();
         } finally {
-            workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
     }

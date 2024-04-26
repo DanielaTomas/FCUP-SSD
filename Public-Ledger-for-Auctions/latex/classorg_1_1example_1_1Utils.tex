@@ -12,6 +12,8 @@ static Object \mbox{\hyperlink{classorg_1_1example_1_1Utils_a612616f574e352cd596
 static List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1Utils_af87378fb6d7737774a91bbb394d87811}{find\+Closest\+Nodes}} (List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ my\+Routing\+Table, \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} requested\+Node\+Info, final int K)
 \item 
 static int \mbox{\hyperlink{classorg_1_1example_1_1Utils_a9ab0a2fbef96e30d57b4b2de7b2dacc2}{calculate\+Distance}} (String node\+Id1, String node\+Id2)
+\item 
+static void \mbox{\hyperlink{classorg_1_1example_1_1Utils_a32ba598b3ea57284a7e3f977a52501c7}{send\+Packet}} (Channel\+Handler\+Context ctx, Byte\+Buf msg, Inet\+Socket\+Address sender, Kademlia.\+Message\+Type message\+Type, String success)
 \end{DoxyCompactItemize}
 
 
@@ -92,6 +94,27 @@ The public IP address of the local machine.
 {\em Runtime\+Exception} & if an error occurs during the retrieval process. \\
 \hline
 \end{DoxyExceptions}
+\mbox{\Hypertarget{classorg_1_1example_1_1Utils_a32ba598b3ea57284a7e3f977a52501c7}\label{classorg_1_1example_1_1Utils_a32ba598b3ea57284a7e3f977a52501c7}} 
+\index{org.example.Utils@{org.example.Utils}!sendPacket@{sendPacket}}
+\index{sendPacket@{sendPacket}!org.example.Utils@{org.example.Utils}}
+\doxysubsubsection{\texorpdfstring{sendPacket()}{sendPacket()}}
+{\footnotesize\ttfamily static void org.\+example.\+Utils.\+send\+Packet (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Byte\+Buf}]{msg,  }\item[{Inet\+Socket\+Address}]{sender,  }\item[{Kademlia.\+Message\+Type}]{message\+Type,  }\item[{String}]{success }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Sends a packet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The Channel\+Handler\+Context for sending the packet. \\
+\hline
+{\em msg} & The Byte\+Buf containing the packet data to send. \\
+\hline
+{\em sender} & The Inet\+Socket\+Address of the packet sender. \\
+\hline
+{\em message\+Type} & The type of the message being sent. \\
+\hline
+{\em success} & The success message to log upon successful packet send. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classorg_1_1example_1_1Utils_a3a7037d37b06189592ab2d5ff63c28af}\label{classorg_1_1example_1_1Utils_a3a7037d37b06189592ab2d5ff63c28af}} 
 \index{org.example.Utils@{org.example.Utils}!serialize@{serialize}}
 \index{serialize@{serialize}!org.example.Utils@{org.example.Utils}}

@@ -20,6 +20,8 @@ void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af
 void \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}{exception\+Caught}} (Channel\+Handler\+Context ctx, Throwable cause)
 \item 
 List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_aedd303aeed5354637ba1315cd169e6db}{get\+Near\+Nodes\+Info}} ()
+\item 
+String \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler_afffce2bfdb3aead25af11526bb967e28}{get\+Stored\+Value}} ()
 \end{DoxyCompactItemize}
 
 
@@ -118,6 +120,17 @@ Gets the list of near nodes\textquotesingle{} information.
 
 \begin{DoxyReturn}{Returns}
 The list of near nodes\textquotesingle{} information. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_afffce2bfdb3aead25af11526bb967e28}\label{classorg_1_1example_1_1ClientHandler_afffce2bfdb3aead25af11526bb967e28}} 
+\index{org.example.ClientHandler@{org.example.ClientHandler}!getStoredValue@{getStoredValue}}
+\index{getStoredValue@{getStoredValue}!org.example.ClientHandler@{org.example.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{getStoredValue()}{getStoredValue()}}
+{\footnotesize\ttfamily String org.\+example.\+Client\+Handler.\+get\+Stored\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the stored value.
+
+\begin{DoxyReturn}{Returns}
+The stored value. 
 \end{DoxyReturn}
 
 

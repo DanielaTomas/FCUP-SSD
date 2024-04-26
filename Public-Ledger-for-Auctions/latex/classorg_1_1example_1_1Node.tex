@@ -11,6 +11,8 @@ void \mbox{\hyperlink{classorg_1_1example_1_1Node_ada8659be75ebc3911d947302e01d6
 \item 
 void \mbox{\hyperlink{classorg_1_1example_1_1Node_a649eac097cb9d97e325d5d8d1c18a0f5}{store\+Key\+Value}} (String key, String value)
 \item 
+String \mbox{\hyperlink{classorg_1_1example_1_1Node_ae9d0f257dd906523bde06b5bf4d6b166}{find\+Value\+By\+Key}} (String key)
+\item 
 \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} \mbox{\hyperlink{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}{get\+Node\+Info}} ()
 \item 
 List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classorg_1_1example_1_1Node_af5e42daffbe225e315cdc139b739b795}{get\+Routing\+Table}} ()
@@ -52,6 +54,22 @@ Find a \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} in the rou
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} with the given ID, or null if not found. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classorg_1_1example_1_1Node_ae9d0f257dd906523bde06b5bf4d6b166}\label{classorg_1_1example_1_1Node_ae9d0f257dd906523bde06b5bf4d6b166}} 
+\index{org.example.Node@{org.example.Node}!findValueByKey@{findValueByKey}}
+\index{findValueByKey@{findValueByKey}!org.example.Node@{org.example.Node}}
+\doxysubsubsection{\texorpdfstring{findValueByKey()}{findValueByKey()}}
+{\footnotesize\ttfamily String org.\+example.\+Node.\+find\+Value\+By\+Key (\begin{DoxyParamCaption}\item[{String}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Finds the value associated with the given key in the storage.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value associated with the given key, or null if the key is not found. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}\label{classorg_1_1example_1_1Node_a355e258f48c0eb60590a15be8f43746c}} 
 \index{org.example.Node@{org.example.Node}!getNodeInfo@{getNodeInfo}}
