@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import static Kademlia.Kademlia.MessageType;
 
 /** Class ServerHandler: Handles the client-side channel events */
-class ServerHandler extends ChannelInboundHandlerAdapter {
+public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ServerHandler.class.getName());
 
     private Node myNode;
