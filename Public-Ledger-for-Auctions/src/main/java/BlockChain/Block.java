@@ -1,7 +1,10 @@
-package org.example;
+package BlockChain;
+
+import org.example.Utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Date;
 import java.util.List;
 
 /** Class Block: Represents a block in a blockchain. */
@@ -21,15 +24,14 @@ public class Block {
      * @param index         The index of the block in the blockchain.
      * @param previousHash  The hash of the previous block in the blockchain.
      * @param transactions  The list of transactions contained in the block.
-     * @param timestamp     The timestamp indicating when the block was created.
      */
-    public Block(int index, String previousHash, List<Transaction> transactions, long timestamp) {
+    public Block(int index, String previousHash, List<Transaction> transactions) {
         this.index = index;
         this.previousHash = previousHash;
         this.transactions = transactions;
-        this.timestamp = timestamp;
+        this.timestamp = new Date().getTime();
         //this.data = data;
-        this.hash = calculateHash();
+        calculateHash();
         this.nonce = 0;
     }
 
@@ -38,29 +40,15 @@ public class Block {
      *
      * @return The calculated hash value.
      */
-    public String calculateHash() {
+    public void calculateHash() {
         String input = previousHash + timestamp + nonce + transactions.toString();
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            return Utils.getHexString(hash);
+            this.hash = BlockChainUtils.getHexString(hash);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Mines the block with the given difficulty.
-     *
-     * @param difficulty The difficulty level of mining.
-     */
-    public void mineBlock(int difficulty) {
-        String target = new String(new char[difficulty]).replace('\0', '0');
-        while (!hash.substring(0, difficulty).equals(target)) {
-            nonce++;
-            hash = calculateHash();
-        }
-        System.out.println("Block mined: " + hash);
     }
 
     /**
@@ -106,5 +94,36 @@ public class Block {
      */
     public long getTimestamp() {
         return this.timestamp;
+    }
+
+    public void incrementNonce() {this.nonce++; }
+
+    @Override
+    public String toString() {
+        return "index:"+this.index+"\n" +
+                "Previous Hash:"+this.previousHash+"\n" +
+                "Time:"+this.timestamp+"\n" +
+                "Hash:"+this.hash+"\n" +
+                "Nonce:"+this.nonce+"\n" +
+                "" + this.transactions + "\n";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final Block other = (Block) obj;
+
+        return index == other.index
+                && timestamp == other.timestamp
+                && hash.equals(other.hash)
+                && previousHash.equals(other.previousHash)
+                && transactions.equals(other.transactions);
     }
 }
