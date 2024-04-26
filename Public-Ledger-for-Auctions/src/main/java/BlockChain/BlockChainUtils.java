@@ -1,5 +1,9 @@
 package BlockChain;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BlockChainUtils {
     static String getHexString(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
@@ -9,5 +13,11 @@ public class BlockChainUtils {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    static public String convertTime(long time){
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return format.format(date);
     }
 }

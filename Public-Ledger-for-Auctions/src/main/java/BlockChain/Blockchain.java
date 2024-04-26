@@ -1,7 +1,6 @@
 package BlockChain;
 
 import java.security.KeyPair;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class Blockchain {
     public Blockchain() {
         this.chain = new ArrayList<>();
         this.pendingTransactions = new ArrayList<>();
-        this.difficulty = Constants.DIFICULTY;
+        this.difficulty = Constants.DIFFICULTY;
         Block genesisBlock = createGenesisBlock();
         this.chain.add(genesisBlock);
     }

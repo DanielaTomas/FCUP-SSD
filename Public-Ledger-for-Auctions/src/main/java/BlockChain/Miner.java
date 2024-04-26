@@ -1,8 +1,5 @@
 package BlockChain;
 
-import java.security.KeyPair;
-import java.security.PublicKey;
-
 public class Miner {
     private double reward;
 
@@ -29,10 +26,10 @@ public class Miner {
      * @param b The most recent block in the chain.
      */
     public boolean PoW(Block b) {
-        String target = new String(new char[Constants.DIFICULTY]).replace('\0', '0');
+        String target = new String(new char[Constants.DIFFICULTY]).replace('\0', '0');
         String hash = b.getHash();
 
-        return !hash.substring(0, Constants.DIFICULTY).equals(target);
+        return !hash.substring(0, Constants.DIFFICULTY).equals(target);
     }
 
     public Block mine(Block b ,Blockchain blockchain ){

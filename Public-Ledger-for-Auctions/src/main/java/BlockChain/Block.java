@@ -98,11 +98,13 @@ public class Block {
 
     public void incrementNonce() {this.nonce++; }
 
+
+
     @Override
     public String toString() {
         return "index:"+this.index+"\n" +
                 "Previous Hash:"+this.previousHash+"\n" +
-                "Time:"+this.timestamp+"\n" +
+                "Time:"+BlockChainUtils.convertTime(this.timestamp)+"\n" +
                 "Hash:"+this.hash+"\n" +
                 "Nonce:"+this.nonce+"\n" +
                 "" + this.transactions + "\n";
