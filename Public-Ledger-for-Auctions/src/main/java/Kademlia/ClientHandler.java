@@ -1,4 +1,4 @@
-package org.example;
+package Kademlia;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -34,7 +34,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      * @param key            The key for the message.
      * @param value          The value for the message.
      * @param messageType    The type of the message.
-     * @param nearNodesInfo  Information about the near nodes.
+     * @param nearNodesInfo  Information about the near nodes. //TODO tirar do construtor
      */
     public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, String value, Kademlia.MessageType messageType, List<NodeInfo> nearNodesInfo) {
         this.targetNodeInfo = targetNodeInfo;

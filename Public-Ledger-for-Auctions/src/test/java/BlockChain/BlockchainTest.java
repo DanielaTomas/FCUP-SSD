@@ -1,4 +1,4 @@
-package org.example;
+package BlockChain;
 import BlockChain.Block;
 import BlockChain.Blockchain;
 import BlockChain.Transaction;

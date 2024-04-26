@@ -1,5 +1,5 @@
 \hypertarget{classorg_1_1example_1_1ClientHandler}{}\doxysection{org.\+example.\+Client\+Handler Class Reference}
-\label{classorg_1_1example_1_1ClientHandler}\index{org.example.ClientHandler@{org.example.ClientHandler}}
+\label{classorg_1_1example_1_1ClientHandler}\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 
 
 Inheritance diagram for org.\+example.\+Client\+Handler\+:
@@ -30,8 +30,8 @@ Class \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler}{Client\+Handler}}\+
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_af4c038ac04294a62039add1566283e98}\label{classorg_1_1example_1_1ClientHandler_af4c038ac04294a62039add1566283e98}} 
-\index{org.example.ClientHandler@{org.example.ClientHandler}!ClientHandler@{ClientHandler}}
-\index{ClientHandler@{ClientHandler}!org.example.ClientHandler@{org.example.ClientHandler}}
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!ClientHandler@{ClientHandler}}
+\index{ClientHandler@{ClientHandler}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{ClientHandler()}{ClientHandler()}}
 {\footnotesize\ttfamily org.\+example.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{node\+Info,  }\item[{\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info,  }\item[{String}]{key,  }\item[{String}]{value,  }\item[{Kademlia.\+Message\+Type}]{message\+Type,  }\item[{List$<$ \mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}} $>$}]{near\+Nodes\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -56,8 +56,8 @@ Constructs a new \mbox{\hyperlink{classorg_1_1example_1_1ClientHandler}{Client\+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_a9f6f031893e58e00a57857e47c93209f}\label{classorg_1_1example_1_1ClientHandler_a9f6f031893e58e00a57857e47c93209f}} 
-\index{org.example.ClientHandler@{org.example.ClientHandler}!channelActive@{channelActive}}
-\index{channelActive@{channelActive}!org.example.ClientHandler@{org.example.ClientHandler}}
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!channelActive@{channelActive}}
+\index{channelActive@{channelActive}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{channelActive()}{channelActive()}}
 {\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+channel\+Active (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx }\end{DoxyParamCaption}) throws IOException\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -74,8 +74,8 @@ Called when the channel becomes active.
 \hline
 \end{DoxyExceptions}
 \mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af7a790916e49b}\label{classorg_1_1example_1_1ClientHandler_adf26b234869a7b0ce5af7a790916e49b}} 
-\index{org.example.ClientHandler@{org.example.ClientHandler}!channelRead@{channelRead}}
-\index{channelRead@{channelRead}!org.example.ClientHandler@{org.example.ClientHandler}}
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!channelRead@{channelRead}}
+\index{channelRead@{channelRead}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{channelRead()}{channelRead()}}
 {\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+channel\+Read (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Object}]{msg }\end{DoxyParamCaption}) throws IOException, Class\+Not\+Found\+Exception\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -96,8 +96,8 @@ Called when a message is received from the server.
 \hline
 \end{DoxyExceptions}
 \mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}\label{classorg_1_1example_1_1ClientHandler_a1ada4b73d4a71284d12ff05aad1d3789}} 
-\index{org.example.ClientHandler@{org.example.ClientHandler}!exceptionCaught@{exceptionCaught}}
-\index{exceptionCaught@{exceptionCaught}!org.example.ClientHandler@{org.example.ClientHandler}}
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!exceptionCaught@{exceptionCaught}}
+\index{exceptionCaught@{exceptionCaught}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{exceptionCaught()}{exceptionCaught()}}
 {\footnotesize\ttfamily void org.\+example.\+Client\+Handler.\+exception\+Caught (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Throwable}]{cause }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -111,8 +111,8 @@ Called when an exception is caught in the channel.
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_aedd303aeed5354637ba1315cd169e6db}\label{classorg_1_1example_1_1ClientHandler_aedd303aeed5354637ba1315cd169e6db}} 
-\index{org.example.ClientHandler@{org.example.ClientHandler}!getNearNodesInfo@{getNearNodesInfo}}
-\index{getNearNodesInfo@{getNearNodesInfo}!org.example.ClientHandler@{org.example.ClientHandler}}
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!getNearNodesInfo@{getNearNodesInfo}}
+\index{getNearNodesInfo@{getNearNodesInfo}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{getNearNodesInfo()}{getNearNodesInfo()}}
 {\footnotesize\ttfamily List$<$\mbox{\hyperlink{classorg_1_1example_1_1NodeInfo}{Node\+Info}}$>$ org.\+example.\+Client\+Handler.\+get\+Near\+Nodes\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
@@ -122,8 +122,8 @@ Gets the list of near nodes\textquotesingle{} information.
 The list of near nodes\textquotesingle{} information. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classorg_1_1example_1_1ClientHandler_afffce2bfdb3aead25af11526bb967e28}\label{classorg_1_1example_1_1ClientHandler_afffce2bfdb3aead25af11526bb967e28}} 
-\index{org.example.ClientHandler@{org.example.ClientHandler}!getStoredValue@{getStoredValue}}
-\index{getStoredValue@{getStoredValue}!org.example.ClientHandler@{org.example.ClientHandler}}
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!getStoredValue@{getStoredValue}}
+\index{getStoredValue@{getStoredValue}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{getStoredValue()}{getStoredValue()}}
 {\footnotesize\ttfamily String org.\+example.\+Client\+Handler.\+get\+Stored\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 

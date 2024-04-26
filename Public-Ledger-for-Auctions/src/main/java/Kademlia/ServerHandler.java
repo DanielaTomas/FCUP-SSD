@@ -1,8 +1,7 @@
-package org.example;
+package Kademlia;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.DatagramPacket;
@@ -14,7 +13,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.example.Kademlia.MessageType;
+import static Kademlia.Kademlia.MessageType;
 
 /** Class ServerHandler: Handles the client-side channel events */
 class ServerHandler extends ChannelInboundHandlerAdapter {

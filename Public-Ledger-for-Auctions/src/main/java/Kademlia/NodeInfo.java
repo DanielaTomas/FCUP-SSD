@@ -1,4 +1,4 @@
-package org.example;
+package Kademlia;
 
 import java.io.*;
 import java.security.MessageDigest;
