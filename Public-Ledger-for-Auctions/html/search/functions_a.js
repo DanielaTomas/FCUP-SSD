@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['node_115',['Node',['../classorg_1_1example_1_1Node.html#a42bd73056f540571dd64bd06aefdbf68',1,'org::example::Node']]],
-  ['nodeinfo_116',['NodeInfo',['../classorg_1_1example_1_1NodeInfo.html#a4194f2e3e03372f28c99c546fc2b2115',1,'org::example::NodeInfo']]]
+  ['ping_135',['ping',['../classKademlia_1_1Kademlia.html#ad9f8c252d91d3163d9139df615ac1d8a',1,'Kademlia::Kademlia']]],
+  ['pow_136',['PoW',['../classBlockChain_1_1Miner.html#a00b1a7238abeca531e65d1beb07d2ae5',1,'BlockChain::Miner']]]
 ];

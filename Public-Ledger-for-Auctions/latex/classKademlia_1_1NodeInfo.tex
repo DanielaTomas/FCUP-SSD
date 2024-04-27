@@ -1,0 +1,168 @@
+\hypertarget{classKademlia_1_1NodeInfo}{}\doxysection{Kademlia.\+Node\+Info Class Reference}
+\label{classKademlia_1_1NodeInfo}\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+
+
+Inheritance diagram for Kademlia.\+Node\+Info\+:
+% FIG 0
+
+
+Collaboration diagram for Kademlia.\+Node\+Info\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classKademlia_1_1NodeInfo_ab53f6af5aa5ba8bf4d110296907bc44e}{Node\+Info}} (String ip\+Addr, int port)
+\item 
+String \mbox{\hyperlink{classKademlia_1_1NodeInfo_aaee3cae668893bf7c7186af84bf06fc3}{to\+String}} ()
+\item 
+int \mbox{\hyperlink{classKademlia_1_1NodeInfo_a5f820768bf7f26e95bc68abf6ab42d16}{compare\+To}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} o)
+\item 
+boolean \mbox{\hyperlink{classKademlia_1_1NodeInfo_a0033e3224c4dbeda1a7d1bcdb73fdf43}{equals}} (Object obj)
+\item 
+int \mbox{\hyperlink{classKademlia_1_1NodeInfo_a00e6bf1c12d266d75ed6429c348ea8c9}{hash\+Code}} ()
+\item 
+String \mbox{\hyperlink{classKademlia_1_1NodeInfo_a7f2846a07dd953c03313bf1900a72ac9}{get\+Node\+Id}} ()
+\item 
+String \mbox{\hyperlink{classKademlia_1_1NodeInfo_aedae923323b1c22bec0e4dda5845e55d}{get\+Ip\+Addr}} ()
+\item 
+int \mbox{\hyperlink{classKademlia_1_1NodeInfo_a763e7542b8594338cbeb7fcccb065326}{get\+Port}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static String \mbox{\hyperlink{classKademlia_1_1NodeInfo_a9fd621c6155cfea593008d106c96a45d}{generate\+Node\+Id}} (String ip\+Address, int port)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}\+: Represents information about a node in the network 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_ab53f6af5aa5ba8bf4d110296907bc44e}\label{classKademlia_1_1NodeInfo_ab53f6af5aa5ba8bf4d110296907bc44e}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!NodeInfo@{NodeInfo}}
+\index{NodeInfo@{NodeInfo}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{NodeInfo()}{NodeInfo()}}
+{\footnotesize\ttfamily Kademlia.\+Node\+Info.\+Node\+Info (\begin{DoxyParamCaption}\item[{String}]{ip\+Addr,  }\item[{int}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a node with the specified parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip\+Addr} & The IP address of the node. \\
+\hline
+{\em port} & The port on which the node listens. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_a5f820768bf7f26e95bc68abf6ab42d16}\label{classKademlia_1_1NodeInfo_a5f820768bf7f26e95bc68abf6ab42d16}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!compareTo@{compareTo}}
+\index{compareTo@{compareTo}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{compareTo()}{compareTo()}}
+{\footnotesize\ttfamily int Kademlia.\+Node\+Info.\+compare\+To (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{o }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Compares this \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} object with another \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} object based on node\+Id.
+
+
+\begin{DoxyParams}{Parameters}
+{\em o} & The \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} object to compare with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An integer value indicating the comparison result. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_a0033e3224c4dbeda1a7d1bcdb73fdf43}\label{classKademlia_1_1NodeInfo_a0033e3224c4dbeda1a7d1bcdb73fdf43}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!equals@{equals}}
+\index{equals@{equals}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{equals()}{equals()}}
+{\footnotesize\ttfamily boolean Kademlia.\+Node\+Info.\+equals (\begin{DoxyParamCaption}\item[{Object}]{obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Checks if this \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} object is equal to another object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to compare with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the objects are equal, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_a9fd621c6155cfea593008d106c96a45d}\label{classKademlia_1_1NodeInfo_a9fd621c6155cfea593008d106c96a45d}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!generateNodeId@{generateNodeId}}
+\index{generateNodeId@{generateNodeId}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{generateNodeId()}{generateNodeId()}}
+{\footnotesize\ttfamily static String Kademlia.\+Node\+Info.\+generate\+Node\+Id (\begin{DoxyParamCaption}\item[{String}]{ip\+Address,  }\item[{int}]{port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Generates a node ID based on the IP address and port.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip\+Address} & The IP address of the node. \\
+\hline
+{\em port} & The port on which the node listens. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The generated node ID. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_aedae923323b1c22bec0e4dda5845e55d}\label{classKademlia_1_1NodeInfo_aedae923323b1c22bec0e4dda5845e55d}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!getIpAddr@{getIpAddr}}
+\index{getIpAddr@{getIpAddr}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{getIpAddr()}{getIpAddr()}}
+{\footnotesize\ttfamily String Kademlia.\+Node\+Info.\+get\+Ip\+Addr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the IP address of the node.
+
+\begin{DoxyReturn}{Returns}
+The IP address. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_a7f2846a07dd953c03313bf1900a72ac9}\label{classKademlia_1_1NodeInfo_a7f2846a07dd953c03313bf1900a72ac9}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!getNodeId@{getNodeId}}
+\index{getNodeId@{getNodeId}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{getNodeId()}{getNodeId()}}
+{\footnotesize\ttfamily String Kademlia.\+Node\+Info.\+get\+Node\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the node ID.
+
+\begin{DoxyReturn}{Returns}
+The node ID. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_a763e7542b8594338cbeb7fcccb065326}\label{classKademlia_1_1NodeInfo_a763e7542b8594338cbeb7fcccb065326}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!getPort@{getPort}}
+\index{getPort@{getPort}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{getPort()}{getPort()}}
+{\footnotesize\ttfamily int Kademlia.\+Node\+Info.\+get\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the port on which the node listens.
+
+\begin{DoxyReturn}{Returns}
+The port number. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_a00e6bf1c12d266d75ed6429c348ea8c9}\label{classKademlia_1_1NodeInfo_a00e6bf1c12d266d75ed6429c348ea8c9}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!hashCode@{hashCode}}
+\index{hashCode@{hashCode}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{hashCode()}{hashCode()}}
+{\footnotesize\ttfamily int Kademlia.\+Node\+Info.\+hash\+Code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Generates a hash code for this \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} object.
+
+\begin{DoxyReturn}{Returns}
+The hash code value for this object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1NodeInfo_aaee3cae668893bf7c7186af84bf06fc3}\label{classKademlia_1_1NodeInfo_aaee3cae668893bf7c7186af84bf06fc3}} 
+\index{Kademlia.NodeInfo@{Kademlia.NodeInfo}!toString@{toString}}
+\index{toString@{toString}!Kademlia.NodeInfo@{Kademlia.NodeInfo}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily String Kademlia.\+Node\+Info.\+to\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Returns a string representation of the \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} object.
+
+\begin{DoxyReturn}{Returns}
+A string representation of the object. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Kademlia/Node\+Info.\+java\end{DoxyCompactItemize}

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['server_70',['Server',['../classorg_1_1example_1_1Server.html',1,'org::example']]]
+  ['peer_84',['Peer',['../classMain_1_1Peer.html',1,'Main']]],
+  ['peermainmenu_85',['PeerMainMenu',['../classMain_1_1PeerMainMenu.html',1,'Main']]]
 ];

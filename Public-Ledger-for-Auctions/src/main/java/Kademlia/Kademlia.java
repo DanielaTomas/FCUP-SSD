@@ -17,12 +17,33 @@ public class Kademlia {
 
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
     private static final int K = 2; //TODO ajustar valor
+    private static Kademlia instance;
 
     /**
      * Enum for message types used in Kademlia.
      */
     public enum MessageType {
         PING, FIND_NODE, FIND_VALUE, STORE
+    }
+
+    /**
+     * Private constructor for the Kademlia class. This constructor is private to enforce the Singleton design pattern.
+     */
+    private Kademlia() {
+
+    }
+
+    /**
+     * Gets the singleton instance of the Kademlia class.
+     *
+     * @return The singleton instance of the Kademlia class.
+     */
+    public static Kademlia getInstance(){
+        if(instance == null){
+            instance = new Kademlia();
+        }
+
+        return instance;
     }
 
     /**

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['tostring_125',['toString',['../classorg_1_1example_1_1NodeInfo.html#ae6f9c099fbef8228bd735598b0beee22',1,'org.example.NodeInfo.toString()'],['../classorg_1_1example_1_1Transaction.html#a184754aa8d76632fb48e6f065ed5aa93',1,'org.example.Transaction.toString()']]],
-  ['transaction_126',['Transaction',['../classorg_1_1example_1_1Transaction.html#af7bb00d173934bd5a45088c22a0e1c92',1,'org::example::Transaction']]]
+  ['tostring_145',['toString',['../classBlockChain_1_1Block.html#a49edf17a9196007272d5cd82ce745be2',1,'BlockChain.Block.toString()'],['../classBlockChain_1_1Transaction.html#a536af87b57beb3edfddc3c47d248476c',1,'BlockChain.Transaction.toString()'],['../classKademlia_1_1NodeInfo.html#aaee3cae668893bf7c7186af84bf06fc3',1,'Kademlia.NodeInfo.toString()'],['../classMain_1_1Peer.html#a6bb4570a0bc6ed12b98a3937dff0aebf',1,'Main.Peer.toString()']]],
+  ['transaction_146',['Transaction',['../classBlockChain_1_1Transaction.html#ace7916baa93121b226c0a0712d6e05c1',1,'BlockChain::Transaction']]]
 ];

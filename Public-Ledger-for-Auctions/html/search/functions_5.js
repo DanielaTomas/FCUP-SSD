@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['findclosestnodes_85',['findClosestNodes',['../classorg_1_1example_1_1Utils.html#af87378fb6d7737774a91bbb394d87811',1,'org::example::Utils']]],
-  ['findnodebyid_86',['findNodeById',['../classorg_1_1example_1_1Node.html#aa6f3b3ef55945572a14aba7bb02e272b',1,'org::example::Node']]],
-  ['findvalue_87',['findValue',['../classorg_1_1example_1_1Kademlia.html#aae7ac3c66c28a82309e8ca4944724924',1,'org::example::Kademlia']]],
-  ['findvaluebykey_88',['findValueByKey',['../classorg_1_1example_1_1Node.html#ae9d0f257dd906523bde06b5bf4d6b166',1,'org::example::Node']]]
+  ['findclosestnodes_104',['findClosestNodes',['../classKademlia_1_1Utils.html#a64449721f94992c5c4461e4ced60ddfb',1,'Kademlia::Utils']]],
+  ['findnodebyid_105',['findNodeById',['../classKademlia_1_1Node.html#a80c7f66ed76ec1e1566f02cc0661d084',1,'Kademlia::Node']]],
+  ['findvalue_106',['findValue',['../classKademlia_1_1Kademlia.html#a4a100ebf5c9993ab8aa9d2f12a7834e3',1,'Kademlia::Kademlia']]],
+  ['findvaluebykey_107',['findValueByKey',['../classKademlia_1_1Node.html#a9271ea189d8f2d81449f7c3c2c6145b6',1,'Kademlia::Node']]]
 ];

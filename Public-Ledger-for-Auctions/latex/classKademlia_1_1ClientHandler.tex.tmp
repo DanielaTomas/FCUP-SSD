@@ -1,0 +1,139 @@
+\hypertarget{classKademlia_1_1ClientHandler}{}\doxysection{Kademlia.\+Client\+Handler Class Reference}
+\label{classKademlia_1_1ClientHandler}\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}}
+
+
+Inheritance diagram for Kademlia.\+Client\+Handler\+:
+% FIG 0
+
+
+Collaboration diagram for Kademlia.\+Client\+Handler\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classKademlia_1_1ClientHandler_ac0409f249e99ed6ca3528a9c23832e49}{Client\+Handler}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} node\+Info, \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} target\+Node\+Info, String key, String value, \mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}} message\+Type, List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ near\+Nodes\+Info)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1ClientHandler_ac38cf5bfafe24058e1b96744d66f9aed}{channel\+Active}} (Channel\+Handler\+Context ctx)  throws IOException 
+\item 
+void \mbox{\hyperlink{classKademlia_1_1ClientHandler_a25516adade137f7f8f1d6c7e8d10568c}{channel\+Read}} (Channel\+Handler\+Context ctx, Object msg)  throws IOException, Class\+Not\+Found\+Exception 
+\item 
+void \mbox{\hyperlink{classKademlia_1_1ClientHandler_a8a7fdf6147dc13d266c63504cbb829f2}{exception\+Caught}} (Channel\+Handler\+Context ctx, Throwable cause)
+\item 
+List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1ClientHandler_ab8909ac3aa1137f839484b6292d70f45}{get\+Near\+Nodes\+Info}} ()
+\item 
+String \mbox{\hyperlink{classKademlia_1_1ClientHandler_a5bd069966a066a8e7686e7328ff2c107}{get\+Stored\+Value}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classKademlia_1_1ClientHandler}{Client\+Handler}}\+: Handles the client-\/side channel events 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classKademlia_1_1ClientHandler_ac0409f249e99ed6ca3528a9c23832e49}\label{classKademlia_1_1ClientHandler_ac0409f249e99ed6ca3528a9c23832e49}} 
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!ClientHandler@{ClientHandler}}
+\index{ClientHandler@{ClientHandler}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{ClientHandler()}{ClientHandler()}}
+{\footnotesize\ttfamily Kademlia.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{node\+Info,  }\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info,  }\item[{String}]{key,  }\item[{String}]{value,  }\item[{\mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}}}]{message\+Type,  }\item[{List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{near\+Nodes\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a new \mbox{\hyperlink{classKademlia_1_1ClientHandler}{Client\+Handler}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Info} & The local node info. \\
+\hline
+{\em target\+Node\+Info} & Information about the target node. \\
+\hline
+{\em key} & The key for the message. \\
+\hline
+{\em value} & The value for the message. \\
+\hline
+{\em message\+Type} & The type of the message. \\
+\hline
+{\em near\+Nodes\+Info} & Information about the near nodes. //\+TODO tirar do construtor \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classKademlia_1_1ClientHandler_ac38cf5bfafe24058e1b96744d66f9aed}\label{classKademlia_1_1ClientHandler_ac38cf5bfafe24058e1b96744d66f9aed}} 
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!channelActive@{channelActive}}
+\index{channelActive@{channelActive}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{channelActive()}{channelActive()}}
+{\footnotesize\ttfamily void Kademlia.\+Client\+Handler.\+channel\+Active (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx }\end{DoxyParamCaption}) throws IOException\hspace{0.3cm}{\ttfamily [inline]}}
+
+Called when the channel becomes active.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The channel handler context. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & If an I/O error occurs. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classKademlia_1_1ClientHandler_a25516adade137f7f8f1d6c7e8d10568c}\label{classKademlia_1_1ClientHandler_a25516adade137f7f8f1d6c7e8d10568c}} 
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!channelRead@{channelRead}}
+\index{channelRead@{channelRead}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{channelRead()}{channelRead()}}
+{\footnotesize\ttfamily void Kademlia.\+Client\+Handler.\+channel\+Read (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Object}]{msg }\end{DoxyParamCaption}) throws IOException, Class\+Not\+Found\+Exception\hspace{0.3cm}{\ttfamily [inline]}}
+
+Called when a message is received from the server.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The channel handler context. \\
+\hline
+{\em msg} & The received message. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & If an I/O error occurs. \\
+\hline
+{\em Class\+Not\+Found\+Exception} & If the class of the serialized object cannot be found. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classKademlia_1_1ClientHandler_a8a7fdf6147dc13d266c63504cbb829f2}\label{classKademlia_1_1ClientHandler_a8a7fdf6147dc13d266c63504cbb829f2}} 
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!exceptionCaught@{exceptionCaught}}
+\index{exceptionCaught@{exceptionCaught}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{exceptionCaught()}{exceptionCaught()}}
+{\footnotesize\ttfamily void Kademlia.\+Client\+Handler.\+exception\+Caught (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Throwable}]{cause }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Called when an exception is caught in the channel.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The channel handler context. \\
+\hline
+{\em cause} & The exception caught. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1ClientHandler_ab8909ac3aa1137f839484b6292d70f45}\label{classKademlia_1_1ClientHandler_ab8909ac3aa1137f839484b6292d70f45}} 
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!getNearNodesInfo@{getNearNodesInfo}}
+\index{getNearNodesInfo@{getNearNodesInfo}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{getNearNodesInfo()}{getNearNodesInfo()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Client\+Handler.\+get\+Near\+Nodes\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the list of near nodes\textquotesingle{} information.
+
+\begin{DoxyReturn}{Returns}
+The list of near nodes\textquotesingle{} information. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1ClientHandler_a5bd069966a066a8e7686e7328ff2c107}\label{classKademlia_1_1ClientHandler_a5bd069966a066a8e7686e7328ff2c107}} 
+\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!getStoredValue@{getStoredValue}}
+\index{getStoredValue@{getStoredValue}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
+\doxysubsubsection{\texorpdfstring{getStoredValue()}{getStoredValue()}}
+{\footnotesize\ttfamily String Kademlia.\+Client\+Handler.\+get\+Stored\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the stored value.
+
+\begin{DoxyReturn}{Returns}
+The stored value. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Kademlia/Client\+Handler.\+java\end{DoxyCompactItemize}

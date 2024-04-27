@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="Main.Server",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classorg_1_1example_1_1Server.html",tooltip=" "];
+  Node0 [label="Kademlia.Kademlia",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classKademlia_1_1Kademlia.html",tooltip=" "];
 }

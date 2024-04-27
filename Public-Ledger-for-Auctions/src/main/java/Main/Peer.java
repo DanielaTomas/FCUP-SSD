@@ -5,18 +5,23 @@ import Kademlia.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/** Class Peer: Contains the main class representing a peer in the Kademlia network. */
 public class Peer {
 
     private static final Logger logger = Logger.getLogger(Peer.class.getName());
     String ip;
     int port;
 
-
+    /**
+     * Constructor for the Peer class.
+     *
+     * @param ip The IP address of the peer.
+     * @param port The port number of the peer.
+     */
     Peer(String ip, int port){
        this.ip = ip;
        this.port = port;
     }
-
 
     public static void main(String[] args) { //TODO colocar mais do que um bootstrap node
         if (args.length < 1 || args.length > 2) {
@@ -31,7 +36,7 @@ public class Peer {
 
             //System.setProperty("filename", port + ".log");
             Node node = new Node(new NodeInfo(myself.ip, myself.port));
-            Kademlia kademlia = new Kademlia();
+            Kademlia kademlia = Kademlia.getInstance();
 
             if (args.length == 2) { // Node TODO code inside this if statement should probably be removed
                 String bootstrapIp = args[1];
@@ -57,7 +62,7 @@ public class Peer {
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error starting the server", e);
             }
-            //TODO join network automatically somewhere on this file, and launch client aftewards
+            //TODO join network automatically somewhere on this file, and launch client afterwards
             try {
                 new Thread(new PeerMainMenu()).start();
                 logger.log(Level.FINE,"Kademlia client running!");
@@ -73,6 +78,11 @@ public class Peer {
 
     }
 
+    /**
+     * Returns a string representation of the Peer object.
+     *
+     * @return A string representation of the object.
+     */
     @Override
     public String toString() {
         return  "----------------------------------" + '\n' +

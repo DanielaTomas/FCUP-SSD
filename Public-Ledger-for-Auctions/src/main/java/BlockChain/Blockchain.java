@@ -23,6 +23,11 @@ public class Blockchain {
         this.chain.add(genesisBlock);
     }
 
+    /**
+     * Gets the singleton instance of the Blockchain class.
+     *
+     * @return The singleton instance of the Blockchain class.
+     */
     public static Blockchain getInstance(){
         if(instance == null){
             instance = new Blockchain();

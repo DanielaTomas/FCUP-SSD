@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deserialize_82',['deserialize',['../classorg_1_1example_1_1Utils.html#a612616f574e352cd596b0a089a873c21',1,'org::example::Utils']]]
+  ['deserialize_101',['deserialize',['../classKademlia_1_1Utils.html#a9f78403a316a4540b2b41cfad189f83a',1,'Kademlia::Utils']]]
 ];

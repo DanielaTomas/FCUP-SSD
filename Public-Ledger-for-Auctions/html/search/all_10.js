@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['verifysignature_60',['verifySignature',['../classorg_1_1example_1_1Transaction.html#acd525ecceb57719aed804a6635287566',1,'org::example::Transaction']]]
+  ['updateroutingtable_68',['updateRoutingTable',['../classKademlia_1_1Node.html#a1507dfc0295772e8fa65e62fc7b14f0e',1,'Kademlia::Node']]],
+  ['utils_69',['Utils',['../classKademlia_1_1Utils.html',1,'Kademlia']]]
 ];

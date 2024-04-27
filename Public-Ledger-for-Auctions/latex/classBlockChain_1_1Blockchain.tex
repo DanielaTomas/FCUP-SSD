@@ -1,0 +1,97 @@
+\hypertarget{classBlockChain_1_1Blockchain}{}\doxysection{Block\+Chain.\+Blockchain Class Reference}
+\label{classBlockChain_1_1Blockchain}\index{BlockChain.Blockchain@{BlockChain.Blockchain}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classBlockChain_1_1Blockchain_a748ad33d99087c9809f61aa376b1656a}{add\+Transaction}} (\mbox{\hyperlink{classBlockChain_1_1Transaction}{Transaction}} transaction)
+\item 
+\mbox{\hyperlink{classBlockChain_1_1Block}{Block}} \mbox{\hyperlink{classBlockChain_1_1Blockchain_a31b35c3b25262571c7d44942a20f2d7a}{get\+Last\+Block}} ()
+\item 
+List$<$ \mbox{\hyperlink{classBlockChain_1_1Block}{Block}} $>$ \mbox{\hyperlink{classBlockChain_1_1Blockchain_abf56479bda006a7df71765dbd7988f25}{get\+Chain}} ()
+\item 
+void \mbox{\hyperlink{classBlockChain_1_1Blockchain_a5482f957cf12bf798525ff098076331e}{add\+Block}} (\mbox{\hyperlink{classBlockChain_1_1Block}{Block}} block)
+\item 
+List$<$ \mbox{\hyperlink{classBlockChain_1_1Transaction}{Transaction}} $>$ \mbox{\hyperlink{classBlockChain_1_1Blockchain_af9398bea7d5b8ad271375e17e3c18065}{get\+Pending\+Transactions}} ()
+\item 
+\mbox{\Hypertarget{classBlockChain_1_1Blockchain_ac0185cffcc26caade459107186855f3f}\label{classBlockChain_1_1Blockchain_ac0185cffcc26caade459107186855f3f}} 
+String {\bfseries to\+String} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classBlockChain_1_1Blockchain}{Blockchain}} \mbox{\hyperlink{classBlockChain_1_1Blockchain_a4ae52c2c6f9ee7777b690c87b56285a4}{get\+Instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classBlockChain_1_1Blockchain}{Blockchain}}\+: Represents a blockchain containing a chain of blocks and pending transactions. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBlockChain_1_1Blockchain_a5482f957cf12bf798525ff098076331e}\label{classBlockChain_1_1Blockchain_a5482f957cf12bf798525ff098076331e}} 
+\index{BlockChain.Blockchain@{BlockChain.Blockchain}!addBlock@{addBlock}}
+\index{addBlock@{addBlock}!BlockChain.Blockchain@{BlockChain.Blockchain}}
+\doxysubsubsection{\texorpdfstring{addBlock()}{addBlock()}}
+{\footnotesize\ttfamily void Block\+Chain.\+Blockchain.\+add\+Block (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBlockChain_1_1Block}{Block}}}]{block }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Adds the given block to the chain \mbox{\Hypertarget{classBlockChain_1_1Blockchain_a748ad33d99087c9809f61aa376b1656a}\label{classBlockChain_1_1Blockchain_a748ad33d99087c9809f61aa376b1656a}} 
+\index{BlockChain.Blockchain@{BlockChain.Blockchain}!addTransaction@{addTransaction}}
+\index{addTransaction@{addTransaction}!BlockChain.Blockchain@{BlockChain.Blockchain}}
+\doxysubsubsection{\texorpdfstring{addTransaction()}{addTransaction()}}
+{\footnotesize\ttfamily void Block\+Chain.\+Blockchain.\+add\+Transaction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBlockChain_1_1Transaction}{Transaction}}}]{transaction }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Adds a transaction to the list of pending transactions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & The transaction to add. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBlockChain_1_1Blockchain_abf56479bda006a7df71765dbd7988f25}\label{classBlockChain_1_1Blockchain_abf56479bda006a7df71765dbd7988f25}} 
+\index{BlockChain.Blockchain@{BlockChain.Blockchain}!getChain@{getChain}}
+\index{getChain@{getChain}!BlockChain.Blockchain@{BlockChain.Blockchain}}
+\doxysubsubsection{\texorpdfstring{getChain()}{getChain()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classBlockChain_1_1Block}{Block}}$>$ Block\+Chain.\+Blockchain.\+get\+Chain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the chain of blocks in the blockchain.
+
+\begin{DoxyReturn}{Returns}
+The list of blocks forming the blockchain. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBlockChain_1_1Blockchain_a4ae52c2c6f9ee7777b690c87b56285a4}\label{classBlockChain_1_1Blockchain_a4ae52c2c6f9ee7777b690c87b56285a4}} 
+\index{BlockChain.Blockchain@{BlockChain.Blockchain}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!BlockChain.Blockchain@{BlockChain.Blockchain}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classBlockChain_1_1Blockchain}{Blockchain}} Block\+Chain.\+Blockchain.\+get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Gets the singleton instance of the \mbox{\hyperlink{classBlockChain_1_1Blockchain}{Blockchain}} class.
+
+\begin{DoxyReturn}{Returns}
+The singleton instance of the \mbox{\hyperlink{classBlockChain_1_1Blockchain}{Blockchain}} class. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBlockChain_1_1Blockchain_a31b35c3b25262571c7d44942a20f2d7a}\label{classBlockChain_1_1Blockchain_a31b35c3b25262571c7d44942a20f2d7a}} 
+\index{BlockChain.Blockchain@{BlockChain.Blockchain}!getLastBlock@{getLastBlock}}
+\index{getLastBlock@{getLastBlock}!BlockChain.Blockchain@{BlockChain.Blockchain}}
+\doxysubsubsection{\texorpdfstring{getLastBlock()}{getLastBlock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBlockChain_1_1Block}{Block}} Block\+Chain.\+Blockchain.\+get\+Last\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the last block in the blockchain.
+
+\begin{DoxyReturn}{Returns}
+The last block in the blockchain. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBlockChain_1_1Blockchain_af9398bea7d5b8ad271375e17e3c18065}\label{classBlockChain_1_1Blockchain_af9398bea7d5b8ad271375e17e3c18065}} 
+\index{BlockChain.Blockchain@{BlockChain.Blockchain}!getPendingTransactions@{getPendingTransactions}}
+\index{getPendingTransactions@{getPendingTransactions}!BlockChain.Blockchain@{BlockChain.Blockchain}}
+\doxysubsubsection{\texorpdfstring{getPendingTransactions()}{getPendingTransactions()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classBlockChain_1_1Transaction}{Transaction}}$>$ Block\+Chain.\+Blockchain.\+get\+Pending\+Transactions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the list of pending transactions.
+
+\begin{DoxyReturn}{Returns}
+The list of pending transactions. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Block\+Chain/Blockchain.\+java\end{DoxyCompactItemize}

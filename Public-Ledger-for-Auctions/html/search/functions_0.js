@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['addtransaction_73',['addTransaction',['../classorg_1_1example_1_1Blockchain.html#a4f0fd7235e7baf86f63b6532b6016f46',1,'org::example::Blockchain']]]
+  ['addblock_90',['addBlock',['../classBlockChain_1_1Blockchain.html#a5482f957cf12bf798525ff098076331e',1,'BlockChain::Blockchain']]],
+  ['addtransaction_91',['addTransaction',['../classBlockChain_1_1Blockchain.html#a748ad33d99087c9809f61aa376b1656a',1,'BlockChain::Blockchain']]]
 ];

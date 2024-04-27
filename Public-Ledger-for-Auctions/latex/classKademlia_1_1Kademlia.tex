@@ -1,0 +1,105 @@
+\hypertarget{classKademlia_1_1Kademlia}{}\doxysection{Kademlia.\+Kademlia Class Reference}
+\label{classKademlia_1_1Kademlia}\index{Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Message\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_a6dc6dbe7d23b628e0f75e31b98baf4ed}{join\+Network}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} node, \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} bootstrap\+Node\+Info)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_ad9f8c252d91d3163d9139df615ac1d8a}{ping}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} target\+Node\+Info)
+\item 
+Object \mbox{\hyperlink{classKademlia_1_1Kademlia_a4a100ebf5c9993ab8aa9d2f12a7834e3}{find\+Value}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} node, String key)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_a9179508950124103e24af0bacc9b5cae}{store}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} node, String key, String value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} \mbox{\hyperlink{classKademlia_1_1Kademlia_a00686d398fb8dac6f3324aa059ae892f}{get\+Instance}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a4a100ebf5c9993ab8aa9d2f12a7834e3}\label{classKademlia_1_1Kademlia_a4a100ebf5c9993ab8aa9d2f12a7834e3}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!findValue@{findValue}}
+\index{findValue@{findValue}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{findValue()}{findValue()}}
+{\footnotesize\ttfamily Object Kademlia.\+Kademlia.\+find\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1Node}{Node}}}]{node,  }\item[{String}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Finds the value corresponding to a key in the \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} network.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The local node. \\
+\hline
+{\em key} & The key to find. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a00686d398fb8dac6f3324aa059ae892f}\label{classKademlia_1_1Kademlia_a00686d398fb8dac6f3324aa059ae892f}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} Kademlia.\+Kademlia.\+get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Gets the singleton instance of the \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} class.
+
+\begin{DoxyReturn}{Returns}
+The singleton instance of the \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} class. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a6dc6dbe7d23b628e0f75e31b98baf4ed}\label{classKademlia_1_1Kademlia_a6dc6dbe7d23b628e0f75e31b98baf4ed}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!joinNetwork@{joinNetwork}}
+\index{joinNetwork@{joinNetwork}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{joinNetwork()}{joinNetwork()}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+join\+Network (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1Node}{Node}}}]{node,  }\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{bootstrap\+Node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Joins the \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} network.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The local node. \\
+\hline
+{\em bootstrap\+Node\+Info} & Information about the bootstrap node. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_ad9f8c252d91d3163d9139df615ac1d8a}\label{classKademlia_1_1Kademlia_ad9f8c252d91d3163d9139df615ac1d8a}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!ping@{ping}}
+\index{ping@{ping}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{ping()}{ping()}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+ping (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sends a ping message to the target node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Node\+Info} & Information about the target node. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a9179508950124103e24af0bacc9b5cae}\label{classKademlia_1_1Kademlia_a9179508950124103e24af0bacc9b5cae}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!store@{store}}
+\index{store@{store}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{store()}{store()}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+store (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1Node}{Node}}}]{node,  }\item[{String}]{key,  }\item[{String}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Stores a key-\/value pair in the \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} network.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node} & The local node. \\
+\hline
+{\em key} & The key to store. \\
+\hline
+{\em value} & The value corresponding to the key. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Kademlia/Kademlia.\+java\end{DoxyCompactItemize}
