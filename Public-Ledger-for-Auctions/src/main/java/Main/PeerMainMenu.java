@@ -10,16 +10,29 @@ public class PeerMainMenu implements Runnable {
         this.scanner = new Scanner(System.in);
     }
 
-    public void printMenu(){
-        System.out.println("\n");
-        System.out.println("----------------------------------");
-        System.out.println("1 - coisas");
-        System.out.println("----------------------------------");
+    public String menu(){
+        return "----------------------------------" + '\n' +
+        " 1 - Find Node" + '\n' +
+        "----------------------------------";
 
     }
 
     @Override
     public void run() {
-        printMenu();
+        String input;
+        System.out.println(menu());
+        while (true){
+
+
+            input = scanner.nextLine();
+
+            switch (input){
+                case "menu":
+                    System.out.println(menu());
+                case "1"://TODO add interfacing with kademlia here, the singleton design pattern might be useful
+
+            }
+
+        }
     }
 }

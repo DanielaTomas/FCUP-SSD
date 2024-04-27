@@ -19,14 +19,13 @@ public class Peer {
 
 
     public static void main(String[] args) { //TODO colocar mais do que um bootstrap node
-
-        new Thread(new PeerMainMenu()).start();
         if (args.length < 1 || args.length > 2) {
             System.err.println("Error: Wrong number of arguments. Usage: java Main.java <port> [BootstrapNodeIps]");
             System.exit(1);
         }
 
         Peer myself = new Peer(Utils.getAddress(), Integer.parseInt(args[0]));
+        System.out.println(myself);
 
         try {
 
@@ -34,8 +33,7 @@ public class Peer {
             Node node = new Node(new NodeInfo(myself.ip, myself.port));
             Kademlia kademlia = new Kademlia();
 
-
-            if (args.length == 2) { // Node
+            if (args.length == 2) { // Node TODO code inside this if statement should probably be removed
                 String bootstrapIp = args[1];
 
 
@@ -55,8 +53,16 @@ public class Peer {
 
             try {
                 new Thread(new Server(myself.port, node)).start();
+                logger.log(Level.FINE,"Kademlia server running!");
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error starting the server", e);
+            }
+            //TODO join network automatically somewhere on this file, and launch client aftewards
+            try {
+                new Thread(new PeerMainMenu()).start();
+                logger.log(Level.FINE,"Kademlia client running!");
+            }catch (Exception e){
+                logger.log(Level.SEVERE, "Error starting the client", e);
             }
 
         } catch (NumberFormatException e) {
@@ -64,5 +70,15 @@ public class Peer {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    @Override
+    public String toString() {
+        return  "----------------------------------" + '\n' +
+                "Peer Info " + '\n' +
+                "ip = " + ip + '\n' +
+                "port = " + port + '\n' +
+                "----------------------------------";
     }
 }
