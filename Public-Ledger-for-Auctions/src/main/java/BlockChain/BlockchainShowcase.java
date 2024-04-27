@@ -9,7 +9,7 @@ public class BlockchainShowcase {
 
 
     public static void main(String[] args){
-        Blockchain blockchain = new Blockchain();//empty constructor automatically creates the genesis block
+        Blockchain blockchain = Blockchain.getInstance();//empty constructor automatically creates the genesis block
 
         Miner miner = new Miner();
 

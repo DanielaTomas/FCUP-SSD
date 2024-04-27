@@ -6,6 +6,8 @@ import java.util.List;
 
 /** Class Blockchain: Represents a blockchain containing a chain of blocks and pending transactions. */
 public class Blockchain {
+    private static Blockchain instance; // Singleton design pattern, seems like a good ideia for this class
+
     private List<Block> chain;
     private List<Transaction> pendingTransactions;
     private final int difficulty;
@@ -13,12 +15,20 @@ public class Blockchain {
     /**
      * Constructs a blockchain with default difficulty and creates the genesis block.
      */
-    public Blockchain() {
+    private Blockchain() {
         this.chain = new ArrayList<>();
         this.pendingTransactions = new ArrayList<>();
         this.difficulty = Constants.DIFFICULTY;
         Block genesisBlock = createGenesisBlock();
         this.chain.add(genesisBlock);
+    }
+
+    public static Blockchain getInstance(){
+        if(instance == null){
+            instance = new Blockchain();
+        }
+
+        return instance;
     }
 
     /**
