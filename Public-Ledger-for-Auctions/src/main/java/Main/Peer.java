@@ -38,22 +38,11 @@ public class Peer {
             Node node = new Node(new NodeInfo(myself.ip, myself.port));
             Kademlia kademlia = Kademlia.getInstance();
 
-            if (args.length == 2) { // Node TODO code inside this if statement should probably be removed
+            if (args.length == 2) { // Node
                 String bootstrapIp = args[1];
-
-
-                /*
                 NodeInfo bootstrapNodeInfo = new NodeInfo(bootstrapIp, myself.port);
                 node.updateRoutingTable(bootstrapNodeInfo);
                 kademlia.joinNetwork(node, bootstrapNodeInfo);
-                Scanner in = new Scanner(System.in);
-                System.out.println("Store? 'y' or 'n'");
-                String n = in.nextLine();
-                if(n.equals("y")) {
-                    //mudar id e value
-                    //kademlia.store(node, "b9b98f4de460b9da7db4547e4b2ca68d84b97a17", "gaaaaaas");
-                    kademlia.store(node, "174be1b78723cf02995324f3985134a4227c920d", "gaaaaaas");
-                }*/
             }
 
             try {
@@ -62,9 +51,9 @@ public class Peer {
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error starting the server", e);
             }
-            //TODO join network automatically somewhere on this file, and launch client afterwards
+
             try {
-                new Thread(new PeerMainMenu()).start();
+                new Thread(new PeerMainMenu(node)).start();
                 logger.log(Level.FINE,"Kademlia client running!");
             }catch (Exception e){
                 logger.log(Level.SEVERE, "Error starting the client", e);

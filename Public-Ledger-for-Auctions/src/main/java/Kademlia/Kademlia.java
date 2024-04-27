@@ -78,7 +78,7 @@ public class Kademlia {
      * @param targetNodeInfo Information about the target node.
      * @return List of near nodes.
      */
-    private List<NodeInfo> findNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
+    public List<NodeInfo> findNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
         return (List<NodeInfo>) connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE);
     }
 

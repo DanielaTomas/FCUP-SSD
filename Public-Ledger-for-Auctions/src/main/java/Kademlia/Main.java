@@ -21,7 +21,7 @@ public class Main {
             port = Integer.parseInt(args[0]);
             //System.setProperty("filename", port + ".log");
             Node node = new Node(new NodeInfo(ip, port));
-            Kademlia kademlia = new Kademlia();
+            Kademlia kademlia = Kademlia.getInstance();
 
             if (args.length == 2) { // Node
                 NodeInfo bootstrapNodeInfo = new NodeInfo(args[1], port);
