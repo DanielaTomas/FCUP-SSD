@@ -61,7 +61,7 @@ public class PeerMainMenu implements Runnable {
                     input = scanner.nextLine();
                     System.out.println("Port: ");
                     int portPing = Integer.parseInt(scanner.nextLine());
-                    kademlia.ping(new NodeInfo(input,portPing));
+                    kademlia.ping(node.getNodeInfo(), new NodeInfo(input,portPing));
                     break;
                 default:
                     System.out.println("Invalid input. Please try again.");

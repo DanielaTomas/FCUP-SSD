@@ -85,10 +85,11 @@ public class Kademlia {
     /**
      * Sends a ping message to the target node.
      *
+     * @param nodeInfo       Information about the local node.
      * @param targetNodeInfo Information about the target node.
      */
-    public void ping(NodeInfo targetNodeInfo) {
-        connectAndHandle(null, targetNodeInfo, null, null, MessageType.PING);
+    public void ping(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
+        connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.PING);
     }
 
 
