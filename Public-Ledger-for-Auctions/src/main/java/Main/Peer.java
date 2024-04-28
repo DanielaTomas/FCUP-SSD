@@ -35,25 +35,25 @@ public class Peer {
         try {
 
             //System.setProperty("filename", port + ".log");
-            Node node = new Node(new NodeInfo(myself.ip, myself.port));
+            Node myNode = new Node(new NodeInfo(myself.ip, myself.port));
             Kademlia kademlia = Kademlia.getInstance();
 
             if (args.length == 2) { // Node
                 String bootstrapIp = args[1];
                 NodeInfo bootstrapNodeInfo = new NodeInfo(bootstrapIp, myself.port);
-                node.updateRoutingTable(bootstrapNodeInfo);
-                kademlia.joinNetwork(node, bootstrapNodeInfo);
+                myNode.updateRoutingTable(bootstrapNodeInfo);
+                kademlia.joinNetwork(myNode, bootstrapNodeInfo);
             }
 
             try {
-                new Thread(new Server(myself.port, node)).start();
+                new Thread(new Server(myself.port, myNode)).start();
                 logger.log(Level.FINE,"Kademlia server running!");
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error starting the server", e);
             }
 
             try {
-                new Thread(new PeerMainMenu(node)).start();
+                new Thread(new PeerMainMenu(myNode)).start();
                 logger.log(Level.FINE,"Kademlia client running!");
             }catch (Exception e){
                 logger.log(Level.SEVERE, "Error starting the client", e);

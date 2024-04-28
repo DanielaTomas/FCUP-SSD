@@ -8,20 +8,22 @@ public class PeerMainMenu implements Runnable {
 
     private Scanner scanner;
     private Kademlia kademlia;
-    private Node node;
+    private Node myNode;
 
-    public PeerMainMenu(Node node){
+    public PeerMainMenu(Node myNode){
         this.scanner = new Scanner(System.in);
         this.kademlia = Kademlia.getInstance();
-        this.node = node;
+        this.myNode = myNode;
     }
 
     public String menu(){
         return "----------------------------------" + '\n' +
+        " 0 - Print KBucket" + '\n' +
         " 1 - Find Node" + '\n' +
         " 2 - Store" + '\n' +
         " 3 - Find Value" + '\n' +
         " 4 - Ping" + '\n' +
+        " 99 - Exit" + '\n' +
         "----------------------------------";
     }
 
@@ -37,32 +39,36 @@ public class PeerMainMenu implements Runnable {
                 case "menu":
                     System.out.println(menu());
                     break;
+                case "0":
+                    myNode.getRoutingTable();
+                    for ( NodeInfo nodeInfo : myNode.getRoutingTable()){
+                        System.out.println(nodeInfo);
+                    }
+                    break;
                 case "1":
-                    System.out.println("IP: ");
+                    System.out.println("Node ID: ");
                     input = scanner.nextLine();
-                    System.out.println("Port: ");
-                    int portFindNode = Integer.parseInt(scanner.nextLine());
-                    kademlia.findNode(node.getNodeInfo(), new NodeInfo(input,portFindNode));
+                    kademlia.findNode(myNode.getNodeInfo(), null);// WHAT THE HEEEEEEEEEEEEEEELLLLLLLLLLLLLLL
                     break;
                 case "2":
                     System.out.println("Key: ");
                     input = scanner.nextLine();
                     System.out.println("Value: ");
                     String value = scanner.nextLine();
-                    kademlia.store(node, input, value);
+                    kademlia.store(myNode, input, value);
                     break;
                 case "3":
                     System.out.println("Key: ");
                     input = scanner.nextLine();
-                    kademlia.findValue(node, input);
+                    kademlia.findValue(myNode, input);
                     break;
                 case "4":
-                    System.out.println("IP: ");
+                    System.out.println("Node ID: ");
                     input = scanner.nextLine();
-                    System.out.println("Port: ");
-                    int portPing = Integer.parseInt(scanner.nextLine());
-                    kademlia.ping(node.getNodeInfo(), new NodeInfo(input,portPing));
+                    kademlia.ping(myNode.getNodeInfo(), null); // WHAT THE HEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLL
                     break;
+                case "99":
+                    System.exit(0);
                 default:
                     System.out.println("Invalid input. Please try again.");
                     break;

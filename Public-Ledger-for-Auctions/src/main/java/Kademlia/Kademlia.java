@@ -29,9 +29,7 @@ public class Kademlia {
     /**
      * Private constructor for the Kademlia class. This constructor is private to enforce the Singleton design pattern.
      */
-    private Kademlia() {
-
-    }
+    private Kademlia() {}
 
     /**
      * Gets the singleton instance of the Kademlia class.
@@ -53,6 +51,7 @@ public class Kademlia {
      * @param bootstrapNodeInfo Information about the bootstrap node.
      */
     public void joinNetwork(Node node, NodeInfo bootstrapNodeInfo) {
+        logger.info("Kademlia - Trying to contact bootstrap");
         List<NodeInfo> nearNodes = findNode(node.getNodeInfo(), bootstrapNodeInfo);
         for(NodeInfo nearNodeInfo : nearNodes) {
             node.updateRoutingTable(nearNodeInfo);
@@ -79,6 +78,7 @@ public class Kademlia {
      * @return List of near nodes.
      */
     public List<NodeInfo> findNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
+        logger.info("Kademlia - Starting FIND_NODE RPC");
         return (List<NodeInfo>) connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE);
     }
 
@@ -89,6 +89,7 @@ public class Kademlia {
      * @param targetNodeInfo Information about the target node.
      */
     public void ping(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
+        logger.info("Kademlia - Starting PING RPC");
         connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.PING);
     }
 
@@ -100,6 +101,7 @@ public class Kademlia {
      * @param key The key to find.
      */
     public Object findValue(Node node, String key) { //FIXME ?
+        logger.info("Kademlia - Starting FIND_VALUE RPC");
         String storedValue = node.findValueByKey(key);
         if(storedValue != null) {
             logger.info("Stored value: " + storedValue);
@@ -119,6 +121,7 @@ public class Kademlia {
      * @param value The value corresponding to the key.
      */
     public void store(Node node, String key, String value) { //FIXME ?
+        logger.info("Kademlia - Starting STORE RPC");
         NodeInfo keyInfo = node.findNodeById(key);
         NodeInfo targetNodeInfo = findNodeForKey(node, keyInfo);
         if (targetNodeInfo != null) {
