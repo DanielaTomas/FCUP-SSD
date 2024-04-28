@@ -39,35 +39,35 @@ public class PeerMainMenu implements Runnable {
                 case "menu":
                     System.out.println(menu());
                     break;
-                case "0":
+                case "0": //Routing Table Info
                     myNode.getRoutingTable();
                     for ( NodeInfo nodeInfo : myNode.getRoutingTable()){
                         System.out.println(nodeInfo);
                     }
                     break;
-                case "1":
+                case "1": //FIND_NODE RPC
                     System.out.println("Node ID: ");
                     input = scanner.nextLine();
                     kademlia.findNode(myNode.getNodeInfo(), null);// WHAT THE HEEEEEEEEEEEEEEELLLLLLLLLLLLLLL
                     break;
-                case "2":
+                case "2": //STORE RPC
                     System.out.println("Key: ");
                     input = scanner.nextLine();
                     System.out.println("Value: ");
                     String value = scanner.nextLine();
                     kademlia.store(myNode, input, value);
                     break;
-                case "3":
+                case "3"://FIND_VALUE RPC
                     System.out.println("Key: ");
                     input = scanner.nextLine();
                     kademlia.findValue(myNode, input);
                     break;
-                case "4":
+                case "4": //PING RPC
                     System.out.println("Node ID: ");
                     input = scanner.nextLine();
-                    kademlia.ping(myNode.getNodeInfo(), null); // WHAT THE HEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLL
+                    kademlia.ping(myNode.getNodeInfo(), input, myNode.getRoutingTable()); // WHAT THE HEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLL
                     break;
-                case "99":
+                case "99": //Quit safely, otherwise i won't be blamed if weird behaviour occurs
                     System.exit(0);
                 default:
                     System.out.println("Invalid input. Please try again.");
