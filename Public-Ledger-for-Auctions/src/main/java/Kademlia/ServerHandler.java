@@ -1,5 +1,4 @@
 package Kademlia;
-import Main.Server;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -109,7 +108,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         logger.info("Received node info from client: " + nodeInfo);
 
         myNode.updateRoutingTable(nodeInfo);
-        List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo, K);
+        List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo.getNodeId(), K);
 
         ByteBuf responseMsg = ctx.alloc().buffer();
         responseMsg.writeInt(messageType.ordinal());

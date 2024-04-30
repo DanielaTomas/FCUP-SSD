@@ -139,9 +139,7 @@ public class Kademlia {
             return storedValue;
         }
 
-        NodeInfo keyInfo = myNode.findNodeById(key);
-        if(keyInfo != null) return findNode(myNode.getNodeInfo(), key, myNode.getRoutingTable());
-        return null;
+        return findNode(myNode.getNodeInfo(), key, myNode.getRoutingTable());
     }
 
     /**
@@ -154,7 +152,7 @@ public class Kademlia {
     public void store(Node myNode, String key, String value) {
         logger.info("Kademlia - Starting STORE RPC");
 
-        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
+        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable()); //TODO não preciso disto se a key já estiver na routing table...
 
         if(myNode.findNodeById(key) == null && keyNearNodes == null) {
             logger.severe("Error: Unable to find a node to store the key-value pair.");
