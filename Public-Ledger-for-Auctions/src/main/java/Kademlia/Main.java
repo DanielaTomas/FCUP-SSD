@@ -26,7 +26,7 @@ public class Main {
             if (args.length == 2) { // Node
                 NodeInfo bootstrapNodeInfo = new NodeInfo(args[1], port);
                 node.updateRoutingTable(bootstrapNodeInfo);
-                kademlia.joinNetwork(node, bootstrapNodeInfo);
+                kademlia.joinNetwork(node, bootstrapNodeInfo.getNodeId());
                 Scanner in = new Scanner(System.in);
                 System.out.println("Store? 'y' or 'n'");
                 String n = in.nextLine();

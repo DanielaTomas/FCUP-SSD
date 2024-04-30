@@ -12,6 +12,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
+import static Kademlia.Utils.findClosestNodes;
+
 /** Class Kademlia */
 public class Kademlia {
 
@@ -48,20 +50,20 @@ public class Kademlia {
      * Joins the Kademlia network.
      *
      * @param myNode              The local node.
-     * @param bootstrapNodeInfo Information about the bootstrap node.
+     * @param bootstrapNodeId id of the bootstrap node.
      */
-    public void joinNetwork(Node myNode, NodeInfo bootstrapNodeInfo) {
+    public void joinNetwork(Node myNode, String bootstrapNodeId) {
         logger.info("Kademlia - Trying to contact bootstrap");
-        List<NodeInfo> nearNodes = findNode(myNode.getNodeInfo(), bootstrapNodeInfo);
+        List<NodeInfo> nearNodes = findNode(myNode.getNodeInfo(), bootstrapNodeId, myNode.getRoutingTable());
         for(NodeInfo nearNodeInfo : nearNodes) {
             myNode.updateRoutingTable(nearNodeInfo);
-            List<NodeInfo> additionalNearNodesInfo = findNode(myNode.getNodeInfo(), nearNodeInfo);
+            List<NodeInfo> additionalNearNodesInfo = findNode(myNode.getNodeInfo(), nearNodeInfo.getNodeId(), myNode.getRoutingTable());
             while(!additionalNearNodesInfo.isEmpty()) {
                 List<NodeInfo> nextNearNodes = new ArrayList<>();
                 for (NodeInfo nextNearNodeInfo : additionalNearNodesInfo) {
                     if(!myNode.getRoutingTable().contains(nextNearNodeInfo)) {
                         myNode.updateRoutingTable(nextNearNodeInfo);
-                        List<NodeInfo> nextAdditionalNearNodes = findNode(myNode.getNodeInfo(), nextNearNodeInfo);
+                        List<NodeInfo> nextAdditionalNearNodes = findNode(myNode.getNodeInfo(), nextNearNodeInfo.getNodeId(), myNode.getRoutingTable());
                         nextNearNodes.addAll(nextAdditionalNearNodes);
                     }
                 }
@@ -74,20 +76,41 @@ public class Kademlia {
      * Finds the closest nodes to the target node by sending a FIND_NODE message.
      *
      * @param myNodeInfo       Information about the local node.
-     * @param targetNodeInfo Information about the target node.
+     * @param targetNodeId id of the target node.
+     * @param routingTable routing table of the local node.
+     *
      * @return List of near nodes.
      */
-    public List<NodeInfo> findNode(NodeInfo myNodeInfo, NodeInfo targetNodeInfo) {
+    public List<NodeInfo> findNode(NodeInfo myNodeInfo, String targetNodeId, List<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting FIND_NODE RPC");
-        return (List<NodeInfo>) connectAndHandle(myNodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE);
+        for (NodeInfo nodeInfo : routingTable) {
+            if (nodeInfo.getNodeId().equals(targetNodeId) ){
+                logger.info("Kademlia - Found node: " + nodeInfo);
+                return (List<NodeInfo>) connectAndHandle(myNodeInfo, nodeInfo, null, null, MessageType.FIND_NODE);
+            }
+        }
+        List<NodeInfo> closestNodes = findClosestNodes(routingTable, targetNodeId, K);
+        List<NodeInfo> nodeInfoList = new ArrayList<>();
+        for (NodeInfo targetNodeInfo : closestNodes) {
+            nodeInfoList.addAll((List<NodeInfo>) connectAndHandle(myNodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE));
+        }
+
+        for(NodeInfo nodeInfo : nodeInfoList) {
+            if(nodeInfo.getNodeId().equals(targetNodeId)) {
+                logger.info("Kademlia - Found node: " + nodeInfo);
+                return (List<NodeInfo>) connectAndHandle(myNodeInfo, nodeInfo, null, null, MessageType.FIND_NODE);
+            }
+        }
+
+        return nodeInfoList;
     }
 
     /**
      * Sends a ping message to the target node.
      *
      * @param myNodeInfo       Information about the local node.
-     * @param targetNodeId   ID of the target node .
-     * @param routingTable
+     * @param targetNodeId   ID of the target node.
+     * @param routingTable   Routing table of the local node.
      */
     public void ping(NodeInfo myNodeInfo, String targetNodeId , List<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting PING RPC");
@@ -105,7 +128,7 @@ public class Kademlia {
      * @param myNode The local node.
      * @param key The key to find.
      */
-    public Object findValue(Node myNode, String key) { //FIXME ?
+    public Object findValue(Node myNode, String key) { //FIXME
         logger.info("Kademlia - Starting FIND_VALUE RPC");
         String storedValue = myNode.findValueByKey(key);
         if(storedValue != null) {
@@ -114,7 +137,7 @@ public class Kademlia {
         }
 
         NodeInfo keyInfo = myNode.findNodeById(key);
-        if(keyInfo != null) return findNode(myNode.getNodeInfo(), keyInfo);
+        if(keyInfo != null) return findNode(myNode.getNodeInfo(), key, myNode.getRoutingTable());
         return null;
     }
 
@@ -125,7 +148,7 @@ public class Kademlia {
      * @param key   The key to store.
      * @param value The value corresponding to the key.
      */
-    public void store(Node myNode, String key, String value) { //FIXME ?
+    public void store(Node myNode, String key, String value) { //FIXME
         logger.info("Kademlia - Starting STORE RPC");
         NodeInfo keyInfo = myNode.findNodeById(key);
         NodeInfo targetNodeInfo = findNodeForKey(myNode, keyInfo);
@@ -150,16 +173,16 @@ public class Kademlia {
      * @param keyInfo    Information about the key (usually represented as a NodeInfo object).
      * @return The NodeInfo object representing the node closest to the given key, or null if the keyInfo parameter is null or the routing table is empty.
      */
-    private NodeInfo findNodeForKey(Node myNode, NodeInfo keyInfo) {
+    private NodeInfo findNodeForKey(Node myNode, NodeInfo keyInfo) { //FIXME
         if(keyInfo == null) return null;
         NodeInfo closestNode = myNode.getNodeInfo();
         int closestDistance = Utils.calculateDistance(myNode.getNodeInfo().getNodeId(), keyInfo.getNodeId());
         List<NodeInfo> routingTable = myNode.getRoutingTable();
 
-        List<NodeInfo> nearNodesInfo = Utils.findClosestNodes(routingTable, keyInfo, K);
+        List<NodeInfo> nearNodesInfo = findClosestNodes(routingTable, keyInfo, K);
 
         for (NodeInfo nearNodeInfo : nearNodesInfo) {
-            List<NodeInfo> keyNearNodes = findNode(keyInfo, nearNodeInfo);
+            List<NodeInfo> keyNearNodes = findNode(keyInfo, nearNodeInfo.getNodeId(), myNode.getRoutingTable());
             for(NodeInfo keyNearNode : keyNearNodes) {
                 if(!routingTable.contains(keyNearNode)) {
                     myNode.updateRoutingTable(keyNearNode);

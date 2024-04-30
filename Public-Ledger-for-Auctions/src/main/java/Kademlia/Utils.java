@@ -89,10 +89,38 @@ public class Utils {
     /**
      * Finds the closest nodes to the requested node information.
      *
+     * @param requestedNodeId The requested node id.
+     * @return List of closest nodes.
+     */
+    public static List<NodeInfo> findClosestNodes(List<NodeInfo> myRoutingTable, String requestedNodeId, final int K) {
+        List<NodeInfo> nearNodes = new ArrayList<>();
+        Map<NodeInfo, Integer> distanceMap = new HashMap<>();
+
+        for (NodeInfo nodeInfo : myRoutingTable) {
+            if(!nodeInfo.getNodeId().equals(requestedNodeId)) {
+                int distance = Utils.calculateDistance(requestedNodeId, nodeInfo.getNodeId());
+                distanceMap.put(nodeInfo, distance);
+            }
+        }
+
+        List<Map.Entry<NodeInfo, Integer>> sortedEntries = new ArrayList<>(distanceMap.entrySet());
+        sortedEntries.sort(Map.Entry.comparingByValue());
+
+        int k = Math.min(K, sortedEntries.size());
+        for (int i = 0; i < k; i++) {
+            nearNodes.add(sortedEntries.get(i).getKey());
+        }
+
+        return nearNodes;
+    }
+
+    /**
+     * Finds the closest nodes to the requested node information.
+     *
      * @param requestedNodeInfo The requested node information.
      * @return List of closest nodes.
      */
-    public static List<NodeInfo> findClosestNodes(List<NodeInfo> myRoutingTable, NodeInfo requestedNodeInfo, final int K) {
+    public static List<NodeInfo> findClosestNodes(List<NodeInfo> myRoutingTable, NodeInfo requestedNodeInfo, final int K) { //TODO remove
         List<NodeInfo> nearNodes = new ArrayList<>();
         Map<NodeInfo, Integer> distanceMap = new HashMap<>();
 

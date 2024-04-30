@@ -47,7 +47,7 @@ public class PeerMainMenu implements Runnable {
                 case "1": //FIND_NODE RPC
                     System.out.println("Node ID: ");
                     input = scanner.nextLine();
-                    kademlia.findNode(myNode.getNodeInfo(), null);// WHAT THE HEEEEEEEEEEEEEEELLLLLLLLLLLLLLL
+                    kademlia.findNode(myNode.getNodeInfo(), input, myNode.getRoutingTable());
                     break;
                 case "2": //STORE RPC
                     System.out.println("Key: ");
