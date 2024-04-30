@@ -132,7 +132,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
             ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
             logger.info("Received near nodes info from server: " + nodeInfoList);
             nearNodesInfo.addAll(nodeInfoList);
-            //nodeInfoListBytes.release();
+            nodeInfoListBytes.release();
         } else {
             logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
         }

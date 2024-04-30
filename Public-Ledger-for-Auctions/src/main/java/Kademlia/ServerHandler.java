@@ -1,5 +1,5 @@
 package Kademlia;
-
+import Main.Server;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -119,7 +119,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         String success = "Sent near nodes info to client " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort();
         Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
 
-        //nodeInfoBytes.release();
+        nodeInfoBytes.release();
     }
 
     /**

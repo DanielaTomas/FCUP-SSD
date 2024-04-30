@@ -92,14 +92,12 @@ public class Kademlia {
     public void ping(NodeInfo myNodeInfo, String targetNodeId , List<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting PING RPC");
         for (NodeInfo targetNodeInfo : routingTable) {
-            if (targetNodeInfo.equalsId(targetNodeId) ){
+            if (targetNodeInfo.getNodeId().equals(targetNodeId) ){
                 logger.info("Kademlia - Found node: " + targetNodeInfo);
                 connectAndHandle(myNodeInfo, targetNodeInfo, null, null, MessageType.PING);
             }
         }
-
     }
-
 
     /**
      * Finds the value corresponding to a key in the Kademlia network.
@@ -234,7 +232,7 @@ public class Kademlia {
                     }
                 });
 
-        bootstrap.localAddress(myNodeInfo.getPort());
+        //bootstrap.localAddress(myNodeInfo.getPort()); //TODO
         ChannelFuture channelFuture = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         channelFuture.channel().closeFuture().await(3, TimeUnit.SECONDS);

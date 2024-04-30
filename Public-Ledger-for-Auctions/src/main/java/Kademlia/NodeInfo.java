@@ -71,11 +71,6 @@ public class NodeInfo implements Serializable, Comparable<NodeInfo> {
         return this.nodeId.compareTo(o.getNodeId());
     }
 
-
-    public boolean equalsId(String o ){
-        return this.nodeId.equals(o);
-    }
-
     /**
      * Checks if this NodeInfo object is equal to another object.
      *
