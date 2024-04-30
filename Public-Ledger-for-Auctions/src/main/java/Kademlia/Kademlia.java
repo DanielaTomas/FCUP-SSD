@@ -83,18 +83,20 @@ public class Kademlia {
      */
     public List<NodeInfo> findNode(NodeInfo myNodeInfo, String targetNodeId, List<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting FIND_NODE RPC");
+
         for (NodeInfo nodeInfo : routingTable) {
-            if (nodeInfo.getNodeId().equals(targetNodeId) ){
+            if (nodeInfo.getNodeId().equals(targetNodeId)){
                 logger.info("Kademlia - Found node: " + nodeInfo);
                 return (List<NodeInfo>) connectAndHandle(myNodeInfo, nodeInfo, null, null, MessageType.FIND_NODE);
             }
         }
+
         List<NodeInfo> closestNodes = findClosestNodes(routingTable, targetNodeId, K);
         List<NodeInfo> nodeInfoList = new ArrayList<>();
         for (NodeInfo targetNodeInfo : closestNodes) {
             nodeInfoList.addAll((List<NodeInfo>) connectAndHandle(myNodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE));
         }
-
+        //TODO isto deve ser recursivo?
         for(NodeInfo nodeInfo : nodeInfoList) {
             if(nodeInfo.getNodeId().equals(targetNodeId)) {
                 logger.info("Kademlia - Found node: " + nodeInfo);
@@ -102,6 +104,7 @@ public class Kademlia {
             }
         }
 
+        logger.info("Kademlia - Node not found");
         return nodeInfoList;
     }
 
@@ -148,12 +151,19 @@ public class Kademlia {
      * @param key   The key to store.
      * @param value The value corresponding to the key.
      */
-    public void store(Node myNode, String key, String value) { //FIXME
+    public void store(Node myNode, String key, String value) {
         logger.info("Kademlia - Starting STORE RPC");
-        NodeInfo keyInfo = myNode.findNodeById(key);
-        NodeInfo targetNodeInfo = findNodeForKey(myNode, keyInfo);
+
+        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
+
+        if(myNode.findNodeById(key) == null && keyNearNodes == null) {
+            logger.severe("Error: Unable to find a node to store the key-value pair.");
+            return;
+        }
+
+        NodeInfo targetNodeInfo = findNodeForKey(myNode.getNodeInfo(), key, keyNearNodes);
         if (targetNodeInfo != null) {
-            if (targetNodeInfo.getNodeId().equals(myNode.getNodeInfo().getNodeId())) {
+            if (targetNodeInfo.equals(myNode.getNodeInfo())) {
                 myNode.storeKeyValue(key, value);
                 logger.info("key: " + key + ", value: " + value + " stored");
             } else {
@@ -161,7 +171,7 @@ public class Kademlia {
             }
         }
         else {
-            System.err.println("Error: Unable to find a node to store the key-value pair.");
+            logger.severe("Error: Unable to find a node to store the key-value pair.");
         }
     }
 
@@ -169,29 +179,19 @@ public class Kademlia {
      * Finds the node in the network that is closest to the given key.
      * This method is used for key-based routing in the Kademlia DHT protocol.
      *
-     * @param myNode       The local node performing the search.
-     * @param keyInfo    Information about the key (usually represented as a NodeInfo object).
-     * @return The NodeInfo object representing the node closest to the given key, or null if the keyInfo parameter is null or the routing table is empty.
+     * @param myNodeInfo       The local node information.
+     * @param key    id of the key.
+     * @return the node info closest to the given key.
      */
-    private NodeInfo findNodeForKey(Node myNode, NodeInfo keyInfo) { //FIXME
-        if(keyInfo == null) return null;
-        NodeInfo closestNode = myNode.getNodeInfo();
-        int closestDistance = Utils.calculateDistance(myNode.getNodeInfo().getNodeId(), keyInfo.getNodeId());
-        List<NodeInfo> routingTable = myNode.getRoutingTable();
+    private NodeInfo findNodeForKey(NodeInfo myNodeInfo, String key, List<NodeInfo> keyNearNodes) {
+        NodeInfo closestNode = myNodeInfo;
+        int closestDistance = Utils.calculateDistance(myNodeInfo.getNodeId(), key);
 
-        List<NodeInfo> nearNodesInfo = findClosestNodes(routingTable, keyInfo, K);
-
-        for (NodeInfo nearNodeInfo : nearNodesInfo) {
-            List<NodeInfo> keyNearNodes = findNode(keyInfo, nearNodeInfo.getNodeId(), myNode.getRoutingTable());
-            for(NodeInfo keyNearNode : keyNearNodes) {
-                if(!routingTable.contains(keyNearNode)) {
-                    myNode.updateRoutingTable(keyNearNode);
-                }
-                int distance = Utils.calculateDistance(keyNearNode.getNodeId(), keyInfo.getNodeId());
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestNode = nearNodeInfo;
-                }
+        for (NodeInfo keyNearNodeInfo : keyNearNodes) {
+            int distance = Utils.calculateDistance(keyNearNodeInfo.getNodeId(), key);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestNode = keyNearNodeInfo;
             }
         }
         return closestNode;
