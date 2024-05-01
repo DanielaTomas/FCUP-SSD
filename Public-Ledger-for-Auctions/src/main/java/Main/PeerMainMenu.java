@@ -40,15 +40,14 @@ public class PeerMainMenu implements Runnable {
                     System.out.println(menu());
                     break;
                 case "0": //Routing Table Info
-                    myNode.getRoutingTable();
-                    for ( NodeInfo nodeInfo : myNode.getRoutingTable()){
+                    for (NodeInfo nodeInfo : myNode.getRoutingTable()){
                         System.out.println(nodeInfo);
                     }
                     break;
                 case "1": //FIND_NODE RPC
                     System.out.println("Node ID: ");
                     input = scanner.nextLine();
-                    kademlia.findNode(myNode.getNodeInfo(), null);// WHAT THE HEEEEEEEEEEEEEEELLLLLLLLLLLLLLL
+                    kademlia.findNode(myNode.getNodeInfo(), input, myNode.getRoutingTable());
                     break;
                 case "2": //STORE RPC
                     System.out.println("Key: ");
@@ -65,7 +64,7 @@ public class PeerMainMenu implements Runnable {
                 case "4": //PING RPC
                     System.out.println("Node ID: ");
                     input = scanner.nextLine();
-                    kademlia.ping(myNode.getNodeInfo(), input, myNode.getRoutingTable()); // WHAT THE HEEEEEEEEEEEEEEEEEEEELLLLLLLLLLLLLL
+                    kademlia.ping(myNode.getNodeInfo(), input, myNode.getRoutingTable());
                     break;
                 case "99": //Quit safely, otherwise i won't be blamed if weird behaviour occurs
                     System.exit(0);

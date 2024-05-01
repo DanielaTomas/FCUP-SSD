@@ -1,5 +1,4 @@
 package Kademlia;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -73,6 +72,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param ctx          The channel handler context.
      * @param bytebuf      The received ByteBuf.
      * @param messageType  The type of the message.
+     * @param sender       The address of the sender node
      */
     private void storeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) {
         int keyLength = bytebuf.readInt();
@@ -99,6 +99,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param ctx          The channel handler context.
      * @param bytebuf      The received ByteBuf.
      * @param messageType  The type of the message.
+     * @param sender       The address of the sender node.
      * @throws IOException            If an I/O error occurs.
      * @throws ClassNotFoundException If the class of the serialized object cannot be found.
      */
@@ -106,10 +107,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         int nodeInfoLength = bytebuf.readInt();
         ByteBuf nodeInfoBytes = bytebuf.readBytes(nodeInfoLength);
         NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(nodeInfoBytes);
-        logger.info("Received node info from client: " + nodeInfo);
+
+        if(messageType == MessageType.FIND_VALUE) {
+            if(findValueHandler(ctx,bytebuf,nodeInfo, messageType, sender)) return;
+            messageType = MessageType.FIND_NODE;
+        }
+        else {
+            logger.info("Received node info from client: " + nodeInfo);
+        }
 
         myNode.updateRoutingTable(nodeInfo);
-        List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo, K);
+        List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo.getNodeId(), K);
 
         ByteBuf responseMsg = ctx.alloc().buffer();
         responseMsg.writeInt(messageType.ordinal());
@@ -119,7 +127,34 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         String success = "Sent near nodes info to client " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort();
         Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
 
-        //nodeInfoBytes.release();
+        nodeInfoBytes.release();
+    }
+
+    /**
+     * Handles FIND_VALUE messages from the client.
+     *
+     * @param ctx          The channel handler context.
+     * @param bytebuf      The received ByteBuf.
+     * @param messageType  The type of the message.
+     * @param sender       The address of the sender node
+     */
+    private boolean findValueHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, NodeInfo nodeInfo, MessageType messageType, InetSocketAddress sender) {
+        int keyLength = bytebuf.readInt();
+        String key = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
+        logger.info("Received key " + key + " and node info from client: " + nodeInfo);
+        String value = myNode.findValueByKey(key);
+        if(value != null) {
+            ByteBuf responseMsg = ctx.alloc().buffer();
+            responseMsg.writeInt(messageType.ordinal());
+            ByteBuf responseBuf = Unpooled.wrappedBuffer(value.getBytes());
+            responseMsg.writeInt(responseBuf.readableBytes());
+            responseMsg.writeBytes(responseBuf);
+
+            String success = "Responded to FIND_VALUE from client " + sender;
+            Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -128,6 +163,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param ctx          The channel handler context.
      * @param bytebuf      The received ByteBuf.
      * @param messageType  The type of the message.
+     * @param sender       The address of the sender node
      */
     private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) {
         int pingLength = bytebuf.readInt();

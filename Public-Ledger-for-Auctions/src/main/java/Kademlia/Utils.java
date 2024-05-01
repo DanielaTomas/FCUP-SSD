@@ -89,16 +89,16 @@ public class Utils {
     /**
      * Finds the closest nodes to the requested node information.
      *
-     * @param requestedNodeInfo The requested node information.
+     * @param requestedNodeId The requested node id.
      * @return List of closest nodes.
      */
-    public static List<NodeInfo> findClosestNodes(List<NodeInfo> myRoutingTable, NodeInfo requestedNodeInfo, final int K) {
+    public static List<NodeInfo> findClosestNodes(List<NodeInfo> myRoutingTable, String requestedNodeId, final int K) {
         List<NodeInfo> nearNodes = new ArrayList<>();
         Map<NodeInfo, Integer> distanceMap = new HashMap<>();
 
         for (NodeInfo nodeInfo : myRoutingTable) {
-            if(!nodeInfo.equals(requestedNodeInfo)) {
-                int distance = Utils.calculateDistance(requestedNodeInfo.getNodeId(), nodeInfo.getNodeId());
+            if(!nodeInfo.getNodeId().equals(requestedNodeId)) {
+                int distance = Utils.calculateDistance(requestedNodeId, nodeInfo.getNodeId());
                 distanceMap.put(nodeInfo, distance);
             }
         }

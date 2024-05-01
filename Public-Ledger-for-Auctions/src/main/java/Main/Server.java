@@ -10,6 +10,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /** Class Server: Represents a Netty server.*/
@@ -60,8 +61,25 @@ public class Server implements Runnable {
                 })
                 .option(ChannelOption.SO_REUSEADDR, true);
 
-        ChannelFuture channelFuture = bootstrap.bind(port).sync();
-        logger.info("Server started and listening on port " + port);
-        channelFuture.channel().closeFuture().sync();
+        int maxAttempts = 3;
+        int currentAttempt = 0;
+        int retryDelaySeconds = 5;
+
+        while (currentAttempt < maxAttempts) {
+            try {
+                ChannelFuture channelFuture = bootstrap.bind(port).sync();
+                logger.info("Server started and listening on port " + port);
+                channelFuture.channel().closeFuture().sync();
+                break;
+            } catch (Exception e) {
+                currentAttempt++;
+                logger.warning("Failed to bind to port " + port + ". Retrying in " + retryDelaySeconds + " seconds.");
+                TimeUnit.SECONDS.sleep(retryDelaySeconds);
+            }
+        }
+
+        if (currentAttempt >= maxAttempts) {
+            logger.severe("Could not start server after " + maxAttempts + " attempts. Exiting.");
+        }
     }
 }

@@ -42,7 +42,7 @@ public class Peer {
                 String bootstrapIp = args[1];
                 NodeInfo bootstrapNodeInfo = new NodeInfo(bootstrapIp, myself.port);
                 myNode.updateRoutingTable(bootstrapNodeInfo);
-                kademlia.joinNetwork(myNode, bootstrapNodeInfo);
+                kademlia.joinNetwork(myNode, bootstrapNodeInfo.getNodeId());
             }
 
             try {
