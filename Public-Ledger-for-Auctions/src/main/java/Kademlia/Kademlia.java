@@ -93,8 +93,8 @@ public class Kademlia {
 
         List<NodeInfo> closestNodes = findClosestNodes(routingTable, targetNodeId, K);
         List<NodeInfo> nodeInfoList = new ArrayList<>();
-        for (NodeInfo targetNodeInfo : closestNodes) {
-            nodeInfoList.addAll((List<NodeInfo>) connectAndHandle(myNodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE));
+        for (NodeInfo closestNode : closestNodes) {
+            nodeInfoList.addAll((List<NodeInfo>) connectAndHandle(myNodeInfo, closestNode, null, null, MessageType.FIND_NODE));
         }
         //TODO isto deve ser recursivo?
         for(NodeInfo nodeInfo : nodeInfoList) {
@@ -131,7 +131,7 @@ public class Kademlia {
      * @param myNode The local node.
      * @param key The key to find.
      */
-    public Object findValue(Node myNode, String key) { //FIXME
+    public Object findValue(Node myNode, String key) {
         logger.info("Kademlia - Starting FIND_VALUE RPC");
         String storedValue = myNode.findValueByKey(key);
         if(storedValue != null) {
@@ -139,7 +139,22 @@ public class Kademlia {
             return storedValue;
         }
 
-        return findNode(myNode.getNodeInfo(), key, myNode.getRoutingTable());
+        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
+
+        if(keyNearNodes == null) {
+            logger.info("Kademlia - Key near node not found.");
+            return null;
+        }
+
+        for (NodeInfo keyNearNode : keyNearNodes) {
+            Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, null, MessageType.FIND_VALUE);
+            if (result instanceof String) {
+                logger.info("Kademlia - Value found: " + result);
+                return result;
+            }
+        }
+
+        return keyNearNodes;
     }
 
     /**
@@ -178,7 +193,8 @@ public class Kademlia {
      * This method is used for key-based routing in the Kademlia DHT protocol.
      *
      * @param myNodeInfo       The local node information.
-     * @param key    id of the key.
+     * @param key              id of the key.
+     * @param keyNearNodes     key near nodes.
      * @return the node info closest to the given key.
      */
     private NodeInfo findNodeForKey(NodeInfo myNodeInfo, String key, List<NodeInfo> keyNearNodes) {

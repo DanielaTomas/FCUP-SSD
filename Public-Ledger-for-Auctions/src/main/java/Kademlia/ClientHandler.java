@@ -21,7 +21,6 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private NodeInfo nodeInfo;
     private NodeInfo targetNodeInfo;
     private List<NodeInfo> nearNodesInfo;
-    private String storedValue;
     private Kademlia.MessageType messageType;
     private String key;
     private String value;
@@ -61,7 +60,14 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 ByteBuf nodeInfoBuf = Utils.serialize(nodeInfo);
                 msg.writeInt(nodeInfoBuf.readableBytes());
                 msg.writeBytes(nodeInfoBuf);
-                success = "Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                if(messageType == Kademlia.MessageType.FIND_VALUE) {
+                    msg.writeInt(key.length());
+                    msg.writeCharSequence(key, StandardCharsets.UTF_8);
+                    success = "Sent key: " + key + " and node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                }
+                else {
+                    success = "Sent node info to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                }
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             case PING:
@@ -97,10 +103,10 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException {
         if (msg instanceof DatagramPacket packet) {
             ByteBuf bytebuf = packet.content();
-            Kademlia.MessageType messageType = Kademlia.MessageType.values()[bytebuf.readInt()];
+            messageType = Kademlia.MessageType.values()[bytebuf.readInt()];
             switch (messageType) {
                 case FIND_NODE, FIND_VALUE:
-                    findNodeHandler(bytebuf);
+                    findNodeHandler(ctx,bytebuf);
                     break;
                 case PING, STORE:
                     pingAndStoreHandler(ctx,bytebuf);
@@ -120,22 +126,31 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     /**
      * Handles the response from the server for FIND_NODE messages.
      *
+     * @param ctx The channel handler context.
      * @param bytebuf The received ByteBuf.
      * @throws IOException            If an I/O error occurs.
      * @throws ClassNotFoundException If the class of the serialized object cannot be found.
      */
-    private void findNodeHandler(ByteBuf bytebuf) throws IOException, ClassNotFoundException {
-        int nodeInfoListLength = bytebuf.readInt();
-        ByteBuf nodeInfoListBytes = bytebuf.readBytes(nodeInfoListLength);
-        Object deserializedObject = Utils.deserialize(nodeInfoListBytes);
+    private void findNodeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf) throws IOException, ClassNotFoundException {
+        int messageLength = bytebuf.readInt();
+        ByteBuf messageBytes = bytebuf.readBytes(messageLength);
+
+        if(messageType == Kademlia.MessageType.FIND_VALUE) {
+            value = messageBytes.toString(StandardCharsets.UTF_8);
+            logger.info("Received value: " + value + " from " + ctx.channel().remoteAddress());
+            return;
+        }
+
+        Object deserializedObject = Utils.deserialize(messageBytes);
+
         if (deserializedObject instanceof ArrayList) {
             ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
             logger.info("Received near nodes info from server: " + nodeInfoList);
             nearNodesInfo.addAll(nodeInfoList);
-            nodeInfoListBytes.release();
         } else {
             logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
         }
+        messageBytes.release();
     }
 
     /**
@@ -147,9 +162,9 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private void pingAndStoreHandler(ChannelHandlerContext ctx, ByteBuf bytebuf) {
         int ackLength = bytebuf.readInt();
         ByteBuf ackBytes = bytebuf.readBytes(ackLength);
-        String ack = ackBytes.toString(StandardCharsets.UTF_8);;
+        String ack = ackBytes.toString(StandardCharsets.UTF_8);
         logger.info("Received " + ack + " from " + ctx.channel().remoteAddress());
-        //ackBytes.release();
+        ackBytes.release();
     }
 
     /**
@@ -179,6 +194,6 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      * @return The stored value.
      */
     public String getStoredValue() {
-        return this.storedValue;
+        return this.value;
     }
 }
