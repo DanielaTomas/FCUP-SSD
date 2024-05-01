@@ -21,12 +21,12 @@ public class Main {
             port = Integer.parseInt(args[0]);
             //System.setProperty("filename", port + ".log");
             Node node = new Node(new NodeInfo(ip, port));
-            Kademlia kademlia = new Kademlia();
+            Kademlia kademlia = Kademlia.getInstance();
 
             if (args.length == 2) { // Node
                 NodeInfo bootstrapNodeInfo = new NodeInfo(args[1], port);
                 node.updateRoutingTable(bootstrapNodeInfo);
-                kademlia.joinNetwork(node, bootstrapNodeInfo);
+                kademlia.joinNetwork(node, bootstrapNodeInfo.getNodeId());
                 Scanner in = new Scanner(System.in);
                 System.out.println("Store? 'y' or 'n'");
                 String n = in.nextLine();
@@ -38,7 +38,7 @@ public class Main {
             }
 
             try {
-                new Server(port, node).start();
+                //new Server(port, node).start();
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Error starting the server", e);
             }

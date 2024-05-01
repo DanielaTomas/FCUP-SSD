@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['node_46',['Node',['../classorg_1_1example_1_1Node.html#a42bd73056f540571dd64bd06aefdbf68',1,'org.example.Node.Node()'],['../classorg_1_1example_1_1Node.html',1,'org.example.Node']]],
-  ['nodeinfo_47',['NodeInfo',['../classorg_1_1example_1_1NodeInfo.html#a4194f2e3e03372f28c99c546fc2b2115',1,'org.example.NodeInfo.NodeInfo()'],['../classorg_1_1example_1_1NodeInfo.html',1,'org.example.NodeInfo']]]
+  ['node_53',['Node',['../classKademlia_1_1Node.html',1,'Kademlia.Node'],['../classKademlia_1_1Node.html#ad39f576099d174551be97f612176ae28',1,'Kademlia.Node.Node()']]],
+  ['nodeinfo_54',['NodeInfo',['../classKademlia_1_1NodeInfo.html',1,'Kademlia.NodeInfo'],['../classKademlia_1_1NodeInfo.html#ab53f6af5aa5ba8bf4d110296907bc44e',1,'Kademlia.NodeInfo.NodeInfo()']]]
 ];

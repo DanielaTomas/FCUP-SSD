@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['transaction_71',['Transaction',['../classorg_1_1example_1_1Transaction.html',1,'org::example']]]
+  ['server_87',['Server',['../classMain_1_1Server.html',1,'Main']]],
+  ['serverhandler_88',['ServerHandler',['../classKademlia_1_1ServerHandler.html',1,'Kademlia']]]
 ];

@@ -96,8 +96,11 @@ public class Block {
 
     public void incrementNonce() {this.nonce++; }
 
-
-
+    /**
+     * Returns a string representation of the Block object.
+     *
+     * @return A string representation of the object.
+     */
     @Override
     public String toString() {
         return "index:"+this.index+"\n" +
@@ -108,6 +111,12 @@ public class Block {
                 "" + this.transactions + "\n";
     }
 
+    /**
+     * Checks if this Block object is equal to another object.
+     *
+     * @param obj The object to compare with.
+     * @return true if the objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if(this == obj){

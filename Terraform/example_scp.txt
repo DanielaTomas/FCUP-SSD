@@ -1,0 +1,5 @@
+scp /home/diogo/Documents/FCUP-SSD/Public-Ledger-for-Auctions/build/libs/Public-Ledger-for-Auctions-1.0-SNAPSHOT.jar diogoffn@34.76.148.53:/home/diogoffn/ &&
+
+scp /home/diogo/Documents/FCUP-SSD/Public-Ledger-for-Auctions/build/libs/Public-Ledger-for-Auctions-1.0-SNAPSHOT.jar diogoffn@35.187.61.202:/home/diogoffn/ &&
+
+scp /home/diogo/Documents/FCUP-SSD/Public-Ledger-for-Auctions/build/libs/Public-Ledger-for-Auctions-1.0-SNAPSHOT.jar diogoffn@34.38.23.24:/home/diogoffn/

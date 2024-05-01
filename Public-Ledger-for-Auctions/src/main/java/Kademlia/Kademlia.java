@@ -12,11 +12,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
+import static Kademlia.Utils.findClosestNodes;
+
 /** Class Kademlia */
 public class Kademlia {
 
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
     private static final int K = 2; //TODO ajustar valor
+    private static Kademlia instance;
 
     /**
      * Enum for message types used in Kademlia.
@@ -26,22 +29,41 @@ public class Kademlia {
     }
 
     /**
+     * Private constructor for the Kademlia class. This constructor is private to enforce the Singleton design pattern.
+     */
+    private Kademlia() {}
+
+    /**
+     * Gets the singleton instance of the Kademlia class.
+     *
+     * @return The singleton instance of the Kademlia class.
+     */
+    public static Kademlia getInstance(){
+        if(instance == null){
+            instance = new Kademlia();
+        }
+
+        return instance;
+    }
+
+    /**
      * Joins the Kademlia network.
      *
-     * @param node              The local node.
-     * @param bootstrapNodeInfo Information about the bootstrap node.
+     * @param myNode              The local node.
+     * @param bootstrapNodeId id of the bootstrap node.
      */
-    public void joinNetwork(Node node, NodeInfo bootstrapNodeInfo) {
-        List<NodeInfo> nearNodes = findNode(node.getNodeInfo(), bootstrapNodeInfo);
+    public void joinNetwork(Node myNode, String bootstrapNodeId) {
+        logger.info("Kademlia - Trying to contact bootstrap");
+        List<NodeInfo> nearNodes = findNode(myNode.getNodeInfo(), bootstrapNodeId, myNode.getRoutingTable());
         for(NodeInfo nearNodeInfo : nearNodes) {
-            node.updateRoutingTable(nearNodeInfo);
-            List<NodeInfo> additionalNearNodesInfo = findNode(node.getNodeInfo(), nearNodeInfo);
+            myNode.updateRoutingTable(nearNodeInfo);
+            List<NodeInfo> additionalNearNodesInfo = findNode(myNode.getNodeInfo(), nearNodeInfo.getNodeId(), myNode.getRoutingTable());
             while(!additionalNearNodesInfo.isEmpty()) {
                 List<NodeInfo> nextNearNodes = new ArrayList<>();
                 for (NodeInfo nextNearNodeInfo : additionalNearNodesInfo) {
-                    if(!node.getRoutingTable().contains(nextNearNodeInfo)) {
-                        node.updateRoutingTable(nextNearNodeInfo);
-                        List<NodeInfo> nextAdditionalNearNodes = findNode(node.getNodeInfo(), nextNearNodeInfo);
+                    if(!myNode.getRoutingTable().contains(nextNearNodeInfo)) {
+                        myNode.updateRoutingTable(nextNearNodeInfo);
+                        List<NodeInfo> nextAdditionalNearNodes = findNode(myNode.getNodeInfo(), nextNearNodeInfo.getNodeId(), myNode.getRoutingTable());
                         nextNearNodes.addAll(nextAdditionalNearNodes);
                     }
                 }
@@ -53,62 +75,116 @@ public class Kademlia {
     /**
      * Finds the closest nodes to the target node by sending a FIND_NODE message.
      *
-     * @param nodeInfo       Information about the local node.
-     * @param targetNodeInfo Information about the target node.
+     * @param myNodeInfo       Information about the local node.
+     * @param targetNodeId id of the target node.
+     * @param routingTable routing table of the local node.
+     *
      * @return List of near nodes.
      */
-    private List<NodeInfo> findNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo) {
-        return (List<NodeInfo>) connectAndHandle(nodeInfo, targetNodeInfo, null, null, MessageType.FIND_NODE);
+    public List<NodeInfo> findNode(NodeInfo myNodeInfo, String targetNodeId, List<NodeInfo> routingTable) {
+        logger.info("Kademlia - Starting FIND_NODE RPC");
+
+        for (NodeInfo nodeInfo : routingTable) {
+            if (nodeInfo.getNodeId().equals(targetNodeId)){
+                logger.info("Kademlia - Found node: " + nodeInfo);
+                return (List<NodeInfo>) connectAndHandle(myNodeInfo, nodeInfo, null, null, MessageType.FIND_NODE);
+            }
+        }
+
+        List<NodeInfo> closestNodes = findClosestNodes(routingTable, targetNodeId, K);
+        List<NodeInfo> nodeInfoList = new ArrayList<>();
+        for (NodeInfo closestNode : closestNodes) {
+            nodeInfoList.addAll((List<NodeInfo>) connectAndHandle(myNodeInfo, closestNode, null, null, MessageType.FIND_NODE));
+        }
+        //TODO isto deve ser recursivo?
+        for(NodeInfo nodeInfo : nodeInfoList) {
+            if(nodeInfo.getNodeId().equals(targetNodeId)) {
+                logger.info("Kademlia - Found node: " + nodeInfo);
+                return (List<NodeInfo>) connectAndHandle(myNodeInfo, nodeInfo, null, null, MessageType.FIND_NODE);
+            }
+        }
+
+        logger.info("Kademlia - Node not found");
+        return nodeInfoList;
     }
 
     /**
      * Sends a ping message to the target node.
      *
-     * @param targetNodeInfo Information about the target node.
+     * @param myNodeInfo       Information about the local node.
+     * @param targetNodeId   ID of the target node.
+     * @param routingTable   Routing table of the local node.
      */
-    public void ping(NodeInfo targetNodeInfo) {
-        connectAndHandle(null, targetNodeInfo, null, null, MessageType.PING);
+    public void ping(NodeInfo myNodeInfo, String targetNodeId , List<NodeInfo> routingTable) {
+        logger.info("Kademlia - Starting PING RPC");
+        for (NodeInfo targetNodeInfo : routingTable) {
+            if (targetNodeInfo.getNodeId().equals(targetNodeId) ){
+                logger.info("Kademlia - Found node: " + targetNodeInfo);
+                connectAndHandle(myNodeInfo, targetNodeInfo, null, null, MessageType.PING);
+            }
+        }
     }
-
 
     /**
      * Finds the value corresponding to a key in the Kademlia network.
      *
-     * @param node The local node.
+     * @param myNode The local node.
      * @param key The key to find.
      */
-    public Object findValue(Node node, String key) { //FIXME ?
-        String storedValue = node.findValueByKey(key);
+    public Object findValue(Node myNode, String key) {
+        logger.info("Kademlia - Starting FIND_VALUE RPC");
+        String storedValue = myNode.findValueByKey(key);
         if(storedValue != null) {
             logger.info("Stored value: " + storedValue);
             return storedValue;
         }
 
-        NodeInfo keyInfo = node.findNodeById(key);
-        if(keyInfo != null) return findNode(node.getNodeInfo(), keyInfo);
-        return null;
+        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
+
+        if(keyNearNodes == null) {
+            logger.info("Kademlia - Key near node not found.");
+            return null;
+        }
+
+        for (NodeInfo keyNearNode : keyNearNodes) {
+            Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, null, MessageType.FIND_VALUE);
+            if (result instanceof String) {
+                logger.info("Kademlia - Value found: " + result);
+                return result;
+            }
+        }
+
+        return keyNearNodes;
     }
 
     /**
      * Stores a key-value pair in the Kademlia network.
      *
-     * @param node  The local node.
+     * @param myNode  The local node.
      * @param key   The key to store.
      * @param value The value corresponding to the key.
      */
-    public void store(Node node, String key, String value) { //FIXME ?
-        NodeInfo keyInfo = node.findNodeById(key);
-        NodeInfo targetNodeInfo = findNodeForKey(node, keyInfo);
+    public void store(Node myNode, String key, String value) {
+        logger.info("Kademlia - Starting STORE RPC");
+
+        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable()); //TODO não preciso disto se a key já estiver na routing table...
+
+        if(myNode.findNodeById(key) == null && keyNearNodes == null) {
+            logger.severe("Error: Unable to find a node to store the key-value pair.");
+            return;
+        }
+
+        NodeInfo targetNodeInfo = findNodeForKey(myNode.getNodeInfo(), key, keyNearNodes);
         if (targetNodeInfo != null) {
-            if (targetNodeInfo.getNodeId().equals(node.getNodeInfo().getNodeId())) {
-                node.storeKeyValue(key, value);
+            if (targetNodeInfo.equals(myNode.getNodeInfo())) {
+                myNode.storeKeyValue(key, value);
                 logger.info("key: " + key + ", value: " + value + " stored");
             } else {
-                connectAndHandle(node.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
+                connectAndHandle(myNode.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
             }
         }
         else {
-            System.err.println("Error: Unable to find a node to store the key-value pair.");
+            logger.severe("Error: Unable to find a node to store the key-value pair.");
         }
     }
 
@@ -116,29 +192,20 @@ public class Kademlia {
      * Finds the node in the network that is closest to the given key.
      * This method is used for key-based routing in the Kademlia DHT protocol.
      *
-     * @param node       The local node performing the search.
-     * @param keyInfo    Information about the key (usually represented as a NodeInfo object).
-     * @return The NodeInfo object representing the node closest to the given key, or null if the keyInfo parameter is null or the routing table is empty.
+     * @param myNodeInfo       The local node information.
+     * @param key              id of the key.
+     * @param keyNearNodes     key near nodes.
+     * @return the node info closest to the given key.
      */
-    private NodeInfo findNodeForKey(Node node, NodeInfo keyInfo) {
-        if(keyInfo == null) return null;
-        NodeInfo closestNode = node.getNodeInfo();
-        int closestDistance = Utils.calculateDistance(node.getNodeInfo().getNodeId(), keyInfo.getNodeId());
-        List<NodeInfo> routingTable = node.getRoutingTable();
+    private NodeInfo findNodeForKey(NodeInfo myNodeInfo, String key, List<NodeInfo> keyNearNodes) {
+        NodeInfo closestNode = myNodeInfo;
+        int closestDistance = Utils.calculateDistance(myNodeInfo.getNodeId(), key);
 
-        List<NodeInfo> nearNodesInfo = Utils.findClosestNodes(routingTable, keyInfo, K);
-
-        for (NodeInfo nearNodeInfo : nearNodesInfo) {
-            List<NodeInfo> keyNearNodes = findNode(keyInfo, nearNodeInfo);
-            for(NodeInfo keyNearNode : keyNearNodes) {
-                if(!routingTable.contains(keyNearNode)) {
-                    node.updateRoutingTable(keyNearNode);
-                }
-                int distance = Utils.calculateDistance(keyNearNode.getNodeId(), keyInfo.getNodeId());
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestNode = nearNodeInfo;
-                }
+        for (NodeInfo keyNearNodeInfo : keyNearNodes) {
+            int distance = Utils.calculateDistance(keyNearNodeInfo.getNodeId(), key);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestNode = keyNearNodeInfo;
             }
         }
         return closestNode;
@@ -147,20 +214,20 @@ public class Kademlia {
     /**
      * Connects to a target node, sends a message, and handles the response.
      *
-     * @param nodeInfo        Information about the local node.
+     * @param myNodeInfo        Information about the local node.
      * @param targetNodeInfo  Information about the target node.
      * @param key             The key for the message (optional, used in STORE message).
      * @param value           The value for the message (optional, used in STORE message).
      * @param messageType     The type of message to send.
      * @return List of near nodes.
      */
-    private Object connectAndHandle(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, String value, MessageType messageType) {
+    private Object connectAndHandle(NodeInfo myNodeInfo, NodeInfo targetNodeInfo, String key, String value, MessageType messageType) {
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
         AtomicReference<String> storedValue = new AtomicReference<>(null);;
         EventLoopGroup group = new NioEventLoopGroup();
         try {
-            connectToNode(nodeInfo, targetNodeInfo, group, channel -> {
-                ClientHandler clientHandler = new ClientHandler(nodeInfo, targetNodeInfo, key, value, messageType, nearNodesInfo);
+            connectToNode(myNodeInfo, targetNodeInfo, group, channel -> {
+                ClientHandler clientHandler = new ClientHandler(myNodeInfo, targetNodeInfo, key, value, messageType, nearNodesInfo);
                 channel.pipeline().addLast(clientHandler);
                 if (messageType == MessageType.FIND_VALUE) storedValue.set(clientHandler.getStoredValue());
             });
@@ -184,16 +251,17 @@ public class Kademlia {
     /**
      * Connects to a target node and sets up the channel.
      *
-     * @param nodeInfo        Information about the local node.
+     * @param myNodeInfo        Information about the local node.
      * @param targetNodeInfo  Information about the target node.
      * @param group           The event loop group.
      * @param channelConsumer Consumer function to set up the channel pipeline.
      * @throws InterruptedException If the connection is interrupted.
      */
-    private void connectToNode(NodeInfo nodeInfo, NodeInfo targetNodeInfo, EventLoopGroup group, MessagePassingQueue.Consumer<Channel> channelConsumer) throws InterruptedException {
+    private void connectToNode(NodeInfo myNodeInfo, NodeInfo targetNodeInfo, EventLoopGroup group, MessagePassingQueue.Consumer<Channel> channelConsumer) throws InterruptedException {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)
                 .channel(NioDatagramChannel.class)
+                .option(ChannelOption.AUTO_CLOSE, true)
                 .handler(new ChannelInitializer<NioDatagramChannel>() {
                     @Override
                     protected void initChannel(NioDatagramChannel ch) throws Exception {
@@ -201,7 +269,7 @@ public class Kademlia {
                     }
                 });
 
-        bootstrap.localAddress(nodeInfo.getPort());
+        //bootstrap.localAddress(myNodeInfo.getPort()); //TODO
         ChannelFuture channelFuture = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         channelFuture.channel().closeFuture().await(3, TimeUnit.SECONDS);

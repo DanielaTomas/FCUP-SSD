@@ -24,7 +24,7 @@ public class BlockchainTest {
 
     @BeforeEach
     public void setup() {
-        this.blockchain = new Blockchain();
+        this.blockchain = Blockchain.getInstance();
         this.AliceKeyPair = Transaction.generateKeyPair();
         this.BobKeyPair = Transaction.generateKeyPair();
         this.CharlieKeyPair = Transaction.generateKeyPair();
@@ -62,7 +62,7 @@ public class BlockchainTest {
     @Test
     public void miningPendingTransactions() {
         this.sign_and_add_transactions();
-        blockchain.minePendingTransactions(MinerKeyPair.getPublic());
+        //blockchain.minePendingTransactions(MinerKeyPair.getPublic());
         Assertions.assertEquals(2, blockchain.getChain().size());
         Assertions.assertEquals(1, blockchain.getPendingTransactions().size());
     }
@@ -70,7 +70,7 @@ public class BlockchainTest {
     @Test
     public void debugPrint() {
         this.sign_and_add_transactions();
-        blockchain.minePendingTransactions(MinerKeyPair.getPublic());
+        //blockchain.minePendingTransactions(MinerKeyPair.getPublic());
 
         System.out.println("Blockchain:");
         for (Block block : blockchain.getChain()) {

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['utils_72',['Utils',['../classorg_1_1example_1_1Utils.html',1,'org::example']]]
+  ['transaction_89',['Transaction',['../classBlockChain_1_1Transaction.html',1,'BlockChain']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kademlia_41',['Kademlia',['../classorg_1_1example_1_1Kademlia.html',1,'org::example']]]
+  ['kademlia_49',['Kademlia',['../classKademlia_1_1Kademlia.html',1,'Kademlia']]]
 ];

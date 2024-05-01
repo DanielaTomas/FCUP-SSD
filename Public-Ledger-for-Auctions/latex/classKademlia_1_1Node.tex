@@ -1,0 +1,128 @@
+\hypertarget{classKademlia_1_1Node}{}\doxysection{Kademlia.\+Node Class Reference}
+\label{classKademlia_1_1Node}\index{Kademlia.Node@{Kademlia.Node}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classKademlia_1_1Node_ad39f576099d174551be97f612176ae28}{Node}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} node\+Info)
+\item 
+\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} \mbox{\hyperlink{classKademlia_1_1Node_a80c7f66ed76ec1e1566f02cc0661d084}{find\+Node\+By\+Id}} (String node\+Id)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Node_a1507dfc0295772e8fa65e62fc7b14f0e}{update\+Routing\+Table}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} node\+Info)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Node_a829ba12a951a25441f081b49458d3bdd}{store\+Key\+Value}} (String key, String value)
+\item 
+String \mbox{\hyperlink{classKademlia_1_1Node_a9271ea189d8f2d81449f7c3c2c6145b6}{find\+Value\+By\+Key}} (String key)
+\item 
+\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} \mbox{\hyperlink{classKademlia_1_1Node_afc85c64b70da64e767b7b38e4fe6f426}{get\+Node\+Info}} ()
+\item 
+List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1Node_aa0444a1655fb66eb4cc3fec4d4d2f74a}{get\+Routing\+Table}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classKademlia_1_1Node}{Node}}\+: Represents a node in a peer-\/to-\/peer network. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classKademlia_1_1Node_ad39f576099d174551be97f612176ae28}\label{classKademlia_1_1Node_ad39f576099d174551be97f612176ae28}} 
+\index{Kademlia.Node@{Kademlia.Node}!Node@{Node}}
+\index{Node@{Node}!Kademlia.Node@{Kademlia.Node}}
+\doxysubsubsection{\texorpdfstring{Node()}{Node()}}
+{\footnotesize\ttfamily Kademlia.\+Node.\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a node with the specified parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Info} & id, ip and port of the node. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classKademlia_1_1Node_a80c7f66ed76ec1e1566f02cc0661d084}\label{classKademlia_1_1Node_a80c7f66ed76ec1e1566f02cc0661d084}} 
+\index{Kademlia.Node@{Kademlia.Node}!findNodeById@{findNodeById}}
+\index{findNodeById@{findNodeById}!Kademlia.Node@{Kademlia.Node}}
+\doxysubsubsection{\texorpdfstring{findNodeById()}{findNodeById()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} Kademlia.\+Node.\+find\+Node\+By\+Id (\begin{DoxyParamCaption}\item[{String}]{node\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Find a \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} in the routing table by ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & The ID of the \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} to find. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} with the given ID, or null if not found. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Node_a9271ea189d8f2d81449f7c3c2c6145b6}\label{classKademlia_1_1Node_a9271ea189d8f2d81449f7c3c2c6145b6}} 
+\index{Kademlia.Node@{Kademlia.Node}!findValueByKey@{findValueByKey}}
+\index{findValueByKey@{findValueByKey}!Kademlia.Node@{Kademlia.Node}}
+\doxysubsubsection{\texorpdfstring{findValueByKey()}{findValueByKey()}}
+{\footnotesize\ttfamily String Kademlia.\+Node.\+find\+Value\+By\+Key (\begin{DoxyParamCaption}\item[{String}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Finds the value associated with the given key in the storage.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value associated with the given key, or null if the key is not found. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Node_afc85c64b70da64e767b7b38e4fe6f426}\label{classKademlia_1_1Node_afc85c64b70da64e767b7b38e4fe6f426}} 
+\index{Kademlia.Node@{Kademlia.Node}!getNodeInfo@{getNodeInfo}}
+\index{getNodeInfo@{getNodeInfo}!Kademlia.Node@{Kademlia.Node}}
+\doxysubsubsection{\texorpdfstring{getNodeInfo()}{getNodeInfo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} Kademlia.\+Node.\+get\+Node\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the information about this node.
+
+\begin{DoxyReturn}{Returns}
+Information about this node. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Node_aa0444a1655fb66eb4cc3fec4d4d2f74a}\label{classKademlia_1_1Node_aa0444a1655fb66eb4cc3fec4d4d2f74a}} 
+\index{Kademlia.Node@{Kademlia.Node}!getRoutingTable@{getRoutingTable}}
+\index{getRoutingTable@{getRoutingTable}!Kademlia.Node@{Kademlia.Node}}
+\doxysubsubsection{\texorpdfstring{getRoutingTable()}{getRoutingTable()}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Node.\+get\+Routing\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the routing table of this node.
+
+\begin{DoxyReturn}{Returns}
+The routing table of this node. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Node_a829ba12a951a25441f081b49458d3bdd}\label{classKademlia_1_1Node_a829ba12a951a25441f081b49458d3bdd}} 
+\index{Kademlia.Node@{Kademlia.Node}!storeKeyValue@{storeKeyValue}}
+\index{storeKeyValue@{storeKeyValue}!Kademlia.Node@{Kademlia.Node}}
+\doxysubsubsection{\texorpdfstring{storeKeyValue()}{storeKeyValue()}}
+{\footnotesize\ttfamily void Kademlia.\+Node.\+store\+Key\+Value (\begin{DoxyParamCaption}\item[{String}]{key,  }\item[{String}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Stores a key-\/value pair in the storage.
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & The key to store. \\
+\hline
+{\em value} & The value corresponding to the key. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Node_a1507dfc0295772e8fa65e62fc7b14f0e}\label{classKademlia_1_1Node_a1507dfc0295772e8fa65e62fc7b14f0e}} 
+\index{Kademlia.Node@{Kademlia.Node}!updateRoutingTable@{updateRoutingTable}}
+\index{updateRoutingTable@{updateRoutingTable}!Kademlia.Node@{Kademlia.Node}}
+\doxysubsubsection{\texorpdfstring{updateRoutingTable()}{updateRoutingTable()}}
+{\footnotesize\ttfamily void Kademlia.\+Node.\+update\+Routing\+Table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{node\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Updates the routing table with information about another node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Info} & Information about the node to be added to the routing table. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Kademlia/Node.\+java\end{DoxyCompactItemize}

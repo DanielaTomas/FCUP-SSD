@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['mineblock_113',['mineBlock',['../classorg_1_1example_1_1Block.html#a83027532dbc9a28b6f60b7dde511b00a',1,'org::example::Block']]],
-  ['minependingtransactions_114',['minePendingTransactions',['../classorg_1_1example_1_1Blockchain.html#a08af72f2a4f360708240d5b27b9632a4',1,'org::example::Blockchain']]]
+  ['node_135',['Node',['../classKademlia_1_1Node.html#ad39f576099d174551be97f612176ae28',1,'Kademlia::Node']]],
+  ['nodeinfo_136',['NodeInfo',['../classKademlia_1_1NodeInfo.html#ab53f6af5aa5ba8bf4d110296907bc44e',1,'Kademlia::NodeInfo']]]
 ];

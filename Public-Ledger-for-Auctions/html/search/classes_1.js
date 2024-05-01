@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['clienthandler_64',['ClientHandler',['../classorg_1_1example_1_1ClientHandler.html',1,'org::example']]]
+  ['clienthandler_77',['ClientHandler',['../classKademlia_1_1ClientHandler.html',1,'Kademlia']]],
+  ['constants_78',['Constants',['../classBlockChain_1_1Constants.html',1,'BlockChain']]]
 ];

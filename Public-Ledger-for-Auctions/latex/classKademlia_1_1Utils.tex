@@ -1,0 +1,143 @@
+\hypertarget{classKademlia_1_1Utils}{}\doxysection{Kademlia.\+Utils Class Reference}
+\label{classKademlia_1_1Utils}\index{Kademlia.Utils@{Kademlia.Utils}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static String \mbox{\hyperlink{classKademlia_1_1Utils_a569c1cc2b80d9807b7ecbc158a718a71}{get\+Address}} ()
+\item 
+static Byte\+Buf \mbox{\hyperlink{classKademlia_1_1Utils_a8b1949b5d3b0cf98c03531307f901dc7}{serialize}} (Object obj)  throws IOException 
+\item 
+static Object \mbox{\hyperlink{classKademlia_1_1Utils_a9f78403a316a4540b2b41cfad189f83a}{deserialize}} (Byte\+Buf byte\+Buf)  throws IOException, Class\+Not\+Found\+Exception 
+\item 
+static List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1Utils_a3d184cfb84c637762c22f191f04e2d97}{find\+Closest\+Nodes}} (List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ my\+Routing\+Table, String requested\+Node\+Id, final int K)
+\item 
+static int \mbox{\hyperlink{classKademlia_1_1Utils_a19678da78409aac47c4381dcea0e1bc6}{calculate\+Distance}} (String node\+Id1, String node\+Id2)
+\item 
+static void \mbox{\hyperlink{classKademlia_1_1Utils_a0e561815af890ab2b7efbc4ac6e73dae}{send\+Packet}} (Channel\+Handler\+Context ctx, Byte\+Buf msg, Inet\+Socket\+Address sender, \mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}} message\+Type, String success)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classKademlia_1_1Utils}{Utils}} 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classKademlia_1_1Utils_a19678da78409aac47c4381dcea0e1bc6}\label{classKademlia_1_1Utils_a19678da78409aac47c4381dcea0e1bc6}} 
+\index{Kademlia.Utils@{Kademlia.Utils}!calculateDistance@{calculateDistance}}
+\index{calculateDistance@{calculateDistance}!Kademlia.Utils@{Kademlia.Utils}}
+\doxysubsubsection{\texorpdfstring{calculateDistance()}{calculateDistance()}}
+{\footnotesize\ttfamily static int Kademlia.\+Utils.\+calculate\+Distance (\begin{DoxyParamCaption}\item[{String}]{node\+Id1,  }\item[{String}]{node\+Id2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Calculates the distance between two node IDs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id1} & The first node ID. \\
+\hline
+{\em node\+Id2} & The second node ID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The distance between the node IDs. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Utils_a9f78403a316a4540b2b41cfad189f83a}\label{classKademlia_1_1Utils_a9f78403a316a4540b2b41cfad189f83a}} 
+\index{Kademlia.Utils@{Kademlia.Utils}!deserialize@{deserialize}}
+\index{deserialize@{deserialize}!Kademlia.Utils@{Kademlia.Utils}}
+\doxysubsubsection{\texorpdfstring{deserialize()}{deserialize()}}
+{\footnotesize\ttfamily static Object Kademlia.\+Utils.\+deserialize (\begin{DoxyParamCaption}\item[{Byte\+Buf}]{byte\+Buf }\end{DoxyParamCaption}) throws IOException, Class\+Not\+Found\+Exception\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Deserialize data from a Byte\+Buf into an object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em byte\+Buf} & The Byte\+Buf containing serialized data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The deserialized object. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & If an I/O error occurs during deserialization. \\
+\hline
+{\em Class\+Not\+Found\+Exception} & If the class of the serialized object cannot be found. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classKademlia_1_1Utils_a3d184cfb84c637762c22f191f04e2d97}\label{classKademlia_1_1Utils_a3d184cfb84c637762c22f191f04e2d97}} 
+\index{Kademlia.Utils@{Kademlia.Utils}!findClosestNodes@{findClosestNodes}}
+\index{findClosestNodes@{findClosestNodes}!Kademlia.Utils@{Kademlia.Utils}}
+\doxysubsubsection{\texorpdfstring{findClosestNodes()}{findClosestNodes()}}
+{\footnotesize\ttfamily static List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Utils.\+find\+Closest\+Nodes (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{my\+Routing\+Table,  }\item[{String}]{requested\+Node\+Id,  }\item[{final int}]{K }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Finds the closest nodes to the requested node information.
+
+
+\begin{DoxyParams}{Parameters}
+{\em requested\+Node\+Id} & The requested node id. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of closest nodes. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Utils_a569c1cc2b80d9807b7ecbc158a718a71}\label{classKademlia_1_1Utils_a569c1cc2b80d9807b7ecbc158a718a71}} 
+\index{Kademlia.Utils@{Kademlia.Utils}!getAddress@{getAddress}}
+\index{getAddress@{getAddress}!Kademlia.Utils@{Kademlia.Utils}}
+\doxysubsubsection{\texorpdfstring{getAddress()}{getAddress()}}
+{\footnotesize\ttfamily static String Kademlia.\+Utils.\+get\+Address (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Retrieves the public IP address of the local machine.
+
+\begin{DoxyReturn}{Returns}
+The public IP address of the local machine. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Runtime\+Exception} & if an error occurs during the retrieval process. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classKademlia_1_1Utils_a0e561815af890ab2b7efbc4ac6e73dae}\label{classKademlia_1_1Utils_a0e561815af890ab2b7efbc4ac6e73dae}} 
+\index{Kademlia.Utils@{Kademlia.Utils}!sendPacket@{sendPacket}}
+\index{sendPacket@{sendPacket}!Kademlia.Utils@{Kademlia.Utils}}
+\doxysubsubsection{\texorpdfstring{sendPacket()}{sendPacket()}}
+{\footnotesize\ttfamily static void Kademlia.\+Utils.\+send\+Packet (\begin{DoxyParamCaption}\item[{Channel\+Handler\+Context}]{ctx,  }\item[{Byte\+Buf}]{msg,  }\item[{Inet\+Socket\+Address}]{sender,  }\item[{\mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}}}]{message\+Type,  }\item[{String}]{success }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Sends a packet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The Channel\+Handler\+Context for sending the packet. \\
+\hline
+{\em msg} & The Byte\+Buf containing the packet data to send. \\
+\hline
+{\em sender} & The Inet\+Socket\+Address of the packet sender. \\
+\hline
+{\em message\+Type} & The type of the message being sent. \\
+\hline
+{\em success} & The success message to log upon successful packet send. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Utils_a8b1949b5d3b0cf98c03531307f901dc7}\label{classKademlia_1_1Utils_a8b1949b5d3b0cf98c03531307f901dc7}} 
+\index{Kademlia.Utils@{Kademlia.Utils}!serialize@{serialize}}
+\index{serialize@{serialize}!Kademlia.Utils@{Kademlia.Utils}}
+\doxysubsubsection{\texorpdfstring{serialize()}{serialize()}}
+{\footnotesize\ttfamily static Byte\+Buf Kademlia.\+Utils.\+serialize (\begin{DoxyParamCaption}\item[{Object}]{obj }\end{DoxyParamCaption}) throws IOException\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Serialize an object into a Byte\+Buf.
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & The object to serialize. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Byte\+Buf containing serialized data. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & If an I/O error occurs during serialization. \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Kademlia/Utils.\+java\end{DoxyCompactItemize}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['updateroutingtable_127',['updateRoutingTable',['../classorg_1_1example_1_1Node.html#ada8659be75ebc3911d947302e01d6cef',1,'org::example::Node']]]
+  ['updateroutingtable_149',['updateRoutingTable',['../classKademlia_1_1Node.html#a1507dfc0295772e8fa65e62fc7b14f0e',1,'Kademlia::Node']]]
 ];
