@@ -11,6 +11,8 @@ import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +26,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     private Kademlia.MessageType messageType;
     private String key;
     private String value;
+    private Timer timer;
 
     /**
      * Constructs a new ClientHandler.
@@ -89,6 +92,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 logger.warning("Received unknown message type: " + messageType);
                 break;
         }
+        startTimeoutTimer();
     }
 
     /**
@@ -101,6 +105,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException {
+        cancelTimeoutTimer();
         if (msg instanceof DatagramPacket packet) {
             ByteBuf bytebuf = packet.content();
             messageType = Kademlia.MessageType.values()[bytebuf.readInt()];
@@ -177,6 +182,30 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         logger.log(Level.SEVERE, "Exception caught in client channel", cause);
         ctx.close();
+    }
+
+    /**
+     * Starts a timeout timer for RPC calls.
+     */
+    private void startTimeoutTimer() {
+        timer = new Timer();
+        long timeout = 5000;
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                logger.warning("Server didn't respond to " + messageType + " RPC within " + timeout + " ms");
+            }
+        }, timeout);
+    }
+
+    /**
+     * Cancels the timeout timer if it is active.
+     */
+    private void cancelTimeoutTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
     /**

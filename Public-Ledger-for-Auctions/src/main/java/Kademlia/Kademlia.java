@@ -96,7 +96,7 @@ public class Kademlia {
         for (NodeInfo closestNode : closestNodes) {
             nodeInfoList.addAll((List<NodeInfo>) connectAndHandle(myNodeInfo, closestNode, null, null, MessageType.FIND_NODE));
         }
-        //TODO isto deve ser recursivo?
+
         for(NodeInfo nodeInfo : nodeInfoList) {
             if(nodeInfo.getNodeId().equals(targetNodeId)) {
                 logger.info("Kademlia - Found node: " + nodeInfo);
@@ -121,8 +121,10 @@ public class Kademlia {
             if (targetNodeInfo.getNodeId().equals(targetNodeId) ){
                 logger.info("Kademlia - Found node: " + targetNodeInfo);
                 connectAndHandle(myNodeInfo, targetNodeInfo, null, null, MessageType.PING);
+                return;
             }
         }
+        logger.info("Kademlia - Node not found, PING failed");
     }
 
     /**
@@ -139,13 +141,9 @@ public class Kademlia {
             return storedValue;
         }
 
-        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
+        findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
 
-        if(keyNearNodes == null) {
-            logger.info("Kademlia - Key near node not found.");
-            return null;
-        }
-
+        List<NodeInfo> keyNearNodes = findClosestNodes(myNode.getRoutingTable(), key, K);
         for (NodeInfo keyNearNode : keyNearNodes) {
             Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, null, MessageType.FIND_VALUE);
             if (result instanceof String) {
@@ -167,12 +165,8 @@ public class Kademlia {
     public void store(Node myNode, String key, String value) {
         logger.info("Kademlia - Starting STORE RPC");
 
-        List<NodeInfo> keyNearNodes = findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable()); //TODO não preciso disto se a key já estiver na routing table...
-
-        if(myNode.findNodeById(key) == null && keyNearNodes == null) {
-            logger.severe("Error: Unable to find a node to store the key-value pair.");
-            return;
-        }
+        findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
+        List<NodeInfo> keyNearNodes = findClosestNodes(myNode.getRoutingTable(), key, K);
 
         NodeInfo targetNodeInfo = findNodeForKey(myNode.getNodeInfo(), key, keyNearNodes);
         if (targetNodeInfo != null) {
@@ -269,7 +263,7 @@ public class Kademlia {
                     }
                 });
 
-        //bootstrap.localAddress(myNodeInfo.getPort()); //TODO
+        bootstrap.localAddress(myNodeInfo.getPort()+1); //TODO
         ChannelFuture channelFuture = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         channelFuture.channel().closeFuture().await(3, TimeUnit.SECONDS);

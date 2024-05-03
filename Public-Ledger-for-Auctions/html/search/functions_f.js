@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verifysignature_150',['verifySignature',['../classBlockChain_1_1Transaction.html#af2b706318a67e1c20fbe6865ccc28ea1',1,'BlockChain::Transaction']]]
+  ['verifysignature_148',['verifySignature',['../classBlockChain_1_1Transaction.html#af2b706318a67e1c20fbe6865ccc28ea1',1,'BlockChain::Transaction']]]
 ];

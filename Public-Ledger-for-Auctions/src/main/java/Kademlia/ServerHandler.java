@@ -178,7 +178,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         responseMsg.writeBytes(responseBuf);
         String success = "Responded to PING from client " + sender;
         Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
-        //pingBytes.release();
+        pingBytes.release();
     }
 
     /**
