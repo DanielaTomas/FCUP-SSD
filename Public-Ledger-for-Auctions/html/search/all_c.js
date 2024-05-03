@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['peer_54',['Peer',['../classMain_1_1Peer.html',1,'Main']]],
-  ['peermainmenu_55',['PeerMainMenu',['../classMain_1_1PeerMainMenu.html',1,'Main']]],
-  ['ping_56',['ping',['../classKademlia_1_1Kademlia.html#a99931c9dc2f35779029d7e5dfbe5ae14',1,'Kademlia::Kademlia']]],
-  ['pow_57',['PoW',['../classBlockChain_1_1Miner.html#a00b1a7238abeca531e65d1beb07d2ae5',1,'BlockChain::Miner']]]
+  ['node_52',['Node',['../classKademlia_1_1Node.html',1,'Kademlia.Node'],['../classKademlia_1_1Node.html#ad39f576099d174551be97f612176ae28',1,'Kademlia.Node.Node()']]],
+  ['nodeinfo_53',['NodeInfo',['../classKademlia_1_1NodeInfo.html',1,'Kademlia.NodeInfo'],['../classKademlia_1_1NodeInfo.html#ab53f6af5aa5ba8bf4d110296907bc44e',1,'Kademlia.NodeInfo.NodeInfo()']]]
 ];

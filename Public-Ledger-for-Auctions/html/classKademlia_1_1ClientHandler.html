@@ -85,8 +85,8 @@ Collaboration diagram for Kademlia.ClientHandler:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac0409f249e99ed6ca3528a9c23832e49"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1ClientHandler.html#ac0409f249e99ed6ca3528a9c23832e49">ClientHandler</a> (<a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> nodeInfo, <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo, String key, String value, <a class="el" href="enumKademlia_1_1Kademlia_1_1MessageType.html">Kademlia.MessageType</a> messageType, List&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt; nearNodesInfo)</td></tr>
-<tr class="separator:ac0409f249e99ed6ca3528a9c23832e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f36112e45863e6beb4cfe1bf0c228b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1ClientHandler.html#ad6f36112e45863e6beb4cfe1bf0c228b">ClientHandler</a> (<a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> nodeInfo, <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> targetNodeInfo, String key, Object value, <a class="el" href="enumKademlia_1_1Kademlia_1_1MessageType.html">Kademlia.MessageType</a> messageType, List&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt; nearNodesInfo)</td></tr>
+<tr class="separator:ad6f36112e45863e6beb4cfe1bf0c228b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac38cf5bfafe24058e1b96744d66f9aed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1ClientHandler.html#ac38cf5bfafe24058e1b96744d66f9aed">channelActive</a> (ChannelHandlerContext ctx)  throws IOException </td></tr>
 <tr class="separator:ac38cf5bfafe24058e1b96744d66f9aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25516adade137f7f8f1d6c7e8d10568c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1ClientHandler.html#a25516adade137f7f8f1d6c7e8d10568c">channelRead</a> (ChannelHandlerContext ctx, Object msg)  throws IOException, ClassNotFoundException </td></tr>
@@ -95,14 +95,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8a7fdf6147dc13d266c63504cbb829f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8909ac3aa1137f839484b6292d70f45"><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1ClientHandler.html#ab8909ac3aa1137f839484b6292d70f45">getNearNodesInfo</a> ()</td></tr>
 <tr class="separator:ab8909ac3aa1137f839484b6292d70f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bd069966a066a8e7686e7328ff2c107"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1ClientHandler.html#a5bd069966a066a8e7686e7328ff2c107">getStoredValue</a> ()</td></tr>
-<tr class="separator:a5bd069966a066a8e7686e7328ff2c107"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classKademlia_1_1ClientHandler.html">ClientHandler</a>: Handles the client-side channel events </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac0409f249e99ed6ca3528a9c23832e49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0409f249e99ed6ca3528a9c23832e49">&#9670;&nbsp;</a></span>ClientHandler()</h2>
+<a id="ad6f36112e45863e6beb4cfe1bf0c228b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6f36112e45863e6beb4cfe1bf0c228b">&#9670;&nbsp;</a></span>ClientHandler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +129,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">String&#160;</td>
+          <td class="paramtype">Object&#160;</td>
           <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
@@ -332,33 +330,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the list of near nodes' information.</p>
 <dl class="section return"><dt>Returns</dt><dd>The list of near nodes' information. </dd></dl>
-
-</div>
-</div>
-<a id="a5bd069966a066a8e7686e7328ff2c107"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bd069966a066a8e7686e7328ff2c107">&#9670;&nbsp;</a></span>getStoredValue()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">String Kademlia.ClientHandler.getStoredValue </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Gets the stored value.</p>
-<dl class="section return"><dt>Returns</dt><dd>The stored value. </dd></dl>
 
 </div>
 </div>

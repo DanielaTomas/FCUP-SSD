@@ -35,8 +35,6 @@ public class Block {
 
     /**
      * Calculates the hash of the block.
-     *
-     * @return The calculated hash value.
      */
     public void calculateHash() {
         String input = previousHash + timestamp + nonce + transactions.toString();
@@ -94,6 +92,9 @@ public class Block {
         return this.timestamp;
     }
 
+    /**
+     * Increments the nonce value of the block by one.
+     */
     public void incrementNonce() {this.nonce++; }
 
     /**
@@ -108,7 +109,7 @@ public class Block {
                 "Time:"+BlockChainUtils.convertTime(this.timestamp)+"\n" +
                 "Hash:"+this.hash+"\n" +
                 "Nonce:"+this.nonce+"\n" +
-                "" + this.transactions + "\n";
+                "Transactions:" + this.transactions + "\n";
     }
 
     /**

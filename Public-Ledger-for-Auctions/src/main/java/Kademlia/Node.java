@@ -6,7 +6,7 @@ import java.util.*;
 public class Node {
     private NodeInfo nodeInfo;
     private List<NodeInfo> routingTable;
-    private Map<String,String> storage;
+    private Map<String,Object> storage;
 
 
     /**
@@ -17,7 +17,7 @@ public class Node {
     public Node(NodeInfo nodeInfo) {
         this.nodeInfo = nodeInfo;
         this.routingTable = new ArrayList<>();
-        this.storage = new HashMap<String, String>();
+        this.storage = new HashMap<String, Object>();
     }
 
     /**
@@ -50,7 +50,7 @@ public class Node {
      * @param key   The key to store.
      * @param value The value corresponding to the key.
      */
-    public void storeKeyValue(String key, String value) {
+    public void storeKeyValue(String key, Object value) {
         storage.put(key,value);
     }
 
@@ -60,7 +60,7 @@ public class Node {
      * @param key The key to search for.
      * @return The value associated with the given key, or null if the key is not found.
      */
-    public String findValueByKey(String key) {
+    public Object findValueByKey(String key) {
         return storage.get(key);
     }
 

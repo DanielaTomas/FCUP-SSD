@@ -20,7 +20,6 @@ var searchData=
   ['getroutingtable_41',['getRoutingTable',['../classKademlia_1_1Node.html#aa0444a1655fb66eb4cc3fec4d4d2f74a',1,'Kademlia::Node']]],
   ['getsenderpublickey_42',['getSenderPublicKey',['../classBlockChain_1_1Transaction.html#a0f4de50d01574f4a2e43941534c84447',1,'BlockChain::Transaction']]],
   ['getsignature_43',['getSignature',['../classBlockChain_1_1Transaction.html#a73a8f52d604fcc16f60fddf15749149b',1,'BlockChain::Transaction']]],
-  ['getstoredvalue_44',['getStoredValue',['../classKademlia_1_1ClientHandler.html#a5bd069966a066a8e7686e7328ff2c107',1,'Kademlia::ClientHandler']]],
-  ['gettimestamp_45',['getTimestamp',['../classBlockChain_1_1Block.html#a2d747f2f22b0af81bbb0ba438c7a04bc',1,'BlockChain::Block']]],
-  ['gettransactions_46',['getTransactions',['../classBlockChain_1_1Block.html#ac53250237befadb792d260cfa7cb003e',1,'BlockChain::Block']]]
+  ['gettimestamp_44',['getTimestamp',['../classBlockChain_1_1Block.html#a2d747f2f22b0af81bbb0ba438c7a04bc',1,'BlockChain::Block']]],
+  ['gettransactions_45',['getTransactions',['../classBlockChain_1_1Block.html#ac53250237befadb792d260cfa7cb003e',1,'BlockChain::Block']]]
 ];

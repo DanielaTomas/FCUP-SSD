@@ -1,18 +1,27 @@
 package Main;
 
+import BlockChain.Block;
+import BlockChain.Blockchain;
+import BlockChain.Miner;
+import BlockChain.Transaction;
 import Kademlia.*;
 
+import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PeerMainMenu implements Runnable {
 
     private Scanner scanner;
     private Kademlia kademlia;
+    private Blockchain blockchain;
     private Node myNode;
 
     public PeerMainMenu(Node myNode){
         this.scanner = new Scanner(System.in);
         this.kademlia = Kademlia.getInstance();
+        this.blockchain = Blockchain.getInstance();
         this.myNode = myNode;
     }
 
@@ -52,9 +61,11 @@ public class PeerMainMenu implements Runnable {
                 case "2": //STORE RPC
                     System.out.println("Key: ");
                     input = scanner.nextLine();
-                    System.out.println("Value: ");
-                    String value = scanner.nextLine();
-                    kademlia.store(myNode, input, value);
+
+                    Block block = this.createBlock();
+
+                    blockchain.addBlock(block);
+                    kademlia.store(myNode, input, block);
                     break;
                 case "3"://FIND_VALUE RPC
                     System.out.println("Key: ");
@@ -74,5 +85,26 @@ public class PeerMainMenu implements Runnable {
             }
 
         }
+    }
+
+    public Block createBlock(){
+        Miner miner = new Miner();
+
+        Block genesisBlock = blockchain.getLastBlock();
+
+        miner.mine(genesisBlock,blockchain);
+
+        List<Transaction> transactions = new ArrayList<>();
+        KeyPair senderKeyPair = Transaction.generateKeyPair();
+        KeyPair receiverKeyPair = Transaction.generateKeyPair();
+        Transaction transaction = new Transaction(senderKeyPair.getPublic(), receiverKeyPair.getPublic(), 0);
+        transaction.signTransaction(senderKeyPair.getPrivate());
+        transactions.add(transaction);
+
+        Block block = new Block(1,blockchain.getLastBlock().getHash(),transactions);
+
+        miner.mine(block, blockchain);
+
+        return block;
     }
 }
