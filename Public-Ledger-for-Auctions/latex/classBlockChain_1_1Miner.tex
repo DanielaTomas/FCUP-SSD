@@ -5,15 +5,40 @@
 \item 
 boolean \mbox{\hyperlink{classBlockChain_1_1Miner_a00b1a7238abeca531e65d1beb07d2ae5}{PoW}} (\mbox{\hyperlink{classBlockChain_1_1Block}{Block}} b)
 \item 
-\mbox{\Hypertarget{classBlockChain_1_1Miner_a193480d46ce1b8f3c82293b775c1ed8d}\label{classBlockChain_1_1Miner_a193480d46ce1b8f3c82293b775c1ed8d}} 
-\mbox{\hyperlink{classBlockChain_1_1Block}{Block}} {\bfseries mine} (\mbox{\hyperlink{classBlockChain_1_1Block}{Block}} b, \mbox{\hyperlink{classBlockChain_1_1Blockchain}{Blockchain}} blockchain)
+void \mbox{\hyperlink{classBlockChain_1_1Miner_a4543f5d6c09fb694d6c65cbbf134d663}{mine}} (\mbox{\hyperlink{classBlockChain_1_1Block}{Block}} b)
 \item 
-\mbox{\Hypertarget{classBlockChain_1_1Miner_a692ec304a0a189beb20efc8e99b6d8ef}\label{classBlockChain_1_1Miner_a692ec304a0a189beb20efc8e99b6d8ef}} 
-double {\bfseries get\+Reward} ()
+double \mbox{\hyperlink{classBlockChain_1_1Miner_a692ec304a0a189beb20efc8e99b6d8ef}{get\+Reward}} ()
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classBlockChain_1_1Miner}{Miner}}\+: Represents a miner in a blockchain. 
+
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBlockChain_1_1Miner_a692ec304a0a189beb20efc8e99b6d8ef}\label{classBlockChain_1_1Miner_a692ec304a0a189beb20efc8e99b6d8ef}} 
+\index{BlockChain.Miner@{BlockChain.Miner}!getReward@{getReward}}
+\index{getReward@{getReward}!BlockChain.Miner@{BlockChain.Miner}}
+\doxysubsubsection{\texorpdfstring{getReward()}{getReward()}}
+{\footnotesize\ttfamily double Block\+Chain.\+Miner.\+get\+Reward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the total reward accumulated by the miner.
+
+\begin{DoxyReturn}{Returns}
+The total reward earned by the miner. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBlockChain_1_1Miner_a4543f5d6c09fb694d6c65cbbf134d663}\label{classBlockChain_1_1Miner_a4543f5d6c09fb694d6c65cbbf134d663}} 
+\index{BlockChain.Miner@{BlockChain.Miner}!mine@{mine}}
+\index{mine@{mine}!BlockChain.Miner@{BlockChain.Miner}}
+\doxysubsubsection{\texorpdfstring{mine()}{mine()}}
+{\footnotesize\ttfamily void Block\+Chain.\+Miner.\+mine (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classBlockChain_1_1Block}{Block}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Mines a block until the proof of work (PoW) meets the target difficulty.
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & The block to be mined. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classBlockChain_1_1Miner_a00b1a7238abeca531e65d1beb07d2ae5}\label{classBlockChain_1_1Miner_a00b1a7238abeca531e65d1beb07d2ae5}} 
 \index{BlockChain.Miner@{BlockChain.Miner}!PoW@{PoW}}
 \index{PoW@{PoW}!BlockChain.Miner@{BlockChain.Miner}}

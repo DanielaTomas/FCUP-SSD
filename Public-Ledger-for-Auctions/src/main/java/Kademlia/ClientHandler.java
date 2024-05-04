@@ -88,6 +88,12 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 success = "Sent STORE request for key: " + key + ", value: " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
+            case NOTIFY:
+                msg.writeInt(key.length());
+                msg.writeCharSequence(key, StandardCharsets.UTF_8);
+                success = "New block hash: " + key + "\nNotifying " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
+                break;
             default:
                 logger.warning("Received unknown message type: " + messageType);
                 break;
@@ -113,7 +119,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx,bytebuf);
                     break;
-                case PING, STORE:
+                case PING, STORE, NOTIFY:
                     ackHandler(ctx,bytebuf);
                     break;
                 default:

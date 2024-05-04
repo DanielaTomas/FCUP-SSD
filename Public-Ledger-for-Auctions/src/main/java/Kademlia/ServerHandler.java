@@ -43,8 +43,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException { // handle incoming messages
         if (msg instanceof DatagramPacket packet) {
             ByteBuf bytebuf = packet.content();
-            logger.info("Received packet from: " + packet.sender());
             MessageType messageType = MessageType.values()[bytebuf.readInt()];
+            logger.info("Received " + messageType + " packet from: " + packet.sender());
             switch (messageType) {
                 case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx, bytebuf, messageType, packet.sender());
@@ -53,7 +53,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                     pingHandler(ctx, bytebuf, messageType, packet.sender());
                     break;
                 case STORE:
-                    storeHandler(ctx,bytebuf,messageType, packet.sender());
+                    storeHandler(ctx, bytebuf, messageType, packet.sender());
+                    break;
+                case NOTIFY:
+                    notifyHandler(ctx, bytebuf, messageType, packet.sender());
                     break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
@@ -64,6 +67,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         } else {
             logger.warning("Received unknown message type from client: " + msg.getClass().getName());
         }
+    }
+
+    private void notifyHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, Kademlia.MessageType messageType, InetSocketAddress sender) {
+        int keyLength = bytebuf.readInt();
+        String key = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
+
+        logger.info("Received new block hash: " + key + " from client: " + sender);
+        sendAck(ctx, messageType, sender);
+
+        Kademlia kademlia = Kademlia.getInstance();
+        kademlia.notifyNewBlockHash(myNode,key);
     }
 
     /**

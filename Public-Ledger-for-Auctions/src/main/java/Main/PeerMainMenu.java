@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/** Class PeerMainMenu: Interface for a peer node */
 public class PeerMainMenu implements Runnable {
 
     private Scanner scanner;
@@ -18,6 +19,11 @@ public class PeerMainMenu implements Runnable {
     private Blockchain blockchain;
     private Node myNode;
 
+    /**
+     * Constructs a PeerMainMenu object for the specified node.
+     *
+     * @param myNode The node associated with this menu.
+     */
     public PeerMainMenu(Node myNode){
         this.scanner = new Scanner(System.in);
         this.kademlia = Kademlia.getInstance();
@@ -25,6 +31,11 @@ public class PeerMainMenu implements Runnable {
         this.myNode = myNode;
     }
 
+    /**
+     * Generates the text menu options for the peer node.
+     *
+     * @return The formatted menu string.
+     */
     public String menu(){
         return "----------------------------------" + '\n' +
         " 0 - Print KBucket" + '\n' +
@@ -32,10 +43,12 @@ public class PeerMainMenu implements Runnable {
         " 2 - Store" + '\n' +
         " 3 - Find Value" + '\n' +
         " 4 - Ping" + '\n' +
+        " 5 - Mine Block" + '\n' +
         " 99 - Exit" + '\n' +
         "----------------------------------";
     }
 
+    /** Starts the Peer Main Menu. */
     @Override
     public void run() {
         String input;
@@ -59,13 +72,13 @@ public class PeerMainMenu implements Runnable {
                     kademlia.findNode(myNode.getNodeInfo(), input, myNode.getRoutingTable());
                     break;
                 case "2": //STORE RPC
-                    System.out.println("Key: ");
+                    /*System.out.println("Key: ");
                     input = scanner.nextLine();
 
                     Block block = this.createBlock();
 
                     blockchain.addBlock(block);
-                    kademlia.store(myNode, input, block);
+                    kademlia.store(myNode, input, block);*/
                     break;
                 case "3"://FIND_VALUE RPC
                     System.out.println("Key: ");
@@ -77,22 +90,31 @@ public class PeerMainMenu implements Runnable {
                     input = scanner.nextLine();
                     kademlia.ping(myNode.getNodeInfo(), input, myNode.getRoutingTable());
                     break;
-                case "99": //Quit safely, otherwise i won't be blamed if weird behaviour occurs
+                case "5": // Mine block
+                    System.out.println("Mining block...");
+
+                    //String latestBlockHash = kademlia.getLatestBlockHash();
+                    Block block = this.createBlock();
+                    kademlia.store(myNode, block.getHash(), block);
+                    kademlia.notifyNewBlockHash(myNode, block.getHash());
+                    break;
+                case "99": //Quit safely, otherwise I won't be blamed if weird behaviour occurs
                     System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid input. Please try again.");
                     break;
             }
-
         }
     }
 
+    /**
+     * Creates a new block with transactions and mines it.
+     *
+     * @return The mined block.
+     */
     public Block createBlock(){
         Miner miner = new Miner();
-
-        Block genesisBlock = blockchain.getLastBlock();
-
-        miner.mine(genesisBlock,blockchain);
 
         List<Transaction> transactions = new ArrayList<>();
         KeyPair senderKeyPair = Transaction.generateKeyPair();
@@ -103,7 +125,7 @@ public class PeerMainMenu implements Runnable {
 
         Block block = new Block(1,blockchain.getLastBlock().getHash(),transactions);
 
-        miner.mine(block, blockchain);
+        miner.mine(block);
 
         return block;
     }

@@ -9,9 +9,9 @@ import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
+import static BlockChain.Constants.GENESIS_PREV_HASH;
 import static Kademlia.Utils.findClosestNodes;
 
 /** Class Kademlia */
@@ -20,18 +20,21 @@ public class Kademlia {
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
     private static final int K = 2; //TODO ajustar valor
     private static Kademlia instance;
+    private StringBuilder latestBlockHash;
 
     /**
      * Enum for message types used in Kademlia.
      */
     public enum MessageType {
-        PING, FIND_NODE, FIND_VALUE, STORE
+        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY
     }
 
     /**
      * Private constructor for the Kademlia class. This constructor is private to enforce the Singleton design pattern.
      */
-    private Kademlia() {}
+    private Kademlia() {
+        this.latestBlockHash = new StringBuilder(GENESIS_PREV_HASH);
+    }
 
     /**
      * Gets the singleton instance of the Kademlia class.
@@ -203,6 +206,20 @@ public class Kademlia {
             }
         }
         return closestNode;
+    }
+
+    public void notifyNewBlockHash(Node myNode, String newBlockHash) {
+        logger.info("Kademlia - Starting notify new block hash");
+        if(!newBlockHash.contentEquals(this.latestBlockHash)) {
+            latestBlockHash = new StringBuilder(newBlockHash);
+            logger.info("New block hash updated");
+            for (NodeInfo targetNodeInfo : myNode.getRoutingTable()) {
+                connectAndHandle(myNode.getNodeInfo(), targetNodeInfo, newBlockHash, null, MessageType.NOTIFY);
+            }
+        }
+        else {
+            logger.info("New block hash already updated");
+        }
     }
 
     /**

@@ -15,7 +15,7 @@ public class BlockchainShowcase {
 
         Block genesisBlock = blockchain.getLastBlock();
 
-        miner.mine(genesisBlock,blockchain);
+        miner.mine(genesisBlock);
 
         List<Transaction> transactions = new ArrayList<>();
         KeyPair senderKeyPair = Transaction.generateKeyPair();
@@ -26,7 +26,7 @@ public class BlockchainShowcase {
 
         Block block1 = new Block(1,blockchain.getLastBlock().getHash(),transactions);
 
-        miner.mine(block1, blockchain);
+        miner.mine(block1);
 
         blockchain.addBlock(block1);
 
@@ -39,7 +39,7 @@ public class BlockchainShowcase {
 
         Block block2 = new Block(2,blockchain.getLastBlock().getHash(),transactions);
 
-        miner.mine(block2, blockchain);
+        miner.mine(block2);
 
         blockchain.addBlock(block2);
 

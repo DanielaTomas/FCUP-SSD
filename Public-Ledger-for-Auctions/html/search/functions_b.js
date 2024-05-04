@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ping_135',['ping',['../classKademlia_1_1Kademlia.html#a99931c9dc2f35779029d7e5dfbe5ae14',1,'Kademlia::Kademlia']]],
-  ['pow_136',['PoW',['../classBlockChain_1_1Miner.html#a00b1a7238abeca531e65d1beb07d2ae5',1,'BlockChain::Miner']]]
+  ['node_142',['Node',['../classKademlia_1_1Node.html#ad39f576099d174551be97f612176ae28',1,'Kademlia::Node']]],
+  ['nodeinfo_143',['NodeInfo',['../classKademlia_1_1NodeInfo.html#ab53f6af5aa5ba8bf4d110296907bc44e',1,'Kademlia::NodeInfo']]]
 ];
