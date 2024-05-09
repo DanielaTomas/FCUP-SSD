@@ -30,11 +30,7 @@ public class Server implements Runnable {
         this.myNode = node;
     }
 
-    /**
-     * Starts the server.
-     *
-     * @throws Exception If an error occurs while starting the server.
-     */
+    /** Starts the server. */
     @Override
     public void run() {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -48,6 +44,12 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Configures and starts the Netty server.
+     *
+     * @param bossGroup The event loop group for handling server events.
+     * @throws Exception If an error occurs while starting the server.
+     */
     public void start(EventLoopGroup bossGroup) throws Exception{
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(bossGroup)

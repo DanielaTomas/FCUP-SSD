@@ -1,12 +1,13 @@
 package BlockChain;
 
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.List;
 
 /** Class Block: Represents a block in a blockchain. */
-public class Block {
+public class Block implements Serializable {
     private int index;
     private String previousHash;
     private List<Transaction> transactions;
@@ -35,8 +36,6 @@ public class Block {
 
     /**
      * Calculates the hash of the block.
-     *
-     * @return The calculated hash value.
      */
     public void calculateHash() {
         String input = previousHash + timestamp + nonce + transactions.toString();
@@ -47,6 +46,39 @@ public class Block {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Writes the object's state to a stream. Called by the serialization mechanism when serializing an object.
+     *
+     * @param out The ObjectOutputStream to write the object to.
+     * @throws IOException If an I/O error occurs while writing the object.
+     */
+    @Serial
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.writeInt(index);
+        out.writeObject(previousHash);
+        out.writeObject(transactions);
+        out.writeLong(timestamp);
+        out.writeObject(hash);
+        out.writeInt(nonce);
+    }
+
+    /**
+     * Reads the object's state from a stream. Called by the serialization mechanism when deserializing an object.
+     *
+     * @param in The ObjectInputStream to read the object from.
+     * @throws IOException            If an I/O error occurs while reading the object.
+     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
+     */
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        index = in.readInt();
+        previousHash = (String) in.readObject();
+        transactions = (List<Transaction>) in.readObject();
+        timestamp = in.readLong();
+        hash = (String) in.readObject();
+        nonce = in.readInt();
     }
 
     /**
@@ -94,6 +126,9 @@ public class Block {
         return this.timestamp;
     }
 
+    /**
+     * Increments the nonce value of the block by one.
+     */
     public void incrementNonce() {this.nonce++; }
 
     /**
@@ -108,7 +143,7 @@ public class Block {
                 "Time:"+BlockChainUtils.convertTime(this.timestamp)+"\n" +
                 "Hash:"+this.hash+"\n" +
                 "Nonce:"+this.nonce+"\n" +
-                "" + this.transactions + "\n";
+                "Transactions:" + this.transactions + "\n";
     }
 
     /**

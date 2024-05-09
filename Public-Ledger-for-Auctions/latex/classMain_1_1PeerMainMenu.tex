@@ -11,16 +11,65 @@ Collaboration diagram for Main.\+Peer\+Main\+Menu\+:
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classMain_1_1PeerMainMenu_a25978e9b56b1ca4a3525fb2e783cdff1}\label{classMain_1_1PeerMainMenu_a25978e9b56b1ca4a3525fb2e783cdff1}} 
-{\bfseries Peer\+Main\+Menu} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} my\+Node)
+\mbox{\hyperlink{classMain_1_1PeerMainMenu_a25978e9b56b1ca4a3525fb2e783cdff1}{Peer\+Main\+Menu}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} my\+Node)
 \item 
-\mbox{\Hypertarget{classMain_1_1PeerMainMenu_adb1d9abd08205dcb8aabdbf55e48635d}\label{classMain_1_1PeerMainMenu_adb1d9abd08205dcb8aabdbf55e48635d}} 
-String {\bfseries menu} ()
+String \mbox{\hyperlink{classMain_1_1PeerMainMenu_adb1d9abd08205dcb8aabdbf55e48635d}{menu}} ()
 \item 
-\mbox{\Hypertarget{classMain_1_1PeerMainMenu_acb80aad2093cb1e3ee86dc65a6376544}\label{classMain_1_1PeerMainMenu_acb80aad2093cb1e3ee86dc65a6376544}} 
-void {\bfseries run} ()
+void \mbox{\hyperlink{classMain_1_1PeerMainMenu_acb80aad2093cb1e3ee86dc65a6376544}{run}} ()
+\item 
+\mbox{\hyperlink{classBlockChain_1_1Block}{Block}} \mbox{\hyperlink{classMain_1_1PeerMainMenu_a55c92b9afd0fe1255ea4c77c3a1d8400}{create\+Block}} ()
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Class \mbox{\hyperlink{classMain_1_1PeerMainMenu}{Peer\+Main\+Menu}}\+: Interface for a peer node 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classMain_1_1PeerMainMenu_a25978e9b56b1ca4a3525fb2e783cdff1}\label{classMain_1_1PeerMainMenu_a25978e9b56b1ca4a3525fb2e783cdff1}} 
+\index{Main.PeerMainMenu@{Main.PeerMainMenu}!PeerMainMenu@{PeerMainMenu}}
+\index{PeerMainMenu@{PeerMainMenu}!Main.PeerMainMenu@{Main.PeerMainMenu}}
+\doxysubsubsection{\texorpdfstring{PeerMainMenu()}{PeerMainMenu()}}
+{\footnotesize\ttfamily Main.\+Peer\+Main\+Menu.\+Peer\+Main\+Menu (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1Node}{Node}}}]{my\+Node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructs a \mbox{\hyperlink{classMain_1_1PeerMainMenu}{Peer\+Main\+Menu}} object for the specified node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Node} & The node associated with this menu. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMain_1_1PeerMainMenu_a55c92b9afd0fe1255ea4c77c3a1d8400}\label{classMain_1_1PeerMainMenu_a55c92b9afd0fe1255ea4c77c3a1d8400}} 
+\index{Main.PeerMainMenu@{Main.PeerMainMenu}!createBlock@{createBlock}}
+\index{createBlock@{createBlock}!Main.PeerMainMenu@{Main.PeerMainMenu}}
+\doxysubsubsection{\texorpdfstring{createBlock()}{createBlock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBlockChain_1_1Block}{Block}} Main.\+Peer\+Main\+Menu.\+create\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Creates a new block with transactions and mines it.
+
+\begin{DoxyReturn}{Returns}
+The mined block. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMain_1_1PeerMainMenu_adb1d9abd08205dcb8aabdbf55e48635d}\label{classMain_1_1PeerMainMenu_adb1d9abd08205dcb8aabdbf55e48635d}} 
+\index{Main.PeerMainMenu@{Main.PeerMainMenu}!menu@{menu}}
+\index{menu@{menu}!Main.PeerMainMenu@{Main.PeerMainMenu}}
+\doxysubsubsection{\texorpdfstring{menu()}{menu()}}
+{\footnotesize\ttfamily String Main.\+Peer\+Main\+Menu.\+menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Generates the text menu options for the peer node.
+
+\begin{DoxyReturn}{Returns}
+The formatted menu string. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classMain_1_1PeerMainMenu_acb80aad2093cb1e3ee86dc65a6376544}\label{classMain_1_1PeerMainMenu_acb80aad2093cb1e3ee86dc65a6376544}} 
+\index{Main.PeerMainMenu@{Main.PeerMainMenu}!run@{run}}
+\index{run@{run}!Main.PeerMainMenu@{Main.PeerMainMenu}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Main.\+Peer\+Main\+Menu.\+run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Starts the \mbox{\hyperlink{classMain_1_1Peer}{Peer}} Main Menu. 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

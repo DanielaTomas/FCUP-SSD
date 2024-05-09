@@ -15,8 +15,7 @@ Collaboration diagram for Main.\+Server\+:
 \item 
 void \mbox{\hyperlink{classMain_1_1Server_af3036fecd59097673c9e5d78fcbbcb2a}{run}} ()
 \item 
-\mbox{\Hypertarget{classMain_1_1Server_a05242b956ba472462e8780ab65e6b1b3}\label{classMain_1_1Server_a05242b956ba472462e8780ab65e6b1b3}} 
-void {\bfseries start} (Event\+Loop\+Group boss\+Group)  throws Exception
+void \mbox{\hyperlink{classMain_1_1Server_a05242b956ba472462e8780ab65e6b1b3}{start}} (Event\+Loop\+Group boss\+Group)  throws Exception
 \end{DoxyCompactItemize}
 
 
@@ -48,8 +47,19 @@ Constructs a new \mbox{\hyperlink{classMain_1_1Server}{Server}} instance.
 \doxysubsubsection{\texorpdfstring{run()}{run()}}
 {\footnotesize\ttfamily void Main.\+Server.\+run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-Starts the server.
+Starts the server. \mbox{\Hypertarget{classMain_1_1Server_a05242b956ba472462e8780ab65e6b1b3}\label{classMain_1_1Server_a05242b956ba472462e8780ab65e6b1b3}} 
+\index{Main.Server@{Main.Server}!start@{start}}
+\index{start@{start}!Main.Server@{Main.Server}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Main.\+Server.\+start (\begin{DoxyParamCaption}\item[{Event\+Loop\+Group}]{boss\+Group }\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [inline]}}
 
+Configures and starts the Netty server.
+
+
+\begin{DoxyParams}{Parameters}
+{\em boss\+Group} & The event loop group for handling server events. \\
+\hline
+\end{DoxyParams}
 
 \begin{DoxyExceptions}{Exceptions}
 {\em Exception} & If an error occurs while starting the server. \\

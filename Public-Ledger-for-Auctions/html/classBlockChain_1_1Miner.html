@@ -77,14 +77,74 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a00b1a7238abeca531e65d1beb07d2ae5"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Miner.html#a00b1a7238abeca531e65d1beb07d2ae5">PoW</a> (<a class="el" href="classBlockChain_1_1Block.html">Block</a> b)</td></tr>
 <tr class="separator:a00b1a7238abeca531e65d1beb07d2ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a193480d46ce1b8f3c82293b775c1ed8d"><td class="memItemLeft" align="right" valign="top"><a id="a193480d46ce1b8f3c82293b775c1ed8d"></a>
-<a class="el" href="classBlockChain_1_1Block.html">Block</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mine</b> (<a class="el" href="classBlockChain_1_1Block.html">Block</a> b, <a class="el" href="classBlockChain_1_1Blockchain.html">Blockchain</a> blockchain)</td></tr>
-<tr class="separator:a193480d46ce1b8f3c82293b775c1ed8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a692ec304a0a189beb20efc8e99b6d8ef"><td class="memItemLeft" align="right" valign="top"><a id="a692ec304a0a189beb20efc8e99b6d8ef"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getReward</b> ()</td></tr>
+<tr class="memitem:a4543f5d6c09fb694d6c65cbbf134d663"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Miner.html#a4543f5d6c09fb694d6c65cbbf134d663">mine</a> (<a class="el" href="classBlockChain_1_1Block.html">Block</a> b)</td></tr>
+<tr class="separator:a4543f5d6c09fb694d6c65cbbf134d663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a692ec304a0a189beb20efc8e99b6d8ef"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Miner.html#a692ec304a0a189beb20efc8e99b6d8ef">getReward</a> ()</td></tr>
 <tr class="separator:a692ec304a0a189beb20efc8e99b6d8ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class <a class="el" href="classBlockChain_1_1Miner.html">Miner</a>: Represents a miner in a blockchain. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a692ec304a0a189beb20efc8e99b6d8ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a692ec304a0a189beb20efc8e99b6d8ef">&#9670;&nbsp;</a></span>getReward()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double BlockChain.Miner.getReward </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Retrieves the total reward accumulated by the miner.</p>
+<dl class="section return"><dt>Returns</dt><dd>The total reward earned by the miner. </dd></dl>
+
+</div>
+</div>
+<a id="a4543f5d6c09fb694d6c65cbbf134d663"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4543f5d6c09fb694d6c65cbbf134d663">&#9670;&nbsp;</a></span>mine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BlockChain.Miner.mine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classBlockChain_1_1Block.html">Block</a>&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Mines a block until the proof of work (PoW) meets the target difficulty.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>The block to be mined. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a00b1a7238abeca531e65d1beb07d2ae5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00b1a7238abeca531e65d1beb07d2ae5">&#9670;&nbsp;</a></span>PoW()</h2>
 

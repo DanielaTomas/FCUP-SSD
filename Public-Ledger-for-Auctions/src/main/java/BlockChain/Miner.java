@@ -1,5 +1,6 @@
 package BlockChain;
 
+/** Class Miner: Represents a miner in a blockchain. */
 public class Miner {
     private double reward;
 
@@ -32,19 +33,24 @@ public class Miner {
         return !hash.substring(0, Constants.DIFFICULTY).equals(target);
     }
 
-    public Block mine(Block b ,Blockchain blockchain ){
+    /**
+     * Mines a block until the proof of work (PoW) meets the target difficulty.
+     *
+     * @param b The block to be mined.
+     */
+    public void mine(Block b) {
         while (PoW(b)){
             b.incrementNonce();
             b.calculateHash();
         }
-
-        //blockchain.addBlock(b);
-
         reward += Constants.MINER_REWARD;
-
-        return b;
     }
 
+    /**
+     * Retrieves the total reward accumulated by the miner.
+     *
+     * @return The total reward earned by the miner.
+     */
     public double getReward(){
         return reward;
     }

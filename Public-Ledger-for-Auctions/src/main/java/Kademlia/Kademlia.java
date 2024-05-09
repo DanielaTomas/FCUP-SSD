@@ -9,9 +9,9 @@ import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
+import static BlockChain.Constants.GENESIS_PREV_HASH;
 import static Kademlia.Utils.findClosestNodes;
 
 /** Class Kademlia */
@@ -20,18 +20,21 @@ public class Kademlia {
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
     private static final int K = 2; //TODO ajustar valor
     private static Kademlia instance;
+    private StringBuilder latestBlockHash;
 
     /**
      * Enum for message types used in Kademlia.
      */
     public enum MessageType {
-        PING, FIND_NODE, FIND_VALUE, STORE
+        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY
     }
 
     /**
      * Private constructor for the Kademlia class. This constructor is private to enforce the Singleton design pattern.
      */
-    private Kademlia() {}
+    private Kademlia() {
+        this.latestBlockHash = new StringBuilder(GENESIS_PREV_HASH);
+    }
 
     /**
      * Gets the singleton instance of the Kademlia class.
@@ -135,7 +138,7 @@ public class Kademlia {
      */
     public Object findValue(Node myNode, String key) {
         logger.info("Kademlia - Starting FIND_VALUE RPC");
-        String storedValue = myNode.findValueByKey(key);
+        Object storedValue = myNode.findValueByKey(key);
         if(storedValue != null) {
             logger.info("Stored value: " + storedValue);
             return storedValue;
@@ -162,7 +165,7 @@ public class Kademlia {
      * @param key   The key to store.
      * @param value The value corresponding to the key.
      */
-    public void store(Node myNode, String key, String value) {
+    public void store(Node myNode, String key, Object value) {
         logger.info("Kademlia - Starting STORE RPC");
 
         findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
@@ -205,6 +208,20 @@ public class Kademlia {
         return closestNode;
     }
 
+    public void notifyNewBlockHash(Node myNode, String newBlockHash) {
+        logger.info("Kademlia - Starting notify new block hash");
+        if(!newBlockHash.contentEquals(this.latestBlockHash)) {
+            latestBlockHash = new StringBuilder(newBlockHash);
+            logger.info("New block hash updated");
+            for (NodeInfo targetNodeInfo : myNode.getRoutingTable()) {
+                connectAndHandle(myNode.getNodeInfo(), targetNodeInfo, newBlockHash, null, MessageType.NOTIFY);
+            }
+        }
+        else {
+            logger.info("New block hash already updated");
+        }
+    }
+
     /**
      * Connects to a target node, sends a message, and handles the response.
      *
@@ -215,15 +232,13 @@ public class Kademlia {
      * @param messageType     The type of message to send.
      * @return List of near nodes.
      */
-    private Object connectAndHandle(NodeInfo myNodeInfo, NodeInfo targetNodeInfo, String key, String value, MessageType messageType) {
+    private Object connectAndHandle(NodeInfo myNodeInfo, NodeInfo targetNodeInfo, String key, Object value, MessageType messageType) {
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
-        AtomicReference<String> storedValue = new AtomicReference<>(null);;
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             connectToNode(myNodeInfo, targetNodeInfo, group, channel -> {
                 ClientHandler clientHandler = new ClientHandler(myNodeInfo, targetNodeInfo, key, value, messageType, nearNodesInfo);
                 channel.pipeline().addLast(clientHandler);
-                if (messageType == MessageType.FIND_VALUE) storedValue.set(clientHandler.getStoredValue());
             });
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -238,7 +253,7 @@ public class Kademlia {
             });
         }
         if(messageType == MessageType.FIND_NODE) return nearNodesInfo;
-        else if(messageType == MessageType.FIND_VALUE) return storedValue;
+        else if(messageType == MessageType.FIND_VALUE) return value;
         return null;
     }
 
@@ -258,7 +273,7 @@ public class Kademlia {
                 .option(ChannelOption.AUTO_CLOSE, true)
                 .handler(new ChannelInitializer<NioDatagramChannel>() {
                     @Override
-                    protected void initChannel(NioDatagramChannel ch) throws Exception {
+                    protected void initChannel(NioDatagramChannel ch) {
                         channelConsumer.accept(ch);
                     }
                 });
