@@ -159,7 +159,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         if(messageType == Kademlia.MessageType.FIND_VALUE) {
             value = deserializedObject;
-            //value = messageBytes.toString(StandardCharsets.UTF_8);
             logger.info("Received value: " + value + " from " + ctx.channel().remoteAddress());
             return;
         }

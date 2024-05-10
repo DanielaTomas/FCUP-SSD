@@ -72,13 +72,13 @@ public class PeerMainMenu implements Runnable {
                     kademlia.findNode(myNode.getNodeInfo(), input, myNode.getRoutingTable());
                     break;
                 case "2": //STORE RPC
-                    /*System.out.println("Key: ");
+                    System.out.println("Key: ");
                     input = scanner.nextLine();
 
-                    Block block = this.createBlock();
+                    Block block1 = this.createBlock();
 
-                    blockchain.addBlock(block);
-                    kademlia.store(myNode, input, block);*/
+                    blockchain.addBlock(block1);
+                    kademlia.store(myNode, input, block1);
                     break;
                 case "3"://FIND_VALUE RPC
                     System.out.println("Key: ");
@@ -92,11 +92,9 @@ public class PeerMainMenu implements Runnable {
                     break;
                 case "5": // Mine block
                     System.out.println("Mining block...");
-
-                    //String latestBlockHash = kademlia.getLatestBlockHash();
-                    Block block = this.createBlock();
-                    kademlia.store(myNode, block.getHash(), block);
-                    kademlia.notifyNewBlockHash(myNode, block.getHash());
+                    Block block2 = this.createBlock();
+                    kademlia.store(myNode, block2.getHash(), block2);
+                    kademlia.notifyNewBlockHash(myNode, block2.getHash());
                     break;
                 case "99": //Quit safely, otherwise I won't be blamed if weird behaviour occurs
                     System.exit(0);

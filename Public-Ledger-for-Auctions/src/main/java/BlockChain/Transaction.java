@@ -122,22 +122,6 @@ public class Transaction implements Serializable  {
         this.amount = in.readDouble();
         this.signature = (byte[]) in.readObject();
     }
-    /*
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        byte[] senderKeyBytes = (byte[]) in.readObject();
-        byte[] receiverKeyBytes = (byte[]) in.readObject();
-        int signatureLength = in.readInt();
-        signature = new byte[signatureLength];
-        in.readFully(signature);
-        try {
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            senderPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(senderKeyBytes));
-            receiverPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(receiverKeyBytes));
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-            throw new IOException("Error reconstructing public keys", e);
-        }
-    }*/
 
     /**
      * Retrieves the sender's public key.
