@@ -9,10 +9,7 @@ import io.netty.channel.socket.DatagramPacket;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +24,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     private String key;
     private Object value;
     private Timer timer;
+    private byte[] randomId;
 
     /**
      * Constructs a new ClientHandler.
@@ -57,6 +55,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws IOException {
         ByteBuf msg = ctx.alloc().buffer();
         msg.writeInt(messageType.ordinal());
+        this.randomId = Utils.generateRandomId();
+        msg.writeInt(randomId.length);
+        msg.writeBytes(randomId);
         String success;
         switch(messageType) {
             case FIND_NODE, FIND_VALUE:
@@ -122,6 +123,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         if (msg instanceof DatagramPacket packet) {
             ByteBuf bytebuf = packet.content();
             messageType = Kademlia.MessageType.values()[bytebuf.readInt()];
+            int randomIdLength = bytebuf.readInt();
+            byte[] receivedId = new byte[randomIdLength];
+            bytebuf.readBytes(receivedId);
+            if (!Arrays.equals(randomId, receivedId)) {
+                logger.warning("Received message with unexpected ID. Potential address forgery attack.");
+            }
             switch (messageType) {
                 case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx,bytebuf);

@@ -45,21 +45,24 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             ByteBuf bytebuf = packet.content();
             MessageType messageType = MessageType.values()[bytebuf.readInt()];
             logger.info("Received " + messageType + " packet from: " + packet.sender());
+            int randomIdLength = bytebuf.readInt();
+            byte[] receivedId = new byte[randomIdLength];
+            bytebuf.readBytes(receivedId);
             switch (messageType) {
                 case FIND_NODE, FIND_VALUE:
-                    findNodeHandler(ctx, bytebuf, messageType, packet.sender());
+                    findNodeHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
                 case PING:
-                    pingHandler(ctx, bytebuf, messageType, packet.sender());
+                    pingHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
                 case STORE:
-                    storeHandler(ctx, bytebuf, messageType, packet.sender());
+                    storeHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
                 case NOTIFY:
-                    notifyHandler(ctx, bytebuf, messageType, packet.sender());
+                    notifyHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
                 case LATEST_BLOCK:
-                    latestBlockHandler(ctx, bytebuf, messageType, packet.sender());
+                    latestBlockHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
@@ -80,7 +83,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param messageType   The type of message received.
      * @param sender        The InetSocketAddress of the sender node.
      */
-    private void latestBlockHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, Kademlia.MessageType messageType, InetSocketAddress sender) {
+    private void latestBlockHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, Kademlia.MessageType messageType, byte[] randomId, InetSocketAddress sender) {
         int latestBlockLength = bytebuf.readInt();
         ByteBuf latestBlockBytes = bytebuf.readBytes(latestBlockLength);
         String latestBlockStr = latestBlockBytes.toString(StandardCharsets.UTF_8);
@@ -88,6 +91,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         ByteBuf responseMsg = ctx.alloc().buffer();
         responseMsg.writeInt(messageType.ordinal());
+
+        responseMsg.writeInt(randomId.length);
+        responseMsg.writeBytes(randomId);
+
         Kademlia kademlia = Kademlia.getInstance();
         String latestBlock = kademlia.getLatestBlockHash().toString();
         ByteBuf responseBuf = Unpooled.wrappedBuffer(latestBlock.getBytes());
@@ -107,12 +114,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param messageType   The type of message received.
      * @param sender        The InetSocketAddress of the sender node.
      */
-    private void notifyHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, Kademlia.MessageType messageType, InetSocketAddress sender) {
+    private void notifyHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, Kademlia.MessageType messageType, byte[] randomId, InetSocketAddress sender) {
         int keyLength = bytebuf.readInt();
         String key = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
 
         logger.info("Received new block hash: " + key + " from node: " + sender);
-        sendAck(ctx, messageType, sender);
+        sendAck(ctx, messageType, randomId, sender);
 
         Kademlia kademlia = Kademlia.getInstance();
         kademlia.notifyNewBlockHash(myNode,key);
@@ -128,13 +135,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @throws IOException            If an I/O error occurs.
      * @throws ClassNotFoundException If the class of the serialized object cannot be found.
      */
-    private void findNodeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) throws IOException, ClassNotFoundException {
+    private void findNodeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
         int nodeInfoLength = bytebuf.readInt();
         ByteBuf nodeInfoBytes = bytebuf.readBytes(nodeInfoLength);
         NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(nodeInfoBytes);
 
         if(messageType == MessageType.FIND_VALUE) {
-            if(findValueHandler(ctx,bytebuf,nodeInfo, messageType, sender)) return;
+            if(findValueHandler(ctx,bytebuf,nodeInfo, messageType, randomId, sender)) return;
             messageType = MessageType.FIND_NODE;
         } else {
             logger.info("Received node info from node: " + nodeInfo);
@@ -144,7 +151,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo.getNodeId(), K);
 
         String success = "Sent near nodes info to node " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort();
-        sendSerializedMessage(ctx,messageType,sender,nearNodes,success);
+        sendSerializedMessage(ctx,messageType,randomId,sender,nearNodes,success);
 
         nodeInfoBytes.release();
     }
@@ -157,14 +164,14 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param messageType  The type of the message.
      * @param sender       The address of the sender node
      */
-    private boolean findValueHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, NodeInfo nodeInfo, MessageType messageType, InetSocketAddress sender) throws IOException {
+    private boolean findValueHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, NodeInfo nodeInfo, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException {
         int keyLength = bytebuf.readInt();
         String key = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
         logger.info("Received key " + key + " and node info from node: " + nodeInfo);
         Object value = myNode.findValueByKey(key);
         if(value != null) {
             String success = "Responded to FIND_VALUE from node " + sender;
-            sendSerializedMessage(ctx, messageType, sender, value, success);
+            sendSerializedMessage(ctx, messageType, randomId, sender, value, success);
             return true;
         }
         return false;
@@ -177,12 +184,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param messageType  The type of the message.
      * @param sender       The address of the sender node
      */
-    private void sendSerializedMessage(ChannelHandlerContext ctx, MessageType messageType, InetSocketAddress sender, Object msg, String success) throws IOException {
+    private void sendSerializedMessage(ChannelHandlerContext ctx, MessageType messageType, byte[] randomId, InetSocketAddress sender, Object msg, String success) throws IOException {
         ByteBuf responseMsg = ctx.alloc().buffer();
         responseMsg.writeInt(messageType.ordinal());
+
+        responseMsg.writeInt(randomId.length);
+        responseMsg.writeBytes(randomId);
+
         ByteBuf responseBuf = Utils.serialize(msg);
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
+
         Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
     }
 
@@ -194,13 +206,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param messageType  The type of the message.
      * @param sender       The address of the sender node
      */
-    private void storeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) throws IOException, ClassNotFoundException {
+    private void storeHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
         int keyLength = bytebuf.readInt();
         String key = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
         int valueLength = bytebuf.readInt();
-        if (bytebuf.readableBytes() < valueLength) {
-            throw new IOException("Insufficient bytes for value (expected: " + valueLength + ", available: " + bytebuf.readableBytes() + ")");
-        }
         ByteBuf valueBytes = bytebuf.readBytes(valueLength);
         Object value = Utils.deserialize(valueBytes);
         logger.info("Received STORE request for key: " + key + ", value: " + value);
@@ -208,7 +217,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         myNode.storeKeyValue(key,value);
         logger.info("key: " + key + ", value: " + value + " stored");
 
-        sendAck(ctx,messageType,sender);
+        sendAck(ctx,messageType,randomId,sender);
     }
 
     /**
@@ -219,13 +228,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param messageType  The type of the message.
      * @param sender       The address of the sender node
      */
-    private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, InetSocketAddress sender) {
+    private void pingHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) {
         int pingLength = bytebuf.readInt();
         ByteBuf pingBytes = bytebuf.readBytes(pingLength);
         String pingStr = pingBytes.toString(StandardCharsets.UTF_8);
         logger.info("Received " + pingStr + " from node " + ctx.channel().remoteAddress());
 
-        sendAck(ctx,messageType,sender);
+        sendAck(ctx,messageType,randomId,sender);
         pingBytes.release();
     }
 
@@ -236,13 +245,18 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param messageType  The type of the message.
      * @param sender       The address of the sender node
      */
-    private void sendAck(ChannelHandlerContext ctx, MessageType messageType, InetSocketAddress sender) {
+    private void sendAck(ChannelHandlerContext ctx, MessageType messageType, byte[] randomId, InetSocketAddress sender) {
         ByteBuf responseMsg = ctx.alloc().buffer();
         responseMsg.writeInt(messageType.ordinal());
+
+        responseMsg.writeInt(randomId.length);
+        responseMsg.writeBytes(randomId);
+
         String ack = messageType + "ACK";
         ByteBuf responseBuf = Unpooled.wrappedBuffer(ack.getBytes());
         responseMsg.writeInt(responseBuf.readableBytes());
         responseMsg.writeBytes(responseBuf);
+
         String success = "Responded to " + messageType + " from node " + sender;
         Utils.sendPacket(ctx, responseMsg, sender, messageType, success);
     }

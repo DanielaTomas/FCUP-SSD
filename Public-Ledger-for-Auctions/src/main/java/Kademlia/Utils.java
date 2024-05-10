@@ -10,6 +10,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,13 @@ public class Utils {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    public static byte[] generateRandomId() {
+        SecureRandom random = new SecureRandom();
+        byte[] id = new byte[20]; // 160 bits = 20 bytes
+        random.nextBytes(id);
+        return id;
     }
 
     /**
