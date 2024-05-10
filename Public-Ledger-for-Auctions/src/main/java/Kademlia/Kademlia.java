@@ -26,7 +26,7 @@ public class Kademlia {
      * Enum for message types used in Kademlia.
      */
     public enum MessageType {
-        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY
+        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY, LATEST_BLOCK
     }
 
     /**
@@ -58,6 +58,9 @@ public class Kademlia {
     public void joinNetwork(Node myNode, String bootstrapNodeId) {
         logger.info("Kademlia - Trying to contact bootstrap");
         List<NodeInfo> nearNodes = findNode(myNode.getNodeInfo(), bootstrapNodeId, myNode.getRoutingTable());
+
+        connectAndHandle(myNode.getNodeInfo(), myNode.findNodeInfoById(bootstrapNodeId), null, null, MessageType.LATEST_BLOCK);
+
         for(NodeInfo nearNodeInfo : nearNodes) {
             myNode.updateRoutingTable(nearNodeInfo);
             List<NodeInfo> additionalNearNodesInfo = findNode(myNode.getNodeInfo(), nearNodeInfo.getNodeId(), myNode.getRoutingTable());
@@ -208,6 +211,12 @@ public class Kademlia {
         return closestNode;
     }
 
+    /**
+     * Notifies nodes in the network about a new block hash, if it is different from the latest known hash.
+     *
+     * @param myNode       The local node.
+     * @param newBlockHash The new block hash to notify about.
+     */
     public void notifyNewBlockHash(Node myNode, String newBlockHash) {
         logger.info("Kademlia - Starting notify new block hash");
         if(!newBlockHash.contentEquals(this.latestBlockHash)) {
@@ -282,5 +291,13 @@ public class Kademlia {
         ChannelFuture channelFuture = bootstrap.connect(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()).sync();
         logger.info("Connection established to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort());
         channelFuture.channel().closeFuture().await(3, TimeUnit.SECONDS);
+    }
+
+    public StringBuilder getLatestBlockHash() {
+        return this.latestBlockHash;
+    }
+
+    public void setLatestBlockHash(String latestBlockHash) {
+        this.latestBlockHash = new StringBuilder(latestBlockHash);
     }
 }

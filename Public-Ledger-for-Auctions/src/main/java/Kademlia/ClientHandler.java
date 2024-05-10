@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /** Class ClientHandler: Handles the client-side channel events */
-public class ClientHandler  extends ChannelInboundHandlerAdapter {
+public class ClientHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ClientHandler.class.getName());
 
     private NodeInfo nodeInfo;
@@ -94,6 +94,13 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 success = "New block hash: " + key + "\nNotifying " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
+            case LATEST_BLOCK:
+                ByteBuf latestBlockBuf = Unpooled.wrappedBuffer("LATEST_BLOCK".getBytes());
+                msg.writeInt(latestBlockBuf.readableBytes());
+                msg.writeBytes(latestBlockBuf);
+                success = "Sent LATEST_BLOCK request to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
+                break;
             default:
                 logger.warning("Received unknown message type: " + messageType);
                 break;
@@ -122,6 +129,9 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
                 case PING, STORE, NOTIFY:
                     ackHandler(ctx,bytebuf);
                     break;
+                case LATEST_BLOCK:
+                    latestBlockHandler(ctx,bytebuf);
+                    break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
                     break;
@@ -149,7 +159,7 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
 
         if(messageType == Kademlia.MessageType.FIND_VALUE) {
             value = deserializedObject;
-            value = messageBytes.toString(StandardCharsets.UTF_8);
+            //value = messageBytes.toString(StandardCharsets.UTF_8);
             logger.info("Received value: " + value + " from " + ctx.channel().remoteAddress());
             return;
         }
@@ -176,6 +186,22 @@ public class ClientHandler  extends ChannelInboundHandlerAdapter {
         String ack = ackBytes.toString(StandardCharsets.UTF_8);
         logger.info("Received " + ack + " from " + ctx.channel().remoteAddress());
         ackBytes.release();
+    }
+
+    /**
+     * Handles the response from the server for LATEST_BLOCK messages.
+     *
+     * @param ctx     The channel handler context.
+     * @param bytebuf The received ByteBuf.
+     */
+    private void latestBlockHandler(ChannelHandlerContext ctx, ByteBuf bytebuf) {
+        int latestBlockHashLength = bytebuf.readInt();
+        ByteBuf latestBlockBytes = bytebuf.readBytes(latestBlockHashLength);
+        String latestBlockHash = latestBlockBytes.toString(StandardCharsets.UTF_8);
+        logger.info("Received latest block hash " + latestBlockHash + " from " + ctx.channel().remoteAddress());
+        Kademlia kademlia = Kademlia.getInstance();
+        kademlia.setLatestBlockHash(latestBlockHash);
+        latestBlockBytes.release();
     }
 
     /**

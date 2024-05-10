@@ -26,7 +26,7 @@ public class Node {
      * @param nodeId The ID of the NodeInfo to find.
      * @return The NodeInfo with the given ID, or null if not found.
      */
-    public NodeInfo findNodeById(String nodeId) {
+    public NodeInfo findNodeInfoById(String nodeId) {
         for (NodeInfo nodeInfo : routingTable) {
             if (nodeInfo.getNodeId().equals(nodeId)) {
                 return nodeInfo;

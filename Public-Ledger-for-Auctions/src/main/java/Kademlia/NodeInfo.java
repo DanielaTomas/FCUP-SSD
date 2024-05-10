@@ -34,7 +34,7 @@ public class NodeInfo implements Serializable, Comparable<NodeInfo> {
      * @return The generated node ID.
      */
     public static String generateNodeId(String ipAddress, int port) {
-        String input = ipAddress + ":" + port;
+        String input = ipAddress + ":" + port + ":" + Math.random();
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             byte[] hash = digest.digest(input.getBytes());

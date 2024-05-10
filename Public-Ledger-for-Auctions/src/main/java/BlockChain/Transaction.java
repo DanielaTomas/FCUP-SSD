@@ -1,9 +1,13 @@
 package BlockChain;
+import java.io.*;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
+import java.util.List;
 
 /** Class Transaction: Represents a transaction between two parties in a blockchain. */
-public class Transaction {
+public class Transaction implements Serializable  {
     private PublicKey senderPublicKey;
     private PublicKey receiverPublicKey;
     private double amount;
@@ -86,6 +90,54 @@ public class Transaction {
                 "\t\tAmount: " + amount + "\n" +
                 "\t\tSignature: " + (signature != null ? Arrays.toString(signature) : "null") + "\n";
     }
+
+    /**
+     * Custom serialization method for writing object state.
+     *
+     * @param out The ObjectOutputStream to write object state to.
+     * @throws IOException If an I/O error occurs while writing the object.
+     */
+    @Serial
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.writeObject(senderPublicKey.getEncoded());
+        out.writeObject(receiverPublicKey.getEncoded());
+        out.writeDouble(amount);
+        out.writeObject(signature);
+    }
+
+    /**
+     * Custom deserialization method for reading object state.
+     *
+     * @param in The ObjectInputStream to read object state from.
+     * @throws IOException            If an I/O error occurs while reading the object.
+     * @throws ClassNotFoundException If the class of a serialized object cannot be found.
+     */
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] senderKey = (byte[]) in.readObject();
+        byte[] receiverKey = (byte[]) in.readObject();
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        this.senderPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(senderKey));
+        this.receiverPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(receiverKey));
+        this.amount = in.readDouble();
+        this.signature = (byte[]) in.readObject();
+    }
+    /*
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        byte[] senderKeyBytes = (byte[]) in.readObject();
+        byte[] receiverKeyBytes = (byte[]) in.readObject();
+        int signatureLength = in.readInt();
+        signature = new byte[signatureLength];
+        in.readFully(signature);
+        try {
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            senderPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(senderKeyBytes));
+            receiverPublicKey = keyFactory.generatePublic(new X509EncodedKeySpec(receiverKeyBytes));
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            throw new IOException("Error reconstructing public keys", e);
+        }
+    }*/
 
     /**
      * Retrieves the sender's public key.
