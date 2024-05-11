@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -42,25 +45,25 @@ public class BlockchainTest {
     }
 
     @Test
-    public void validSignature() {
+    public void validSignature() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         Assertions.assertTrue(transaction1.verifySignature());
         Assertions.assertTrue(transaction2.verifySignature());
     }
 
     @Test
-    public void invalidSignature() {
+    public void invalidSignature() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         Assertions.assertFalse(transaction1.verifySignature());
     }
 
     @Test
-    public void addingTransactions() {
+    public void addingTransactions() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         Assertions.assertEquals(2, blockchain.getPendingTransactions().size());
     }
 
     @Test
-    public void miningPendingTransactions() {
+    public void miningPendingTransactions() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         //blockchain.minePendingTransactions(MinerKeyPair.getPublic());
         Assertions.assertEquals(2, blockchain.getChain().size());
@@ -68,7 +71,7 @@ public class BlockchainTest {
     }
 
     @Test
-    public void debugPrint() {
+    public void debugPrint() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         //blockchain.minePendingTransactions(MinerKeyPair.getPublic());
 
@@ -96,7 +99,7 @@ public class BlockchainTest {
         return format.format(date);
     }
 
-    public void sign_and_add_transactions() {
+    public void sign_and_add_transactions() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         transaction1.signTransaction(AliceKeyPair.getPrivate());
         transaction2.signTransaction(BobKeyPair.getPrivate());
         blockchain.addTransaction(transaction1);

@@ -1,10 +1,11 @@
 package BlockChain;
+import Auctions.CryptoUtils;
+
 import java.io.*;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
-import java.util.List;
 
 /** Class Transaction: Represents a transaction between two parties in a blockchain. */
 public class Transaction implements Serializable  {
@@ -32,16 +33,8 @@ public class Transaction implements Serializable  {
      *
      * @param privateKey The private key to sign the transaction.
      */
-    public void signTransaction(PrivateKey privateKey) {
-        try {
-            Signature sign = Signature.getInstance("SHA256withRSA");
-            sign.initSign(privateKey);
-            byte[] transactionData = (senderPublicKey.toString() + receiverPublicKey.toString() + Double.toString(amount)).getBytes();
-            sign.update(transactionData);
-            this.signature = sign.sign();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public void signTransaction(PrivateKey privateKey) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+        this.signature = CryptoUtils.sign(privateKey, (senderPublicKey.toString() + receiverPublicKey.toString() + amount).getBytes());
     }
 
     /**
@@ -49,17 +42,8 @@ public class Transaction implements Serializable  {
      *
      * @return True if the signature is valid, false otherwise.
      */
-    public boolean verifySignature() {
-        if (signature == null) return false;
-        try {
-            Signature verifySign = Signature.getInstance("SHA256withRSA");
-            verifySign.initVerify(senderPublicKey);
-            byte[] transactionData = (senderPublicKey.toString() + receiverPublicKey.toString() + Double.toString(amount)).getBytes();
-            verifySign.update(transactionData);
-            return verifySign.verify(signature);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public boolean verifySignature() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        return CryptoUtils.verifySignature(senderPublicKey, (senderPublicKey.toString() + receiverPublicKey.toString() + amount).getBytes(), signature);
     }
 
     /**

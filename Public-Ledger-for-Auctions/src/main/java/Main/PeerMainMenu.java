@@ -6,7 +6,10 @@ import BlockChain.Miner;
 import BlockChain.Transaction;
 import Kademlia.*;
 
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,7 +27,7 @@ public class PeerMainMenu implements Runnable {
      *
      * @param myNode The node associated with this menu.
      */
-    public PeerMainMenu(Node myNode){
+    public PeerMainMenu(Node myNode) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         this.scanner = new Scanner(System.in);
         this.kademlia = Kademlia.getInstance();
         this.blockchain = Blockchain.getInstance();
@@ -75,7 +78,12 @@ public class PeerMainMenu implements Runnable {
                     System.out.println("Key: ");
                     input = scanner.nextLine();
 
-                    Block block1 = this.createBlock();
+                    Block block1 = null;
+                    try {
+                        block1 = this.createBlock();
+                    } catch (SignatureException | NoSuchAlgorithmException | InvalidKeyException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     blockchain.addBlock(block1);
                     kademlia.store(myNode, input, block1);
@@ -92,7 +100,12 @@ public class PeerMainMenu implements Runnable {
                     break;
                 case "5": // Mine block
                     System.out.println("Mining block...");
-                    Block block2 = this.createBlock();
+                    Block block2 = null;
+                    try {
+                        block2 = this.createBlock();
+                    } catch (SignatureException | NoSuchAlgorithmException | InvalidKeyException e) {
+                        throw new RuntimeException(e);
+                    }
                     kademlia.store(myNode, block2.getHash(), block2);
                     kademlia.notifyNewBlockHash(myNode, block2.getHash());
                     break;
@@ -111,7 +124,7 @@ public class PeerMainMenu implements Runnable {
      *
      * @return The mined block.
      */
-    public Block createBlock(){
+    public Block createBlock() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         Miner miner = new Miner();
 
         List<Transaction> transactions = new ArrayList<>();

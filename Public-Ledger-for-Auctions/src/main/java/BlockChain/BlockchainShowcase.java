@@ -1,14 +1,13 @@
 package BlockChain;
 
-import java.security.KeyPair;
-import java.security.PublicKey;
+import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockchainShowcase {
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         Blockchain blockchain = Blockchain.getInstance();//empty constructor automatically creates the genesis block
 
         Miner miner = new Miner();

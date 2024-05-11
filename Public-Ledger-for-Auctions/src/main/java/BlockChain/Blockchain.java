@@ -1,6 +1,9 @@
 package BlockChain;
 
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class Blockchain {
     /**
      * Constructs a blockchain with default difficulty and creates the genesis block.
      */
-    private Blockchain() {
+    private Blockchain() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         this.chain = new ArrayList<>();
         this.pendingTransactions = new ArrayList<>();
         this.difficulty = Constants.DIFFICULTY;
@@ -28,7 +31,7 @@ public class Blockchain {
      *
      * @return The singleton instance of the Blockchain class.
      */
-    public static Blockchain getInstance(){
+    public static Blockchain getInstance() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         if(instance == null){
             instance = new Blockchain();
         }
@@ -41,7 +44,7 @@ public class Blockchain {
      *
      * @return The genesis block.
      */
-    private Block createGenesisBlock() {
+    private Block createGenesisBlock() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         List<Transaction> transactions = new ArrayList<>();
         KeyPair senderKeyPair = Transaction.generateKeyPair();
         KeyPair receiverKeyPair = Transaction.generateKeyPair();
@@ -56,7 +59,7 @@ public class Blockchain {
      *
      * @param transaction The transaction to add.
      */
-    public void addTransaction(Transaction transaction) {
+    public void addTransaction(Transaction transaction) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         if(transaction == null || !transaction.verifySignature()) return;
         pendingTransactions.add(transaction);
     }
@@ -98,9 +101,9 @@ public class Blockchain {
 
     @Override
     public String toString() {
-        String blockChain = "";
+        StringBuilder blockChain = new StringBuilder();
         for(Block block : this.chain)
-            blockChain+=block.toString()+"\n";
-        return blockChain;
+            blockChain.append(block.toString()).append("\n");
+        return blockChain.toString();
     }
 }
