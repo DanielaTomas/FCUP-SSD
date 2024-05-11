@@ -1,5 +1,7 @@
 package BlockChain;
 
+import Auctions.Wallet;
+
 import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +19,9 @@ public class BlockchainShowcase {
         miner.mine(genesisBlock);
 
         List<Transaction> transactions = new ArrayList<>();
-        KeyPair senderKeyPair = Transaction.generateKeyPair();
-        KeyPair receiverKeyPair = Transaction.generateKeyPair();
-        Transaction transaction = new Transaction(senderKeyPair.getPublic(), receiverKeyPair.getPublic(), 0);
-        transaction.signTransaction(senderKeyPair.getPrivate());
+        KeyPair receiverKeyPair = Wallet.generateKeyPair();
+        Transaction transaction = new Transaction(receiverKeyPair.getPublic(), 0);
+        transaction.signTransaction(Wallet.getInstance().getPrivateKey());
         transactions.add(transaction);
 
         Block block1 = new Block(1,blockchain.getLastBlock().getHash(),transactions);
@@ -30,10 +31,9 @@ public class BlockchainShowcase {
         blockchain.addBlock(block1);
 
         transactions = new ArrayList<>();
-        senderKeyPair = Transaction.generateKeyPair();
-        receiverKeyPair = Transaction.generateKeyPair();
-        transaction = new Transaction(senderKeyPair.getPublic(), receiverKeyPair.getPublic(), 0);
-        transaction.signTransaction(senderKeyPair.getPrivate());
+        receiverKeyPair = Wallet.generateKeyPair();
+        transaction = new Transaction(receiverKeyPair.getPublic(), 0);
+        transaction.signTransaction(Wallet.getInstance().getPrivateKey());
         transactions.add(transaction);
 
         Block block2 = new Block(2,blockchain.getLastBlock().getHash(),transactions);

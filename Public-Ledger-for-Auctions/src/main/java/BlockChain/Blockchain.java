@@ -1,29 +1,31 @@
 package BlockChain;
 
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
+import Auctions.Auction;
+import Auctions.Wallet;
+
+import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Class Blockchain: Represents a blockchain containing a chain of blocks and pending transactions. */
 public class Blockchain {
-    private static Blockchain instance; // Singleton design pattern, seems like a good ideia for this class
+    private static Blockchain instance; // Singleton design pattern, seems like a good idea for this class
 
     private List<Block> chain;
     private List<Transaction> pendingTransactions;
     private final int difficulty;
+    private Wallet wallet;
 
     /**
      * Constructs a blockchain with default difficulty and creates the genesis block.
      */
-    private Blockchain() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+    private Blockchain() {
         this.chain = new ArrayList<>();
         this.pendingTransactions = new ArrayList<>();
         this.difficulty = Constants.DIFFICULTY;
         Block genesisBlock = createGenesisBlock();
         this.chain.add(genesisBlock);
+        this.wallet = Wallet.getInstance();
     }
 
     /**
@@ -31,7 +33,7 @@ public class Blockchain {
      *
      * @return The singleton instance of the Blockchain class.
      */
-    public static Blockchain getInstance() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+    public static Blockchain getInstance() {
         if(instance == null){
             instance = new Blockchain();
         }
@@ -44,12 +46,11 @@ public class Blockchain {
      *
      * @return The genesis block.
      */
-    private Block createGenesisBlock() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+    private Block createGenesisBlock() {
         List<Transaction> transactions = new ArrayList<>();
-        KeyPair senderKeyPair = Transaction.generateKeyPair();
-        KeyPair receiverKeyPair = Transaction.generateKeyPair();
-        Transaction transaction = new Transaction(senderKeyPair.getPublic(), receiverKeyPair.getPublic(), 0);
-        transaction.signTransaction(senderKeyPair.getPrivate());
+        KeyPair receiverKeyPair = Wallet.generateKeyPair();
+        Transaction transaction = new Transaction(receiverKeyPair.getPublic(), 0);
+        transaction.signTransaction(wallet.getPrivateKey());
         transactions.add(transaction);
         return new Block(0, Constants.GENESIS_PREV_HASH, transactions);
     }
@@ -59,7 +60,7 @@ public class Blockchain {
      *
      * @param transaction The transaction to add.
      */
-    public void addTransaction(Transaction transaction) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+    public void addTransaction(Transaction transaction) {
         if(transaction == null || !transaction.verifySignature()) return;
         pendingTransactions.add(transaction);
     }

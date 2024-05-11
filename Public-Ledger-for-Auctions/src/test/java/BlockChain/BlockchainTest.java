@@ -1,4 +1,5 @@
 package BlockChain;
+import Auctions.Wallet;
 import BlockChain.Block;
 import BlockChain.Blockchain;
 import BlockChain.Transaction;
@@ -26,14 +27,14 @@ public class BlockchainTest {
     private Transaction transaction2;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         this.blockchain = Blockchain.getInstance();
-        this.AliceKeyPair = Transaction.generateKeyPair();
-        this.BobKeyPair = Transaction.generateKeyPair();
-        this.CharlieKeyPair = Transaction.generateKeyPair();
-        this.MinerKeyPair = Transaction.generateKeyPair();
-        this.transaction1 = new Transaction(AliceKeyPair.getPublic(), BobKeyPair.getPublic(), 5);
-        this.transaction2 = new Transaction(BobKeyPair.getPublic(), CharlieKeyPair.getPublic(), 10);
+        this.AliceKeyPair = Wallet.generateKeyPair();
+        this.BobKeyPair = Wallet.generateKeyPair();
+        this.CharlieKeyPair = Wallet.generateKeyPair();
+        this.MinerKeyPair = Wallet.generateKeyPair();
+        this.transaction1 = new Transaction(BobKeyPair.getPublic(), 5);
+        this.transaction2 = new Transaction(CharlieKeyPair.getPublic(), 10);
     }
 
     @Test
@@ -52,7 +53,7 @@ public class BlockchainTest {
     }
 
     @Test
-    public void invalidSignature() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+    public void invalidSignature() {
         Assertions.assertFalse(transaction1.verifySignature());
     }
 

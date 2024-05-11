@@ -1,10 +1,14 @@
 package Auctions;
 
+import BlockChain.Blockchain;
+import BlockChain.Transaction;
+
+import java.io.*;
 import java.security.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Auction {
+public class Auction implements Serializable {
     private static final Logger logger = Logger.getLogger(Auction.class.getName());
 
     private String auctionId;
@@ -16,10 +20,10 @@ public class Auction {
     private PublicKey currentBidder;
     private boolean isOpen;
     private byte[] signature;
-    private AuctionService auctionService;
+    private Blockchain blockchain;
     //private List<PublicKey> bidders;
 
-    public Auction(PublicKey sellerPublicKey, String item, double startingPrice, long endTime) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+    public Auction(PublicKey sellerPublicKey, String item, double startingPrice, long endTime) {
         this.auctionId = generateAuctionId(sellerPublicKey, item, startingPrice, endTime);
         this.sellerPublicKey = sellerPublicKey;
         this.item = item;
@@ -28,10 +32,10 @@ public class Auction {
         this.currentBid = startingPrice;
         this.isOpen = true;
         this.signature = null;
-        this.auctionService = new AuctionService(this);
+        this.blockchain = Blockchain.getInstance();
     }
 
-    public void placeBid(PublicKey bidderPublicKey, double bidAmount, byte[] signature) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+    public void placeBid(PublicKey bidderPublicKey, double bidAmount, byte[] signature) {
         byte[] data = (bidderPublicKey.toString() + bidAmount).getBytes();
 
         if (!CryptoUtils.verifySignature(bidderPublicKey, signature, data)) {
@@ -50,7 +54,9 @@ public class Auction {
         this.currentBid = bidAmount;
         this.currentBidder = bidderPublicKey;
 
-        this.auctionService.addTransactionToBlockchain(bidAmount);
+        Transaction transaction = new Transaction(currentBidder, bidAmount);
+        transaction.setSignature(signature);
+        this.blockchain.addTransaction(transaction);
 
         //TODO Broadcast new bid
     }
@@ -87,6 +93,32 @@ public class Auction {
             logger.log(Level.SEVERE, "Error generating auction ID", e);
             return null;
         }
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.writeObject(auctionId);
+        out.writeObject(sellerPublicKey);
+        out.writeObject(item);
+        out.writeDouble(startingPrice);
+        out.writeLong(endTime);
+        out.writeDouble(currentBid);
+        out.writeObject(currentBidder);
+        out.writeBoolean(isOpen);
+        out.writeObject(signature);
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException, SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+        auctionId = (String) ois.readObject();
+        sellerPublicKey = (PublicKey) ois.readObject();
+        item = (String) ois.readObject();
+        startingPrice = ois.readDouble();
+        endTime = ois.readLong();
+        currentBid = ois.readDouble();
+        currentBidder = (PublicKey) ois.readObject();
+        isOpen = ois.readBoolean();
+        signature = (byte[]) ois.readObject();
     }
 
     public String getId() {
