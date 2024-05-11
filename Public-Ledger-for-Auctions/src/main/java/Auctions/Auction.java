@@ -54,7 +54,7 @@ public class Auction implements Serializable {
         this.currentBid = bidAmount;
         this.currentBidder = bidderPublicKey;
 
-        Transaction transaction = new Transaction(currentBidder, bidAmount);
+        Transaction transaction = new Transaction(sellerPublicKey, bidAmount);
         transaction.setSignature(signature);
         this.blockchain.addTransaction(transaction);
 
