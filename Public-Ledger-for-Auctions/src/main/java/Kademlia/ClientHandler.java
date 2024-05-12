@@ -102,6 +102,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 success = "Sent LATEST_BLOCK request to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
+            case NEW_AUCTION:
+                msg.writeInt(key.length());
+                msg.writeCharSequence(key, StandardCharsets.UTF_8);
+                success = "Sent new auction ID " + key + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
+                break;
             default:
                 logger.warning("Received unknown message type: " + messageType);
                 break;
@@ -133,7 +139,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx,bytebuf);
                     break;
-                case PING, STORE, NOTIFY:
+                case PING, STORE, NOTIFY, NEW_AUCTION:
                     ackHandler(ctx,bytebuf);
                     break;
                 case LATEST_BLOCK:

@@ -1,5 +1,6 @@
 package Kademlia;
 
+import Auctions.Auction;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -26,7 +27,7 @@ public class Kademlia {
      * Enum for message types used in Kademlia.
      */
     public enum MessageType {
-        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY, LATEST_BLOCK
+        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY, LATEST_BLOCK, NEW_AUCTION, NEW_BID
     }
 
     /**
@@ -214,20 +215,40 @@ public class Kademlia {
     /**
      * Notifies nodes in the network about a new block hash, if it is different from the latest known hash.
      *
-     * @param myNode       The local node.
+     * @param myNodeInfo       The local node info.
+     * @param routingTable  The local node routing table.
      * @param newBlockHash The new block hash to notify about.
      */
-    public void notifyNewBlockHash(Node myNode, String newBlockHash) {
+    public void notifyNewBlockHash(NodeInfo myNodeInfo, List<NodeInfo> routingTable, String newBlockHash) {
         logger.info("Kademlia - Starting notify new block hash");
         if(!newBlockHash.contentEquals(this.latestBlockHash)) {
             latestBlockHash = new StringBuilder(newBlockHash);
             logger.info("New block hash updated");
-            for (NodeInfo targetNodeInfo : myNode.getRoutingTable()) {
-                connectAndHandle(myNode.getNodeInfo(), targetNodeInfo, newBlockHash, null, MessageType.NOTIFY);
+            for (NodeInfo targetNodeInfo : routingTable) {
+                connectAndHandle(myNodeInfo, targetNodeInfo, newBlockHash, null, MessageType.NOTIFY);
             }
         }
         else {
             logger.info("New block hash already updated");
+        }
+    }
+
+    public void broadcastNewAuction(NodeInfo myNodeInfo, List<NodeInfo> routingTable, String auctionId) {
+        logger.info("Kademlia - Starting broadcast new auction");
+        for(NodeInfo targetNodeInfo : routingTable) {
+            connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, null, MessageType.NEW_AUCTION);
+        }
+    }
+
+    public void broadcastNewBid(NodeInfo myNodeInfo, List<NodeInfo> routingTable, Auction auction) {
+        logger.info("Kademlia - Starting broadcast new bid");
+        for(String targetNodeId : auction.getSubscribers()) {
+            findNode(myNodeInfo,targetNodeId,routingTable);
+        }
+        for(NodeInfo targetNodeInfo : routingTable) {
+            if(auction.isSubscriber(targetNodeInfo.getNodeId())) {
+                connectAndHandle(myNodeInfo, targetNodeInfo, null, auction, MessageType.NEW_BID);
+            }
         }
     }
 

@@ -64,6 +64,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 case LATEST_BLOCK:
                     latestBlockHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
+                case NEW_AUCTION:
+                    newAuctionHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
+                    break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
                     break;
@@ -73,6 +76,26 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         } else {
             logger.warning("Received unknown message type from node: " + msg.getClass().getName());
         }
+    }
+
+    /**
+     * Handles NEW_AUCTION messages from the client.
+     *
+     * @param ctx          The channel handler context.
+     * @param bytebuf      The received ByteBuf.
+     * @param messageType  The type of the message.
+     * @param sender       The address of the sender node.
+     * @throws IOException            If an I/O error occurs.
+     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
+     */
+    private void newAuctionHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
+        int newAuctionLength = bytebuf.readInt();
+        ByteBuf newAuctionBytes = bytebuf.readBytes(newAuctionLength);
+        String newAuctionStr = newAuctionBytes.toString(StandardCharsets.UTF_8);
+        logger.info("New auction with ID " + newAuctionStr + " available. Notified by node " + sender);
+
+        sendAck(ctx,messageType,randomId,sender);
+        newAuctionBytes.release();
     }
 
     /**
@@ -122,7 +145,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         sendAck(ctx, messageType, randomId, sender);
 
         Kademlia kademlia = Kademlia.getInstance();
-        kademlia.notifyNewBlockHash(myNode,key);
+        kademlia.notifyNewBlockHash(myNode.getNodeInfo(),myNode.getRoutingTable(),key);
     }
 
     /**

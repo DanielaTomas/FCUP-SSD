@@ -23,9 +23,9 @@ public class Blockchain {
         this.chain = new ArrayList<>();
         this.pendingTransactions = new ArrayList<>();
         this.difficulty = Constants.DIFFICULTY;
+        this.wallet = Wallet.getInstance();
         Block genesisBlock = createGenesisBlock();
         this.chain.add(genesisBlock);
-        this.wallet = Wallet.getInstance();
     }
 
     /**

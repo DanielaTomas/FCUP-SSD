@@ -14,7 +14,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-core:3.+")
     implementation("io.netty:netty-all:4.1.107.Final")
-    implementation("org.bouncycastle:bcprov-jdk15on:+")
+    //implementation("org.bouncycastle:bcprov-jdk15on:+")
 }
 
 tasks.jar {

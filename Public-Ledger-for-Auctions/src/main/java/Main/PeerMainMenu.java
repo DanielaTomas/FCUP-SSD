@@ -28,7 +28,7 @@ public class PeerMainMenu implements Runnable {
      *
      * @param myNode The node associated with this menu.
      */
-    public PeerMainMenu(Node myNode) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+    public PeerMainMenu(Node myNode) {
         this.scanner = new Scanner(System.in);
         this.kademlia = Kademlia.getInstance();
         this.blockchain = Blockchain.getInstance();
@@ -100,7 +100,7 @@ public class PeerMainMenu implements Runnable {
                     System.out.println("Mining block...");
                     Block block2 = this.createBlock();
                     kademlia.store(myNode, block2.getHash(), block2);
-                    kademlia.notifyNewBlockHash(myNode, block2.getHash());
+                    kademlia.notifyNewBlockHash(myNode.getNodeInfo(), myNode.getRoutingTable(), block2.getHash());
                     break;
                 case "6": // Create Auction
                     System.out.println("Item: ");
@@ -112,7 +112,7 @@ public class PeerMainMenu implements Runnable {
                     Auction newAuction = new Auction(wallet.getPublicKey(), input, startingPrice, endTime);
                     newAuction.addSubscriber(myNode.getNodeInfo().getNodeId());
                     kademlia.store(myNode, newAuction.getId(), newAuction);
-                    //TODO broadcast new auction
+                    kademlia.broadcastNewAuction(myNode.getNodeInfo(),myNode.getRoutingTable(),newAuction.getId());
                     break;
                 case "7": // Place Bid
                     System.out.println("Auction ID: ");

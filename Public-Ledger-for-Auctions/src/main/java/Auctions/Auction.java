@@ -1,8 +1,5 @@
 package Auctions;
 
-import BlockChain.Blockchain;
-import BlockChain.Transaction;
-
 import java.io.*;
 import java.security.*;
 import java.util.ArrayList;
@@ -103,6 +100,21 @@ public class Auction implements Serializable {
         return subscribers.contains(nodeId);
     }
 
+
+    @Override
+    public String toString() {
+        return "Auction ID: " + auctionId + "\n" +
+                "Seller Public Key: " + sellerPublicKey + "\n" +
+                "Item: " + item + "\n" +
+                "Starting Price: " + startingPrice + "\n" +
+                "End Time: " + endTime + "\n" +
+                "Current Bid: " + currentBid + "\n" +
+                "Current Bidder: " + currentBidder + "\n" +
+                "Is Open: " + isOpen + "\n" +
+                "Subscribers: " + subscribers + "\n";
+    }
+
+
     @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(auctionId);
@@ -113,18 +125,20 @@ public class Auction implements Serializable {
         out.writeDouble(currentBid);
         out.writeObject(currentBidder);
         out.writeBoolean(isOpen);
+        out.writeObject(subscribers);
     }
 
     @Serial
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException, SignatureException, NoSuchAlgorithmException, InvalidKeyException {
-        auctionId = (String) ois.readObject();
-        sellerPublicKey = (PublicKey) ois.readObject();
-        item = (String) ois.readObject();
-        startingPrice = ois.readDouble();
-        endTime = ois.readLong();
-        currentBid = ois.readDouble();
-        currentBidder = (PublicKey) ois.readObject();
-        isOpen = ois.readBoolean();
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException, SignatureException, NoSuchAlgorithmException, InvalidKeyException {
+        auctionId = (String) in.readObject();
+        sellerPublicKey = (PublicKey) in.readObject();
+        item = (String) in.readObject();
+        startingPrice = in.readDouble();
+        endTime = in.readLong();
+        currentBid = in.readDouble();
+        currentBidder = (PublicKey) in.readObject();
+        isOpen = in.readBoolean();
+        subscribers = (List<String>) in.readObject();
     }
 
     public String getId() {
@@ -141,5 +155,9 @@ public class Auction implements Serializable {
 
     public PublicKey getSellerPublicKey() {
         return sellerPublicKey;
+    }
+
+    public List<String> getSubscribers() {
+        return subscribers;
     }
 }
