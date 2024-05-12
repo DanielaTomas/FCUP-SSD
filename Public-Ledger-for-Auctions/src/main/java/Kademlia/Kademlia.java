@@ -8,7 +8,9 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -22,6 +24,7 @@ public class Kademlia {
     private static final int K = 2; //TODO ajustar valor
     private static Kademlia instance;
     private StringBuilder latestBlockHash;
+    private StringBuilder auctionId; //TODO Set<StringBuilder>?
 
     /**
      * Enum for message types used in Kademlia.
@@ -35,6 +38,7 @@ public class Kademlia {
      */
     private Kademlia() {
         this.latestBlockHash = new StringBuilder(GENESIS_PREV_HASH);
+        this.auctionId = null;
     }
 
     /**
@@ -153,10 +157,8 @@ public class Kademlia {
         List<NodeInfo> keyNearNodes = findClosestNodes(myNode.getRoutingTable(), key, K);
         for (NodeInfo keyNearNode : keyNearNodes) {
             Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, null, MessageType.FIND_VALUE);
-            if (result instanceof String) {
-                logger.info("Kademlia - Value found: " + result);
-                return result;
-            }
+            logger.info("Kademlia - Value found: " + result);
+            return result;
         }
 
         return keyNearNodes;
@@ -235,19 +237,27 @@ public class Kademlia {
 
     public void broadcastNewAuction(NodeInfo myNodeInfo, List<NodeInfo> routingTable, String auctionId) {
         logger.info("Kademlia - Starting broadcast new auction");
-        for(NodeInfo targetNodeInfo : routingTable) {
-            connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, null, MessageType.NEW_AUCTION);
+        if(this.auctionId == null || !auctionId.contentEquals(this.auctionId)) {
+            this.auctionId = new StringBuilder(auctionId);
+            for(NodeInfo targetNodeInfo : routingTable) {
+                connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, null, MessageType.NEW_AUCTION);
+            }
+        } else {
+            logger.info("New auction already broadcasted");
         }
     }
 
-    public void broadcastNewBid(NodeInfo myNodeInfo, List<NodeInfo> routingTable, Auction auction) {
-        logger.info("Kademlia - Starting broadcast new bid");
+    public void notifyNewBid(NodeInfo myNodeInfo, List<NodeInfo> routingTable, Auction auction) {
+        logger.info("Kademlia - Starting notify new bid");
         for(String targetNodeId : auction.getSubscribers()) {
             findNode(myNodeInfo,targetNodeId,routingTable);
         }
+
+        String auctionId = auction.getId();
+        Double bid = auction.getCurrentBid();
         for(NodeInfo targetNodeInfo : routingTable) {
             if(auction.isSubscriber(targetNodeInfo.getNodeId())) {
-                connectAndHandle(myNodeInfo, targetNodeInfo, null, auction, MessageType.NEW_BID);
+                connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, bid, MessageType.NEW_BID);
             }
         }
     }

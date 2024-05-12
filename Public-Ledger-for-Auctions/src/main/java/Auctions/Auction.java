@@ -34,7 +34,7 @@ public class Auction implements Serializable {
     public boolean placeBid(PublicKey bidderPublicKey, double bidAmount, byte[] signature) {
         byte[] data = (bidderPublicKey.toString() + bidAmount).getBytes();
 
-        if (!CryptoUtils.verifySignature(bidderPublicKey, signature, data)) {
+        if (!CryptoUtils.verifySignature(bidderPublicKey, data, signature)) {
             logger.warning("Invalid bid signature.");
             return false;
         }

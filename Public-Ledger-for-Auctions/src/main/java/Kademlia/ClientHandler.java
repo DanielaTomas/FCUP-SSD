@@ -108,6 +108,15 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 success = "Sent new auction ID " + key + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
+            case NEW_BID:
+                msg.writeInt(key.length());
+                msg.writeCharSequence(key, StandardCharsets.UTF_8);
+                ByteBuf bidBuf = Utils.serialize(value);
+                msg.writeInt(bidBuf.readableBytes());
+                msg.writeBytes(bidBuf);
+                success = "Sent new bid " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
+                break;
             default:
                 logger.warning("Received unknown message type: " + messageType);
                 break;
@@ -139,7 +148,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx,bytebuf);
                     break;
-                case PING, STORE, NOTIFY, NEW_AUCTION:
+                case PING, STORE, NOTIFY, NEW_AUCTION, NEW_BID:
                     ackHandler(ctx,bytebuf);
                     break;
                 case LATEST_BLOCK:
