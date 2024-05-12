@@ -5,6 +5,8 @@ import BlockChain.Transaction;
 
 import java.io.*;
 import java.security.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,9 +21,7 @@ public class Auction implements Serializable {
     private double currentBid;
     private PublicKey currentBidder;
     private boolean isOpen;
-    private byte[] signature;
-    private Blockchain blockchain;
-    //private List<PublicKey> bidders;
+    private List<String> subscribers;
 
     public Auction(PublicKey sellerPublicKey, String item, double startingPrice, long endTime) {
         this.auctionId = generateAuctionId(sellerPublicKey, item, startingPrice, endTime);
@@ -31,34 +31,29 @@ public class Auction implements Serializable {
         this.endTime = endTime;
         this.currentBid = startingPrice;
         this.isOpen = true;
-        this.signature = null;
-        this.blockchain = Blockchain.getInstance();
+        this.subscribers = new ArrayList<>();
     }
 
-    public void placeBid(PublicKey bidderPublicKey, double bidAmount, byte[] signature) {
+    public boolean placeBid(PublicKey bidderPublicKey, double bidAmount, byte[] signature) {
         byte[] data = (bidderPublicKey.toString() + bidAmount).getBytes();
 
         if (!CryptoUtils.verifySignature(bidderPublicKey, signature, data)) {
             logger.warning("Invalid bid signature.");
-            return;
+            return false;
         }
         else if(!this.isOpen()) {
             logger.warning("Bid rejected. Auction is closed.");
-            return;
+            return false;
         }
         else if (bidAmount <= this.currentBid) {
             logger.warning("Bid amount must be greater than current bid.");
-            return;
+            return false;
         }
 
         this.currentBid = bidAmount;
         this.currentBidder = bidderPublicKey;
 
-        Transaction transaction = new Transaction(sellerPublicKey, bidAmount);
-        transaction.setSignature(signature);
-        this.blockchain.addTransaction(transaction);
-
-        //TODO Broadcast new bid
+        return true;
     }
 
     public boolean isOpen() {
@@ -71,6 +66,7 @@ public class Auction implements Serializable {
     public void closeAuction() {
         isOpen = false;
         logger.info("Auction closed. Winner: " + currentBidder + ", Winning bid: " + currentBid);
+        //TODO broadcast
     }
 
     /**
@@ -95,6 +91,18 @@ public class Auction implements Serializable {
         }
     }
 
+    public void addSubscriber(String nodeId) {
+        if(!isSubscriber(nodeId)) {
+            subscribers.add(nodeId);
+        } else {
+            logger.info("You are already subscribed to this auction.");
+        }
+    }
+
+    public boolean isSubscriber(String nodeId) {
+        return subscribers.contains(nodeId);
+    }
+
     @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(auctionId);
@@ -105,7 +113,6 @@ public class Auction implements Serializable {
         out.writeDouble(currentBid);
         out.writeObject(currentBidder);
         out.writeBoolean(isOpen);
-        out.writeObject(signature);
     }
 
     @Serial
@@ -118,7 +125,6 @@ public class Auction implements Serializable {
         currentBid = ois.readDouble();
         currentBidder = (PublicKey) ois.readObject();
         isOpen = ois.readBoolean();
-        signature = (byte[]) ois.readObject();
     }
 
     public String getId() {

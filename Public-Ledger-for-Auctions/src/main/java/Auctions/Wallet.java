@@ -44,4 +44,8 @@ public class Wallet {
     public PrivateKey getPrivateKey() {
         return this.keyPair.getPrivate();
     }
+
+    public KeyPair getKeyPair() {
+        return this.keyPair;
+    }
 }

@@ -51,6 +51,7 @@ public class PeerMainMenu implements Runnable {
         " 5 - Mine Block" + '\n' +
         " 6 - Create Auction" + '\n' +
         " 7 - Place Bid" + '\n' +
+        " 8 - Subscribe Auction" + '\n' +
         " 99 - Exit" + '\n' +
         "----------------------------------";
     }
@@ -101,7 +102,7 @@ public class PeerMainMenu implements Runnable {
                     kademlia.store(myNode, block2.getHash(), block2);
                     kademlia.notifyNewBlockHash(myNode, block2.getHash());
                     break;
-                case "6":
+                case "6": // Create Auction
                     System.out.println("Item: ");
                     input = scanner.nextLine();
                     System.out.println("Starting Price: ");
@@ -109,16 +110,38 @@ public class PeerMainMenu implements Runnable {
                     System.out.println("End time (in milliseconds): ");
                     long endTime = Long.parseLong(scanner.nextLine());
                     Auction newAuction = new Auction(wallet.getPublicKey(), input, startingPrice, endTime);
+                    newAuction.addSubscriber(myNode.getNodeInfo().getNodeId());
                     kademlia.store(myNode, newAuction.getId(), newAuction);
+                    //TODO broadcast new auction
                     break;
-                case "7":
+                case "7": // Place Bid
                     System.out.println("Auction ID: ");
                     String auctionId = scanner.nextLine();
                     Auction auction = (Auction) kademlia.findValue(myNode, auctionId);
-                    System.out.println("Bid amount: ");
-                    double bidAmount = Double.parseDouble(scanner.nextLine());
-                    PublicKey myPublicKey = wallet.getPublicKey();
-                    auction.placeBid(myPublicKey, bidAmount, CryptoUtils.sign(wallet.getPrivateKey(),(myPublicKey.toString() + bidAmount).getBytes()));
+                    if(auction != null) {
+                        System.out.println("Bid amount: ");
+                        double bidAmount = Double.parseDouble(scanner.nextLine());
+                        PublicKey myPublicKey = wallet.getPublicKey();
+                        PrivateKey myPrivateKey = wallet.getPrivateKey();
+                        if (auction.placeBid(myPublicKey, bidAmount, CryptoUtils.sign(myPrivateKey, (myPublicKey.toString() + bidAmount).getBytes()))) {
+                            Transaction transaction = new Transaction(auction.getSellerPublicKey(), bidAmount);
+                            transaction.signTransaction(myPrivateKey);
+                            this.blockchain.addTransaction(transaction);
+                            //TODO broadcast new bid
+                        }
+                    } else {
+                        System.out.println("Auction not found.");
+                    }
+                    break;
+                case "8": // Subscribe Auction
+                    System.out.println("Auction ID: ");
+                    input = scanner.nextLine();
+                    Auction auctionToSubscribe = (Auction) kademlia.findValue(myNode, input);
+                    if (auctionToSubscribe != null) {
+                        auctionToSubscribe.addSubscriber(myNode.getNodeInfo().getNodeId());
+                    } else {
+                        System.out.println("Auction not found.");
+                    }
                     break;
                 case "99": //Quit safely, otherwise I won't be blamed if weird behaviour occurs
                     System.exit(0);
