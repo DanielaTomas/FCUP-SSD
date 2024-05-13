@@ -8,6 +8,7 @@ import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -61,6 +62,8 @@ public class Kademlia {
 
         connectAndHandle(myNode.getNodeInfo(), myNode.findNodeInfoById(bootstrapNodeId), null, null, MessageType.LATEST_BLOCK);
 
+        myNode.getRoutingTable().remove(myNode.findNodeInfoById(bootstrapNodeId));
+
         for(NodeInfo nearNodeInfo : nearNodes) {
             myNode.updateRoutingTable(nearNodeInfo);
             List<NodeInfo> additionalNearNodesInfo = findNode(myNode.getNodeInfo(), nearNodeInfo.getNodeId(), myNode.getRoutingTable());
@@ -87,7 +90,7 @@ public class Kademlia {
      *
      * @return List of near nodes.
      */
-    public List<NodeInfo> findNode(NodeInfo myNodeInfo, String targetNodeId, List<NodeInfo> routingTable) {
+    public List<NodeInfo> findNode(NodeInfo myNodeInfo, String targetNodeId, Set<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting FIND_NODE RPC");
 
         for (NodeInfo nodeInfo : routingTable) {
@@ -121,7 +124,7 @@ public class Kademlia {
      * @param targetNodeId   ID of the target node.
      * @param routingTable   Routing table of the local node.
      */
-    public void ping(NodeInfo myNodeInfo, String targetNodeId , List<NodeInfo> routingTable) {
+    public void ping(NodeInfo myNodeInfo, String targetNodeId , Set<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting PING RPC");
         for (NodeInfo targetNodeInfo : routingTable) {
             if (targetNodeInfo.getNodeId().equals(targetNodeId) ){
@@ -152,10 +155,8 @@ public class Kademlia {
         List<NodeInfo> keyNearNodes = findClosestNodes(myNode.getRoutingTable(), key, K);
         for (NodeInfo keyNearNode : keyNearNodes) {
             Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, null, MessageType.FIND_VALUE);
-            if (result instanceof String) {
-                logger.info("Kademlia - Value found: " + result);
-                return result;
-            }
+            logger.info("Kademlia - Value found: " + result);
+            return result;
         }
 
         return keyNearNodes;

@@ -149,7 +149,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         myNode.updateRoutingTable(nodeInfo);
         List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo.getNodeId(), K);
-
+        nearNodes.add(myNode.getNodeInfo());
         String success = "Sent near nodes info to node " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort();
         sendSerializedMessage(ctx,messageType,randomId,sender,nearNodes,success);
 
