@@ -22,7 +22,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     private List<NodeInfo> nearNodesInfo;
     private Kademlia.MessageType messageType;
     private String key;
-    private Object value;
+    private ValueWrapper value;
     private Timer timer;
     private byte[] randomId;
 
@@ -36,7 +36,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
      * @param messageType    The type of the message.
      * @param nearNodesInfo  Information about the near nodes. //TODO tirar do construtor
      */
-    public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, Object value, Kademlia.MessageType messageType, List<NodeInfo> nearNodesInfo) {
+    public ClientHandler(NodeInfo nodeInfo, NodeInfo targetNodeInfo, String key, ValueWrapper value, Kademlia.MessageType messageType, List<NodeInfo> nearNodesInfo) {
         this.targetNodeInfo = targetNodeInfo;
         this.nodeInfo = nodeInfo;
         this.nearNodesInfo = nearNodesInfo;
@@ -83,10 +83,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             case STORE:
                 msg.writeInt(key.length());
                 msg.writeCharSequence(key, StandardCharsets.UTF_8);
-                ByteBuf valueBuf = Utils.serialize(value);
+                ByteBuf valueBuf = Utils.serialize(value.getValue());
                 msg.writeInt(valueBuf.readableBytes());
                 msg.writeBytes(valueBuf);
-                success = "Sent STORE request for key: " + key + ", value: " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                success = "Sent STORE request for key: " + key + ", value: " + value.getValue() + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             case NOTIFY:
@@ -100,6 +100,21 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 msg.writeInt(latestBlockBuf.readableBytes());
                 msg.writeBytes(latestBlockBuf);
                 success = "Sent LATEST_BLOCK request to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
+                break;
+            case NEW_AUCTION:
+                msg.writeInt(key.length());
+                msg.writeCharSequence(key, StandardCharsets.UTF_8);
+                success = "Sent new auction ID " + key + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
+                break;
+            case NEW_BID:
+                msg.writeInt(key.length());
+                msg.writeCharSequence(key, StandardCharsets.UTF_8);
+                ByteBuf bidBuf = Utils.serialize(value);
+                msg.writeInt(bidBuf.readableBytes());
+                msg.writeBytes(bidBuf);
+                success = "Sent new bid " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             default:
@@ -133,7 +148,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx,bytebuf);
                     break;
-                case PING, STORE, NOTIFY:
+                case PING, STORE, NOTIFY, NEW_AUCTION, NEW_BID:
                     ackHandler(ctx,bytebuf);
                     break;
                 case LATEST_BLOCK:
@@ -165,17 +180,16 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         Object deserializedObject = Utils.deserialize(messageBytes);
 
         if(messageType == Kademlia.MessageType.FIND_VALUE) {
-            value = deserializedObject;
-            logger.info("Received value: " + value + " from " + ctx.channel().remoteAddress());
-            return;
-        }
-
-        if (deserializedObject instanceof ArrayList) {
-            ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
-            logger.info("Received near nodes info from server: " + nodeInfoList);
-            nearNodesInfo.addAll(nodeInfoList);
+            value.setValue(deserializedObject);
+            logger.info("Received value: " + value.getValue() + " from " + ctx.channel().remoteAddress());
         } else {
-            logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
+            if (deserializedObject instanceof ArrayList) {
+                ArrayList<NodeInfo> nodeInfoList = (ArrayList<NodeInfo>) deserializedObject;
+                logger.info("Received near nodes info from server: " + nodeInfoList);
+                nearNodesInfo.addAll(nodeInfoList);
+            } else {
+                logger.warning("Received unknown message type from server: " + deserializedObject.getClass().getName());
+            }
         }
         messageBytes.release();
     }

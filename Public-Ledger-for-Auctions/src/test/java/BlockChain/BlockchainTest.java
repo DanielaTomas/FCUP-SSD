@@ -1,4 +1,5 @@
 package BlockChain;
+import Auctions.Wallet;
 import BlockChain.Block;
 import BlockChain.Blockchain;
 import BlockChain.Transaction;
@@ -6,7 +7,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -23,14 +27,14 @@ public class BlockchainTest {
     private Transaction transaction2;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws SignatureException, NoSuchAlgorithmException, InvalidKeyException {
         this.blockchain = Blockchain.getInstance();
-        this.AliceKeyPair = Transaction.generateKeyPair();
-        this.BobKeyPair = Transaction.generateKeyPair();
-        this.CharlieKeyPair = Transaction.generateKeyPair();
-        this.MinerKeyPair = Transaction.generateKeyPair();
-        this.transaction1 = new Transaction(AliceKeyPair.getPublic(), BobKeyPair.getPublic(), 5);
-        this.transaction2 = new Transaction(BobKeyPair.getPublic(), CharlieKeyPair.getPublic(), 10);
+        this.AliceKeyPair = Wallet.generateKeyPair();
+        this.BobKeyPair = Wallet.generateKeyPair();
+        this.CharlieKeyPair = Wallet.generateKeyPair();
+        this.MinerKeyPair = Wallet.generateKeyPair();
+        this.transaction1 = new Transaction(BobKeyPair.getPublic(), 5);
+        this.transaction2 = new Transaction(CharlieKeyPair.getPublic(), 10);
     }
 
     @Test
@@ -42,7 +46,7 @@ public class BlockchainTest {
     }
 
     @Test
-    public void validSignature() {
+    public void validSignature() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         Assertions.assertTrue(transaction1.verifySignature());
         Assertions.assertTrue(transaction2.verifySignature());
@@ -54,13 +58,13 @@ public class BlockchainTest {
     }
 
     @Test
-    public void addingTransactions() {
+    public void addingTransactions() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         Assertions.assertEquals(2, blockchain.getPendingTransactions().size());
     }
 
     @Test
-    public void miningPendingTransactions() {
+    public void miningPendingTransactions() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         //blockchain.minePendingTransactions(MinerKeyPair.getPublic());
         Assertions.assertEquals(2, blockchain.getChain().size());
@@ -68,7 +72,7 @@ public class BlockchainTest {
     }
 
     @Test
-    public void debugPrint() {
+    public void debugPrint() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.sign_and_add_transactions();
         //blockchain.minePendingTransactions(MinerKeyPair.getPublic());
 
@@ -96,7 +100,7 @@ public class BlockchainTest {
         return format.format(date);
     }
 
-    public void sign_and_add_transactions() {
+    public void sign_and_add_transactions() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         transaction1.signTransaction(AliceKeyPair.getPrivate());
         transaction2.signTransaction(BobKeyPair.getPrivate());
         blockchain.addTransaction(transaction1);

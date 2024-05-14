@@ -64,6 +64,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 case LATEST_BLOCK:
                     latestBlockHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
+                case NEW_AUCTION:
+                    newAuctionHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
+                    break;
+                case NEW_BID:
+                    newBidHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
+                    break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
                     break;
@@ -73,6 +79,53 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         } else {
             logger.warning("Received unknown message type from node: " + msg.getClass().getName());
         }
+    }
+
+    /**
+     * Handles NEW_BID messages from the client.
+     *
+     * @param ctx          The channel handler context.
+     * @param bytebuf      The received ByteBuf.
+     * @param messageType  The type of the message.
+     * @param sender       The address of the sender node.
+     * @throws IOException            If an I/O error occurs.
+     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
+     */
+    private void newBidHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
+        int keyLength = bytebuf.readInt();
+        String auctionId = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
+        int newBidLength = bytebuf.readInt();
+        ByteBuf newBidBytes = bytebuf.readBytes(newBidLength);
+        Double bid = (Double) Utils.deserialize(newBidBytes);
+
+        logger.info("New bid " + bid + " in the auction with ID " + auctionId + ". Notified by node " + sender);
+
+        sendAck(ctx,messageType,randomId,sender);
+        newBidBytes.release();
+    }
+
+    /**
+     * Handles NEW_Auction messages from the client.
+     *
+     * @param ctx          The channel handler context.
+     * @param bytebuf      The received ByteBuf.
+     * @param messageType  The type of the message.
+     * @param sender       The address of the sender node.
+     * @throws IOException            If an I/O error occurs.
+     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
+     */
+    private void newAuctionHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
+        int newBidLength = bytebuf.readInt();
+        ByteBuf newAuctionBytes = bytebuf.readBytes(newBidLength);
+        String newAuctionStr = newAuctionBytes.toString(StandardCharsets.UTF_8);
+        logger.info("New auction with ID " + newAuctionStr + " available. Notified by node " + sender);
+
+        sendAck(ctx,messageType,randomId,sender);
+
+        Kademlia kademlia = Kademlia.getInstance();
+        kademlia.broadcastNewAuction(myNode.getNodeInfo(),myNode.getRoutingTable(),newAuctionStr);
+
+        newAuctionBytes.release();
     }
 
     /**
@@ -122,7 +175,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         sendAck(ctx, messageType, randomId, sender);
 
         Kademlia kademlia = Kademlia.getInstance();
-        kademlia.notifyNewBlockHash(myNode,key);
+        kademlia.notifyNewBlockHash(myNode.getNodeInfo(),myNode.getRoutingTable(),key);
     }
 
     /**
@@ -141,7 +194,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(nodeInfoBytes);
 
         if(messageType == MessageType.FIND_VALUE) {
-            if(findValueHandler(ctx,bytebuf,nodeInfo, messageType, randomId, sender)) return;
+            if(findValueHandler(ctx, bytebuf, nodeInfo, messageType, randomId, sender)) return;
             messageType = MessageType.FIND_NODE;
         } else {
             logger.info("Received node info from node: " + nodeInfo);
