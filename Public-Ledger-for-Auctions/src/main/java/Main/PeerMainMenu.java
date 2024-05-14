@@ -107,7 +107,7 @@ public class PeerMainMenu implements Runnable {
                     input = scanner.nextLine();
                     System.out.println("Starting Price: ");
                     double startingPrice = Double.parseDouble(scanner.nextLine());
-                    System.out.println("End time (in milliseconds): ");
+                    System.out.println("End time (in seconds): ");
                     long endTime = Long.parseLong(scanner.nextLine());
                     Auction newAuction = new Auction(wallet.getPublicKey(), input, startingPrice, endTime);
                     newAuction.addSubscriber(myNode.getNodeInfo().getNodeId());
@@ -131,6 +131,7 @@ public class PeerMainMenu implements Runnable {
                             transaction.signTransaction(myPrivateKey);
                             this.blockchain.addTransaction(transaction);
                             kademlia.notifyNewBid(myNode.getNodeInfo(),myNode.getRoutingTable(),auction);
+                            //TODO notify the node that has the auction stored
                         }
                     } else {
                         System.out.println("Auction not found.");

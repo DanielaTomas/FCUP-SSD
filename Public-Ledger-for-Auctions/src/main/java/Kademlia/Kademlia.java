@@ -7,9 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -157,9 +155,10 @@ public class Kademlia {
 
         List<NodeInfo> keyNearNodes = findClosestNodes(myNode.getRoutingTable(), key, K);
         for (NodeInfo keyNearNode : keyNearNodes) {
-            Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, new ValueWrapper(null), MessageType.FIND_VALUE);
-            logger.info("Kademlia - Value found: " + result);
-            return result;
+            Object value = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, new ValueWrapper(null), MessageType.FIND_VALUE);
+            logger.info("Kademlia - Value found: " + value);
+            //TODO myNode.storeKeyValue(key,value);
+            return value;
         }
 
         return keyNearNodes;
@@ -181,8 +180,8 @@ public class Kademlia {
         NodeInfo targetNodeInfo = findNodeForKey(myNode.getNodeInfo(), key, keyNearNodes);
         if (targetNodeInfo != null) {
             if (targetNodeInfo.equals(myNode.getNodeInfo())) {
-                myNode.storeKeyValue(key, value);
-                logger.info("key: " + key + ", value: " + value + " stored");
+                myNode.storeKeyValue(key, value.getValue());
+                logger.info("key: " + key + ", value: " + value.getValue() + " stored");
             } else {
                 connectAndHandle(myNode.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
             }
@@ -248,10 +247,21 @@ public class Kademlia {
         }
     }
 
+    public boolean contains(Set<NodeInfo> routingTable, String nodeId) {
+        for (NodeInfo nodeInfo : routingTable) {
+            if (nodeInfo.getNodeId().equals(nodeId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void notifyNewBid(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, Auction auction) {
         logger.info("Kademlia - Starting notify new bid");
         for(String targetNodeId : auction.getSubscribers()) {
-            findNode(myNodeInfo,targetNodeId,routingTable);
+            if(!contains(routingTable, targetNodeId)) {
+                findNode(myNodeInfo, targetNodeId, routingTable);
+            }
         }
 
         String auctionId = auction.getId();

@@ -4,6 +4,9 @@ import java.io.*;
 import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,17 +22,30 @@ public class Auction implements Serializable {
     private PublicKey currentBidder;
     private boolean isOpen;
     private List<String> subscribers;
+    //private ScheduledExecutorService scheduler;
 
     public Auction(PublicKey sellerPublicKey, String item, double startingPrice, long endTime) {
         this.auctionId = generateAuctionId(sellerPublicKey, item, startingPrice, endTime);
         this.sellerPublicKey = sellerPublicKey;
         this.item = item;
         this.startingPrice = startingPrice;
-        this.endTime = endTime;
+        this.endTime = endTime*1000;
         this.currentBid = startingPrice;
         this.isOpen = true;
         this.subscribers = new ArrayList<>();
+        //this.startAuctionTimer();
     }
+
+    /*
+    public void startAuctionTimer() {
+        logger.info("Auction is open.");
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        long timeRemaining = endTime - System.currentTimeMillis();
+        if (timeRemaining > 0) {
+            scheduler.schedule(this::closeAuction, timeRemaining, TimeUnit.MILLISECONDS);
+        }
+    }
+    */
 
     public boolean placeBid(PublicKey bidderPublicKey, double bidAmount, byte[] signature) {
         byte[] data = (bidderPublicKey.toString() + bidAmount).getBytes();
@@ -54,15 +70,13 @@ public class Auction implements Serializable {
     }
 
     public boolean isOpen() {
-        if(System.currentTimeMillis() < endTime) {
-            this.closeAuction();
-        }
         return isOpen;
     }
 
     public void closeAuction() {
         isOpen = false;
         logger.info("Auction closed. Winner: " + currentBidder + ", Winning bid: " + currentBid);
+        //scheduler.shutdown();
         //TODO broadcast
     }
 
@@ -107,7 +121,7 @@ public class Auction implements Serializable {
                 "Seller Public Key: " + sellerPublicKey + "\n" +
                 "Item: " + item + "\n" +
                 "Starting Price: " + startingPrice + "\n" +
-                "End Time: " + endTime + "\n" +
+                "End Time: " + endTime/1000 + " seconds\n" +
                 "Current Bid: " + currentBid + "\n" +
                 "Current Bidder: " + currentBidder + "\n" +
                 "Is Open: " + isOpen + "\n" +

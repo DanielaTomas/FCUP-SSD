@@ -111,10 +111,10 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             case NEW_BID:
                 msg.writeInt(key.length());
                 msg.writeCharSequence(key, StandardCharsets.UTF_8);
-                ByteBuf bidBuf = Utils.serialize(value);
+                ByteBuf bidBuf = Utils.serialize(value.getValue());
                 msg.writeInt(bidBuf.readableBytes());
                 msg.writeBytes(bidBuf);
-                success = "Sent new bid " + value + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                success = "Sent new bid " + value.getValue() + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             default:
@@ -258,14 +258,5 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             timer.cancel();
             timer = null;
         }
-    }
-
-    /**
-     * Gets the list of near nodes' information.
-     *
-     * @return The list of near nodes' information.
-     */
-    public List<NodeInfo> getNearNodesInfo() {
-        return this.nearNodesInfo;
     }
 }
