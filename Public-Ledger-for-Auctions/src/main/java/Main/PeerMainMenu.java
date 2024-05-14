@@ -84,7 +84,7 @@ public class PeerMainMenu implements Runnable {
                     input = scanner.nextLine();
                     Block block1 = this.createBlock();
                     blockchain.addBlock(block1);
-                    kademlia.store(myNode, input, block1);
+                    kademlia.store(myNode, input, new ValueWrapper(block1));
                     break;
                 case "3"://FIND_VALUE RPC
                     System.out.println("Key: ");
@@ -99,7 +99,7 @@ public class PeerMainMenu implements Runnable {
                 case "5": // Mine block
                     System.out.println("Mining block...");
                     Block block2 = this.createBlock();
-                    kademlia.store(myNode, block2.getHash(), block2);
+                    kademlia.store(myNode, block2.getHash(), new ValueWrapper(block2));
                     kademlia.notifyNewBlockHash(myNode.getNodeInfo(), myNode.getRoutingTable(), block2.getHash());
                     break;
                 case "6": // Create Auction
@@ -111,7 +111,7 @@ public class PeerMainMenu implements Runnable {
                     long endTime = Long.parseLong(scanner.nextLine());
                     Auction newAuction = new Auction(wallet.getPublicKey(), input, startingPrice, endTime);
                     newAuction.addSubscriber(myNode.getNodeInfo().getNodeId());
-                    kademlia.store(myNode, newAuction.getId(), newAuction);
+                    kademlia.store(myNode, newAuction.getId(), new ValueWrapper(newAuction));
                     kademlia.broadcastNewAuction(myNode.getNodeInfo(),myNode.getRoutingTable(),newAuction.getId());
                     break;
                 case "7": // Place Bid

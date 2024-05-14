@@ -11,10 +11,7 @@ import java.math.BigInteger;
 import java.net.InetSocketAddress;
 import java.net.URL;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /** Class Utils */
@@ -100,7 +97,7 @@ public class Utils {
      * @param requestedNodeId The requested node id.
      * @return List of closest nodes.
      */
-    public static List<NodeInfo> findClosestNodes(List<NodeInfo> myRoutingTable, String requestedNodeId, final int K) {
+    public static List<NodeInfo> findClosestNodes(Set<NodeInfo> myRoutingTable, String requestedNodeId, final int K) {
         List<NodeInfo> nearNodes = new ArrayList<>();
         Map<NodeInfo, Integer> distanceMap = new HashMap<>();
 

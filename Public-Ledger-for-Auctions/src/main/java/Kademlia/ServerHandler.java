@@ -194,7 +194,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         NodeInfo nodeInfo = (NodeInfo) Utils.deserialize(nodeInfoBytes);
 
         if(messageType == MessageType.FIND_VALUE) {
-            if(findValueHandler(ctx,bytebuf,nodeInfo, messageType, randomId, sender)) return;
+            if(findValueHandler(ctx, bytebuf, nodeInfo, messageType, randomId, sender)) return;
             messageType = MessageType.FIND_NODE;
         } else {
             logger.info("Received node info from node: " + nodeInfo);
@@ -202,7 +202,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         myNode.updateRoutingTable(nodeInfo);
         List<NodeInfo> nearNodes = Utils.findClosestNodes(myNode.getRoutingTable(), nodeInfo.getNodeId(), K);
-
+        nearNodes.add(myNode.getNodeInfo());
         String success = "Sent near nodes info to node " + nodeInfo.getIpAddr() + ":" + nodeInfo.getPort();
         sendSerializedMessage(ctx,messageType,randomId,sender,nearNodes,success);
 

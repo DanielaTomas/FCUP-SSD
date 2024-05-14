@@ -7,10 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -66,6 +63,8 @@ public class Kademlia {
 
         connectAndHandle(myNode.getNodeInfo(), myNode.findNodeInfoById(bootstrapNodeId), null, null, MessageType.LATEST_BLOCK);
 
+        myNode.getRoutingTable().remove(myNode.findNodeInfoById(bootstrapNodeId));
+
         for(NodeInfo nearNodeInfo : nearNodes) {
             myNode.updateRoutingTable(nearNodeInfo);
             List<NodeInfo> additionalNearNodesInfo = findNode(myNode.getNodeInfo(), nearNodeInfo.getNodeId(), myNode.getRoutingTable());
@@ -92,7 +91,7 @@ public class Kademlia {
      *
      * @return List of near nodes.
      */
-    public List<NodeInfo> findNode(NodeInfo myNodeInfo, String targetNodeId, List<NodeInfo> routingTable) {
+    public List<NodeInfo> findNode(NodeInfo myNodeInfo, String targetNodeId, Set<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting FIND_NODE RPC");
 
         for (NodeInfo nodeInfo : routingTable) {
@@ -126,7 +125,7 @@ public class Kademlia {
      * @param targetNodeId   ID of the target node.
      * @param routingTable   Routing table of the local node.
      */
-    public void ping(NodeInfo myNodeInfo, String targetNodeId , List<NodeInfo> routingTable) {
+    public void ping(NodeInfo myNodeInfo, String targetNodeId , Set<NodeInfo> routingTable) {
         logger.info("Kademlia - Starting PING RPC");
         for (NodeInfo targetNodeInfo : routingTable) {
             if (targetNodeInfo.getNodeId().equals(targetNodeId) ){
@@ -156,7 +155,7 @@ public class Kademlia {
 
         List<NodeInfo> keyNearNodes = findClosestNodes(myNode.getRoutingTable(), key, K);
         for (NodeInfo keyNearNode : keyNearNodes) {
-            Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, null, MessageType.FIND_VALUE);
+            Object result = connectAndHandle(myNode.getNodeInfo(), keyNearNode, key, new ValueWrapper(null), MessageType.FIND_VALUE);
             logger.info("Kademlia - Value found: " + result);
             return result;
         }
@@ -171,7 +170,7 @@ public class Kademlia {
      * @param key   The key to store.
      * @param value The value corresponding to the key.
      */
-    public void store(Node myNode, String key, Object value) {
+    public void store(Node myNode, String key, ValueWrapper value) {
         logger.info("Kademlia - Starting STORE RPC");
 
         findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
@@ -221,7 +220,7 @@ public class Kademlia {
      * @param routingTable  The local node routing table.
      * @param newBlockHash The new block hash to notify about.
      */
-    public void notifyNewBlockHash(NodeInfo myNodeInfo, List<NodeInfo> routingTable, String newBlockHash) {
+    public void notifyNewBlockHash(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, String newBlockHash) {
         logger.info("Kademlia - Starting notify new block hash");
         if(!newBlockHash.contentEquals(this.latestBlockHash)) {
             latestBlockHash = new StringBuilder(newBlockHash);
@@ -235,7 +234,7 @@ public class Kademlia {
         }
     }
 
-    public void broadcastNewAuction(NodeInfo myNodeInfo, List<NodeInfo> routingTable, String auctionId) {
+    public void broadcastNewAuction(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, String auctionId) {
         logger.info("Kademlia - Starting broadcast new auction");
         if(this.auctionId == null || !auctionId.contentEquals(this.auctionId)) {
             this.auctionId = new StringBuilder(auctionId);
@@ -247,7 +246,7 @@ public class Kademlia {
         }
     }
 
-    public void notifyNewBid(NodeInfo myNodeInfo, List<NodeInfo> routingTable, Auction auction) {
+    public void notifyNewBid(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, Auction auction) {
         logger.info("Kademlia - Starting notify new bid");
         for(String targetNodeId : auction.getSubscribers()) {
             findNode(myNodeInfo,targetNodeId,routingTable);
@@ -257,7 +256,7 @@ public class Kademlia {
         Double bid = auction.getCurrentBid();
         for(NodeInfo targetNodeInfo : routingTable) {
             if(auction.isSubscriber(targetNodeInfo.getNodeId())) {
-                connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, bid, MessageType.NEW_BID);
+                connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, new ValueWrapper(bid), MessageType.NEW_BID);
             }
         }
     }
@@ -272,7 +271,7 @@ public class Kademlia {
      * @param messageType     The type of message to send.
      * @return List of near nodes.
      */
-    private Object connectAndHandle(NodeInfo myNodeInfo, NodeInfo targetNodeInfo, String key, Object value, MessageType messageType) {
+    private Object connectAndHandle(NodeInfo myNodeInfo, NodeInfo targetNodeInfo, String key, ValueWrapper value, MessageType messageType) {
         List<NodeInfo> nearNodesInfo = new ArrayList<>();
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -293,7 +292,7 @@ public class Kademlia {
             });
         }
         if(messageType == MessageType.FIND_NODE) return nearNodesInfo;
-        else if(messageType == MessageType.FIND_VALUE) return value;
+        else if(messageType == MessageType.FIND_VALUE) return value.getValue();
         return null;
     }
 
