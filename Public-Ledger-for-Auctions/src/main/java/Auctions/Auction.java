@@ -2,11 +2,15 @@ package Auctions;
 
 import java.io.*;
 import java.security.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,30 +26,29 @@ public class Auction implements Serializable {
     private PublicKey currentBidder;
     private boolean isOpen;
     private List<String> subscribers;
-    //private ScheduledExecutorService scheduler;
+    private String endTimeString;
+    private Timer timer;
 
-    public Auction(PublicKey sellerPublicKey, String item, double startingPrice, long endTime) {
-        this.auctionId = generateAuctionId(sellerPublicKey, item, startingPrice, endTime);
+    public Auction(PublicKey sellerPublicKey, String item, double startingPrice, String endTimeString) {
+        this.auctionId = generateAuctionId(sellerPublicKey, item, startingPrice, endTimeString);
         this.sellerPublicKey = sellerPublicKey;
         this.item = item;
         this.startingPrice = startingPrice;
-        this.endTime = endTime*1000;
         this.currentBid = startingPrice;
         this.isOpen = true;
         this.subscribers = new ArrayList<>();
-        //this.startAuctionTimer();
-    }
+        this.endTimeString = endTimeString;
 
-    /*
-    public void startAuctionTimer() {
-        logger.info("Auction is open.");
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        long timeRemaining = endTime - System.currentTimeMillis();
-        if (timeRemaining > 0) {
-            scheduler.schedule(this::closeAuction, timeRemaining, TimeUnit.MILLISECONDS);
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime time = LocalDateTime.parse(endTimeString, formatter);
+            LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/London"));
+            this.endTime = ChronoUnit.MILLIS.between(now, time);
+            this.startAuctionTimer();
+        } catch (DateTimeParseException e) {
+            logger.severe("Invalid end time format. Please use yyyy-MM-dd HH:mm:ss");
         }
     }
-    */
 
     public boolean placeBid(PublicKey bidderPublicKey, double bidAmount, byte[] signature) {
         byte[] data = (bidderPublicKey.toString() + bidAmount).getBytes();
@@ -69,6 +72,26 @@ public class Auction implements Serializable {
         return true;
     }
 
+    private void startAuctionTimer() {
+        logger.info("Starting Auction " + auctionId);
+
+        this.timer = new Timer();
+        long timeout = this.endTime;
+        this.timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                closeAuction();
+            }
+        }, timeout);
+    }
+
+    private void cancelAuctionTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
     public boolean isOpen() {
         return isOpen;
     }
@@ -76,7 +99,7 @@ public class Auction implements Serializable {
     public void closeAuction() {
         isOpen = false;
         logger.info("Auction closed. Winner: " + currentBidder + ", Winning bid: " + currentBid);
-        //scheduler.shutdown();
+        cancelAuctionTimer();
         //TODO broadcast
     }
 
@@ -89,7 +112,7 @@ public class Auction implements Serializable {
      * @param endTime
      * @return The generated auction ID.
      */
-    public static String generateAuctionId(PublicKey sellerPublicKey, String item, double startingPrice, long endTime) {
+    public static String generateAuctionId(PublicKey sellerPublicKey, String item, double startingPrice, String endTime) {
         String input = sellerPublicKey + ":" + item + ":" + startingPrice + ":" + endTime + ":" + Math.random();
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
@@ -121,7 +144,7 @@ public class Auction implements Serializable {
                 "Seller Public Key: " + sellerPublicKey + "\n" +
                 "Item: " + item + "\n" +
                 "Starting Price: " + startingPrice + "\n" +
-                "End Time: " + endTime/1000 + " seconds\n" +
+                "End Time: " + endTimeString + "\n" +
                 "Current Bid: " + currentBid + "\n" +
                 "Current Bidder: " + currentBidder + "\n" +
                 "Is Open: " + isOpen + "\n" +

@@ -107,8 +107,8 @@ public class PeerMainMenu implements Runnable {
                     input = scanner.nextLine();
                     System.out.println("Starting Price: ");
                     double startingPrice = Double.parseDouble(scanner.nextLine());
-                    System.out.println("End time (in seconds): ");
-                    long endTime = Long.parseLong(scanner.nextLine());
+                    System.out.println("End time (yyyy-MM-dd HH:mm:ss): ");
+                    String endTime = scanner.nextLine();
                     Auction newAuction = new Auction(wallet.getPublicKey(), input, startingPrice, endTime);
                     newAuction.addSubscriber(myNode.getNodeInfo().getNodeId());
                     kademlia.store(myNode, newAuction.getId(), new ValueWrapper(newAuction));
@@ -117,7 +117,7 @@ public class PeerMainMenu implements Runnable {
                 case "7": // Place Bid
                     System.out.println("Auction ID: ");
                     String auctionId = scanner.nextLine();
-                    Auction auction = (Auction) kademlia.findValue(myNode, auctionId);
+                    Auction auction = (Auction) kademlia.findValue(myNode, auctionId); //TODO verify array list
                     if(auction != null) {
                         System.out.println("Bid amount: ");
                         double bidAmount = Double.parseDouble(scanner.nextLine());
