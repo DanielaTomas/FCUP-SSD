@@ -27,7 +27,7 @@ public class Kademlia {
      * Enum for message types used in Kademlia.
      */
     public enum MessageType {
-        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY, LATEST_BLOCK, NEW_AUCTION, NEW_BID
+        PING, FIND_NODE, FIND_VALUE, STORE, NOTIFY, LATEST_BLOCK, NEW_AUCTION, AUCTION_UPDATE
     }
 
     /**
@@ -256,10 +256,10 @@ public class Kademlia {
         return false;
     }
 
-    public void notifyNewBid(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, Auction auction) {
+    public void notifyAuctionUpdate(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, Auction auction) {
         logger.info("Kademlia - Starting notify new bid");
         for(String targetNodeId : auction.getSubscribers()) {
-            if(!contains(routingTable, targetNodeId)) {
+            if(!contains(routingTable, targetNodeId) && !targetNodeId.equals(myNodeInfo.getNodeId())) {
                 findNode(myNodeInfo, targetNodeId, routingTable);
             }
         }
@@ -268,7 +268,11 @@ public class Kademlia {
         Double bid = auction.getCurrentBid();
         for(NodeInfo targetNodeInfo : routingTable) {
             if(auction.isSubscriber(targetNodeInfo.getNodeId())) {
-                connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, new ValueWrapper(bid), MessageType.NEW_BID);
+                if(auction.isOpen()){
+                    connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, new ValueWrapper(bid), MessageType.AUCTION_UPDATE);
+                } else {
+                    connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, new ValueWrapper("Auction " + auctionId + " closed."), MessageType.AUCTION_UPDATE);
+                }
             }
         }
     }

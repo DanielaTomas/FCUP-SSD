@@ -1,5 +1,7 @@
 package Auctions;
 
+import Kademlia.Kademlia;
+
 import java.io.*;
 import java.security.*;
 import java.time.LocalDateTime;
@@ -100,7 +102,9 @@ public class Auction implements Serializable {
         isOpen = false;
         logger.info("Auction closed. Winner: " + currentBidder + ", Winning bid: " + currentBid);
         cancelAuctionTimer();
-        //TODO broadcast
+        //TODO
+        //Kademlia kademlia = Kademlia.getInstance();
+        //kademlia.notifyAuctionUpdate(myNode.getNodeInfo(),myNode.getRoutingTable(),this);
     }
 
     /**
@@ -137,7 +141,6 @@ public class Auction implements Serializable {
         return subscribers.contains(nodeId);
     }
 
-
     @Override
     public String toString() {
         return "Auction ID: " + auctionId + "\n" +
@@ -150,7 +153,6 @@ public class Auction implements Serializable {
                 "Is Open: " + isOpen + "\n" +
                 "Subscribers: " + subscribers + "\n";
     }
-
 
     @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {

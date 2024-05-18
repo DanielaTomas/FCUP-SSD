@@ -108,13 +108,20 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 success = "Sent new auction ID " + key + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
-            case NEW_BID:
+            case AUCTION_UPDATE:
                 msg.writeInt(key.length());
                 msg.writeCharSequence(key, StandardCharsets.UTF_8);
-                ByteBuf bidBuf = Utils.serialize(value.getValue());
-                msg.writeInt(bidBuf.readableBytes());
-                msg.writeBytes(bidBuf);
-                success = "Sent new bid " + value.getValue() + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                if(value.getValue() instanceof String close) { //Close
+                    ByteBuf closeBuf = Unpooled.wrappedBuffer(close.getBytes());
+                    msg.writeInt(closeBuf.readableBytes());
+                    msg.writeBytes(closeBuf);
+                    success = "Sent auction closure " + close + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                } else { //Double (bid)
+                    ByteBuf bidBuf = Utils.serialize(value.getValue());
+                    msg.writeInt(bidBuf.readableBytes());
+                    msg.writeBytes(bidBuf);
+                    success = "Sent new bid " + value.getValue() + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                }
                 Utils.sendPacket(ctx, msg, new InetSocketAddress(targetNodeInfo.getIpAddr(), targetNodeInfo.getPort()), messageType, success);
                 break;
             default:
@@ -148,7 +155,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 case FIND_NODE, FIND_VALUE:
                     findNodeHandler(ctx,bytebuf);
                     break;
-                case PING, STORE, NOTIFY, NEW_AUCTION, NEW_BID:
+                case PING, STORE, NOTIFY, NEW_AUCTION, AUCTION_UPDATE:
                     ackHandler(ctx,bytebuf);
                     break;
                 case LATEST_BLOCK:

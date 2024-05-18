@@ -67,8 +67,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 case NEW_AUCTION:
                     newAuctionHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
-                case NEW_BID:
-                    newBidHandler(ctx, bytebuf, messageType, receivedId, packet.sender());
+                case AUCTION_UPDATE:
+                    auctionUpdate(ctx, bytebuf, messageType, receivedId, packet.sender());
                     break;
                 default:
                     logger.warning("Received unknown message type: " + messageType);
@@ -82,7 +82,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     * Handles NEW_BID messages from the client.
+     * Handles AUCTION_UPDATE messages from the client.
      *
      * @param ctx          The channel handler context.
      * @param bytebuf      The received ByteBuf.
@@ -91,17 +91,22 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @throws IOException            If an I/O error occurs.
      * @throws ClassNotFoundException If the class of the serialized object cannot be found.
      */
-    private void newBidHandler(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
+    private void auctionUpdate(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
         int keyLength = bytebuf.readInt();
         String auctionId = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
-        int newBidLength = bytebuf.readInt();
-        ByteBuf newBidBytes = bytebuf.readBytes(newBidLength);
-        Double bid = (Double) Utils.deserialize(newBidBytes);
+        int auctionUpdateLength = bytebuf.readInt();
+        ByteBuf auctionUpdateBytes = bytebuf.readBytes(auctionUpdateLength);
 
-        logger.info("New bid " + bid + " in the auction with ID " + auctionId + ". Notified by node " + sender);
-
+        try {
+            Double bid = (Double) Utils.deserialize(auctionUpdateBytes);
+            logger.info("New bid " + bid + " in the auction with ID " + auctionId + ". Notified by node " + sender);
+        } catch (Exception e1) {
+            String auctionUpdate = auctionUpdateBytes.toString(StandardCharsets.UTF_8);
+            logger.info(auctionUpdate + " Notified by node " + sender);
+        }
+        //TODO notify the node(s) that has the auction stored
         sendAck(ctx,messageType,randomId,sender);
-        newBidBytes.release();
+        auctionUpdateBytes.release();
     }
 
     /**
