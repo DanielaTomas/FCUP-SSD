@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="BlockChain.BlockChainUtils",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classBlockChain_1_1BlockChainUtils.html",tooltip=" "];
+  Node0 [label="BlockChain.BlockchainShowcase",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classBlockChain_1_1BlockchainShowcase.html",tooltip=" "];
 }

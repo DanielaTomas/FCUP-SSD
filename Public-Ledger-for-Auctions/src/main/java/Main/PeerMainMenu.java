@@ -131,7 +131,6 @@ public class PeerMainMenu implements Runnable {
                             transaction.signTransaction(myPrivateKey);
                             this.blockchain.addTransaction(transaction);
                             kademlia.notifyAuctionUpdate(myNode.getNodeInfo(),myNode.getRoutingTable(),auction);
-                            //TODO notify the node that has the auction stored
                         }
                     } else {
                         System.out.println("Auction not found.");
@@ -140,9 +139,10 @@ public class PeerMainMenu implements Runnable {
                 case "8": // Subscribe Auction
                     System.out.println("Auction ID: ");
                     input = scanner.nextLine();
-                    Auction auctionToSubscribe = (Auction) kademlia.findValue(myNode, input);
+                    Auction auctionToSubscribe = (Auction) kademlia.findValue(myNode, input); //TODO verify array list
                     if (auctionToSubscribe != null) {
                         auctionToSubscribe.addSubscriber(myNode.getNodeInfo().getNodeId());
+                        kademlia.notifyNewSubscriber(myNode.getNodeInfo(),myNode.getRoutingTable(),auctionToSubscribe);
                     } else {
                         System.out.println("Auction not found.");
                     }

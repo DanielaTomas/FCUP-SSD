@@ -77,12 +77,15 @@ $(function() {
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a569c1cc2b80d9807b7ecbc158a718a71"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1Utils.html#a569c1cc2b80d9807b7ecbc158a718a71">getAddress</a> ()</td></tr>
 <tr class="separator:a569c1cc2b80d9807b7ecbc158a718a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0e9a84b5e74930a72bcda0dfadb782"><td class="memItemLeft" align="right" valign="top"><a id="afe0e9a84b5e74930a72bcda0dfadb782"></a>
+static byte[]&#160;</td><td class="memItemRight" valign="bottom"><b>generateRandomId</b> ()</td></tr>
+<tr class="separator:afe0e9a84b5e74930a72bcda0dfadb782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b1949b5d3b0cf98c03531307f901dc7"><td class="memItemLeft" align="right" valign="top">static ByteBuf&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1Utils.html#a8b1949b5d3b0cf98c03531307f901dc7">serialize</a> (Object obj)  throws IOException </td></tr>
 <tr class="separator:a8b1949b5d3b0cf98c03531307f901dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f78403a316a4540b2b41cfad189f83a"><td class="memItemLeft" align="right" valign="top">static Object&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1Utils.html#a9f78403a316a4540b2b41cfad189f83a">deserialize</a> (ByteBuf byteBuf)  throws IOException, ClassNotFoundException </td></tr>
 <tr class="separator:a9f78403a316a4540b2b41cfad189f83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d184cfb84c637762c22f191f04e2d97"><td class="memItemLeft" align="right" valign="top">static List&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1Utils.html#a3d184cfb84c637762c22f191f04e2d97">findClosestNodes</a> (List&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt; myRoutingTable, String requestedNodeId, final int K)</td></tr>
-<tr class="separator:a3d184cfb84c637762c22f191f04e2d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f4c56c605cc7c747a216febbe971e1a"><td class="memItemLeft" align="right" valign="top">static List&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1Utils.html#a7f4c56c605cc7c747a216febbe971e1a">findClosestNodes</a> (Set&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt; myRoutingTable, String requestedNodeId, final int K)</td></tr>
+<tr class="separator:a7f4c56c605cc7c747a216febbe971e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19678da78409aac47c4381dcea0e1bc6"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1Utils.html#a19678da78409aac47c4381dcea0e1bc6">calculateDistance</a> (String nodeId1, String nodeId2)</td></tr>
 <tr class="separator:a19678da78409aac47c4381dcea0e1bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e561815af890ab2b7efbc4ac6e73dae"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classKademlia_1_1Utils.html#a0e561815af890ab2b7efbc4ac6e73dae">sendPacket</a> (ChannelHandlerContext ctx, ByteBuf msg, InetSocketAddress sender, <a class="el" href="enumKademlia_1_1Kademlia_1_1MessageType.html">Kademlia.MessageType</a> messageType, String success)</td></tr>
@@ -177,8 +180,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3d184cfb84c637762c22f191f04e2d97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d184cfb84c637762c22f191f04e2d97">&#9670;&nbsp;</a></span>findClosestNodes()</h2>
+<a id="a7f4c56c605cc7c747a216febbe971e1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f4c56c605cc7c747a216febbe971e1a">&#9670;&nbsp;</a></span>findClosestNodes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,7 +192,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static List&lt;<a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a>&gt; Kademlia.Utils.findClosestNodes </td>
           <td>(</td>
-          <td class="paramtype">List&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td>
+          <td class="paramtype">Set&lt; <a class="el" href="classKademlia_1_1NodeInfo.html">NodeInfo</a> &gt;&#160;</td>
           <td class="paramname"><em>myRoutingTable</em>, </td>
         </tr>
         <tr>

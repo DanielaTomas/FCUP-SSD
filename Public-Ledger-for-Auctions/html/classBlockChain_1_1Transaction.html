@@ -67,7 +67,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classBlockChain_1_1Transaction-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">BlockChain.Transaction Class Reference</div>  </div>
@@ -86,8 +85,8 @@ Collaboration diagram for BlockChain.Transaction:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ace7916baa93121b226c0a0712d6e05c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Transaction.html#ace7916baa93121b226c0a0712d6e05c1">Transaction</a> (PublicKey sender, PublicKey receiver, double amount)</td></tr>
-<tr class="separator:ace7916baa93121b226c0a0712d6e05c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af10e052794f9b2408a7a06c33c17687a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Transaction.html#af10e052794f9b2408a7a06c33c17687a">Transaction</a> (PublicKey receiver, double amount)</td></tr>
+<tr class="separator:af10e052794f9b2408a7a06c33c17687a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d6bb7bfb862334b90432d776a8a31d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Transaction.html#a4d6bb7bfb862334b90432d776a8a31d4">signTransaction</a> (PrivateKey privateKey)</td></tr>
 <tr class="separator:a4d6bb7bfb862334b90432d776a8a31d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2b706318a67e1c20fbe6865ccc28ea1"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Transaction.html#af2b706318a67e1c20fbe6865ccc28ea1">verifySignature</a> ()</td></tr>
@@ -102,17 +101,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae1a03da015dcfc16120036aff4f89756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73a8f52d604fcc16f60fddf15749149b"><td class="memItemLeft" align="right" valign="top">byte[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Transaction.html#a73a8f52d604fcc16f60fddf15749149b">getSignature</a> ()</td></tr>
 <tr class="separator:a73a8f52d604fcc16f60fddf15749149b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aaba2f51c3e86ca1f3ac1b2585c86c388"><td class="memItemLeft" align="right" valign="top">static KeyPair&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBlockChain_1_1Transaction.html#aaba2f51c3e86ca1f3ac1b2585c86c388">generateKeyPair</a> ()</td></tr>
-<tr class="separator:aaba2f51c3e86ca1f3ac1b2585c86c388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1be0dd1c4231fe3387513fc8f31a34b7"><td class="memItemLeft" align="right" valign="top"><a id="a1be0dd1c4231fe3387513fc8f31a34b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setSignature</b> (byte[] signature)</td></tr>
+<tr class="separator:a1be0dd1c4231fe3387513fc8f31a34b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class <a class="el" href="classBlockChain_1_1Transaction.html">Transaction</a>: Represents a transaction between two parties in a blockchain. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ace7916baa93121b226c0a0712d6e05c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace7916baa93121b226c0a0712d6e05c1">&#9670;&nbsp;</a></span>Transaction()</h2>
+<a id="af10e052794f9b2408a7a06c33c17687a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af10e052794f9b2408a7a06c33c17687a">&#9670;&nbsp;</a></span>Transaction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -123,12 +120,6 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">BlockChain.Transaction.Transaction </td>
           <td>(</td>
-          <td class="paramtype">PublicKey&#160;</td>
-          <td class="paramname"><em>sender</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">PublicKey&#160;</td>
           <td class="paramname"><em>receiver</em>, </td>
         </tr>
@@ -153,7 +144,6 @@ Static Public Member Functions</h2></td></tr>
 <p>Constructs a transaction with the specified sender, receiver, and amount.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sender</td><td>The public key of the sender. </td></tr>
     <tr><td class="paramname">receiver</td><td>The public key of the receiver. </td></tr>
     <tr><td class="paramname">amount</td><td>The amount of the transaction. </td></tr>
   </table>
@@ -163,33 +153,6 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aaba2f51c3e86ca1f3ac1b2585c86c388"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaba2f51c3e86ca1f3ac1b2585c86c388">&#9670;&nbsp;</a></span>generateKeyPair()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static KeyPair BlockChain.Transaction.generateKeyPair </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Generates a new RSA key pair.</p>
-<dl class="section return"><dt>Returns</dt><dd>The generated RSA key pair. </dd></dl>
-
-</div>
-</div>
 <a id="ae1a03da015dcfc16120036aff4f89756"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae1a03da015dcfc16120036aff4f89756">&#9670;&nbsp;</a></span>getAmount()</h2>
 

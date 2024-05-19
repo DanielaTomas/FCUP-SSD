@@ -11,7 +11,7 @@ Collaboration diagram for Block\+Chain.\+Transaction\+:
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classBlockChain_1_1Transaction_ace7916baa93121b226c0a0712d6e05c1}{Transaction}} (Public\+Key sender, Public\+Key receiver, double amount)
+\mbox{\hyperlink{classBlockChain_1_1Transaction_af10e052794f9b2408a7a06c33c17687a}{Transaction}} (Public\+Key receiver, double amount)
 \item 
 void \mbox{\hyperlink{classBlockChain_1_1Transaction_a4d6bb7bfb862334b90432d776a8a31d4}{sign\+Transaction}} (Private\+Key private\+Key)
 \item 
@@ -26,11 +26,9 @@ Public\+Key \mbox{\hyperlink{classBlockChain_1_1Transaction_aabce74b95baf12f843f
 double \mbox{\hyperlink{classBlockChain_1_1Transaction_ae1a03da015dcfc16120036aff4f89756}{get\+Amount}} ()
 \item 
 byte\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classBlockChain_1_1Transaction_a73a8f52d604fcc16f60fddf15749149b}{get\+Signature}} ()
-\end{DoxyCompactItemize}
-\doxysubsection*{Static Public Member Functions}
-\begin{DoxyCompactItemize}
 \item 
-static Key\+Pair \mbox{\hyperlink{classBlockChain_1_1Transaction_aaba2f51c3e86ca1f3ac1b2585c86c388}{generate\+Key\+Pair}} ()
+\mbox{\Hypertarget{classBlockChain_1_1Transaction_a1be0dd1c4231fe3387513fc8f31a34b7}\label{classBlockChain_1_1Transaction_a1be0dd1c4231fe3387513fc8f31a34b7}} 
+void {\bfseries set\+Signature} (byte\mbox{[}$\,$\mbox{]} signature)
 \end{DoxyCompactItemize}
 
 
@@ -38,18 +36,16 @@ static Key\+Pair \mbox{\hyperlink{classBlockChain_1_1Transaction_aaba2f51c3e86ca
 Class \mbox{\hyperlink{classBlockChain_1_1Transaction}{Transaction}}\+: Represents a transaction between two parties in a blockchain. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classBlockChain_1_1Transaction_ace7916baa93121b226c0a0712d6e05c1}\label{classBlockChain_1_1Transaction_ace7916baa93121b226c0a0712d6e05c1}} 
+\mbox{\Hypertarget{classBlockChain_1_1Transaction_af10e052794f9b2408a7a06c33c17687a}\label{classBlockChain_1_1Transaction_af10e052794f9b2408a7a06c33c17687a}} 
 \index{BlockChain.Transaction@{BlockChain.Transaction}!Transaction@{Transaction}}
 \index{Transaction@{Transaction}!BlockChain.Transaction@{BlockChain.Transaction}}
 \doxysubsubsection{\texorpdfstring{Transaction()}{Transaction()}}
-{\footnotesize\ttfamily Block\+Chain.\+Transaction.\+Transaction (\begin{DoxyParamCaption}\item[{Public\+Key}]{sender,  }\item[{Public\+Key}]{receiver,  }\item[{double}]{amount }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily Block\+Chain.\+Transaction.\+Transaction (\begin{DoxyParamCaption}\item[{Public\+Key}]{receiver,  }\item[{double}]{amount }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Constructs a transaction with the specified sender, receiver, and amount.
 
 
 \begin{DoxyParams}{Parameters}
-{\em sender} & The public key of the sender. \\
-\hline
 {\em receiver} & The public key of the receiver. \\
 \hline
 {\em amount} & The amount of the transaction. \\
@@ -58,17 +54,6 @@ Constructs a transaction with the specified sender, receiver, and amount.
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classBlockChain_1_1Transaction_aaba2f51c3e86ca1f3ac1b2585c86c388}\label{classBlockChain_1_1Transaction_aaba2f51c3e86ca1f3ac1b2585c86c388}} 
-\index{BlockChain.Transaction@{BlockChain.Transaction}!generateKeyPair@{generateKeyPair}}
-\index{generateKeyPair@{generateKeyPair}!BlockChain.Transaction@{BlockChain.Transaction}}
-\doxysubsubsection{\texorpdfstring{generateKeyPair()}{generateKeyPair()}}
-{\footnotesize\ttfamily static Key\+Pair Block\+Chain.\+Transaction.\+generate\+Key\+Pair (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
-
-Generates a new RSA key pair.
-
-\begin{DoxyReturn}{Returns}
-The generated RSA key pair. 
-\end{DoxyReturn}
 \mbox{\Hypertarget{classBlockChain_1_1Transaction_ae1a03da015dcfc16120036aff4f89756}\label{classBlockChain_1_1Transaction_ae1a03da015dcfc16120036aff4f89756}} 
 \index{BlockChain.Transaction@{BlockChain.Transaction}!getAmount@{getAmount}}
 \index{getAmount@{getAmount}!BlockChain.Transaction@{BlockChain.Transaction}}

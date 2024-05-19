@@ -1,4 +1,5 @@
 package Kademlia;
+import Auctions.Auction;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -20,7 +21,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     private Node myNode;
 
-    private static final int K = 2; //TODO ajustar valor
+    private static final int K = 2; // ajustar valor
 
     /**
      * Constructor for ServerHandler.
@@ -88,23 +89,37 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      * @param bytebuf      The received ByteBuf.
      * @param messageType  The type of the message.
      * @param sender       The address of the sender node.
-     * @throws IOException            If an I/O error occurs.
-     * @throws ClassNotFoundException If the class of the serialized object cannot be found.
      */
-    private void auctionUpdate(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) throws IOException, ClassNotFoundException {
+    private void auctionUpdate(ChannelHandlerContext ctx, ByteBuf bytebuf, MessageType messageType, byte[] randomId, InetSocketAddress sender) {
         int keyLength = bytebuf.readInt();
         String auctionId = bytebuf.readCharSequence(keyLength, StandardCharsets.UTF_8).toString();
         int auctionUpdateLength = bytebuf.readInt();
         ByteBuf auctionUpdateBytes = bytebuf.readBytes(auctionUpdateLength);
 
+        Auction auction = (Auction) myNode.findValueByKey(auctionId);
+        if (auction != null) {
+            try {
+                ByteBuf bytes = auctionUpdateBytes.copy();
+                Double bid = (Double) Utils.deserialize(bytes);
+                auction.setCurrentBid(bid);
+                myNode.storeKeyValue(auctionId, auction);
+                //TODO update current bidder
+            } catch (Exception e1) {
+                String subscriber = auctionUpdateBytes.toString(StandardCharsets.UTF_8);
+                auction.addSubscriber(subscriber);
+                myNode.storeKeyValue(auctionId, auction);
+            }
+        }
+
         try {
-            Double bid = (Double) Utils.deserialize(auctionUpdateBytes);
+            ByteBuf bytes = auctionUpdateBytes.copy();
+            Double bid = (Double) Utils.deserialize(bytes);
             logger.info("New bid " + bid + " in the auction with ID " + auctionId + ". Notified by node " + sender);
         } catch (Exception e1) {
-            String auctionUpdate = auctionUpdateBytes.toString(StandardCharsets.UTF_8);
-            logger.info(auctionUpdate + " Notified by node " + sender);
+            String close = auctionUpdateBytes.toString(StandardCharsets.UTF_8);
+            logger.info(close + " Notified by node " + sender);
         }
-        //TODO notify the node(s) that has the auction stored
+
         sendAck(ctx,messageType,randomId,sender);
         auctionUpdateBytes.release();
     }
@@ -272,6 +287,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         Object value = Utils.deserialize(valueBytes);
         logger.info("Received STORE request for key: " + key + ", value: " + value);
 
+        if(value instanceof Auction) {
+            ((Auction) value).setStoredNodeId(myNode.getNodeInfo().getNodeId());
+        }
         myNode.storeKeyValue(key,value);
         logger.info("key: " + key + ", value: " + value + " stored");
 

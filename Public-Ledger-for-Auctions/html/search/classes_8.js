@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['utils_94',['Utils',['../classKademlia_1_1Utils.html',1,'Kademlia']]]
+  ['transaction_117',['Transaction',['../classBlockChain_1_1Transaction.html',1,'BlockChain']]]
 ];

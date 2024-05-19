@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['server_91',['Server',['../classMain_1_1Server.html',1,'Main']]],
-  ['serverhandler_92',['ServerHandler',['../classKademlia_1_1ServerHandler.html',1,'Kademlia']]]
+  ['peer_113',['Peer',['../classMain_1_1Peer.html',1,'Main']]],
+  ['peermainmenu_114',['PeerMainMenu',['../classMain_1_1PeerMainMenu.html',1,'Main']]]
 ];

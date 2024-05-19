@@ -10,15 +10,23 @@ enum \mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Message\+Type}}
 \item 
 void \mbox{\hyperlink{classKademlia_1_1Kademlia_a80a2a3cd891e97a37faba7cd82001d1d}{join\+Network}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} my\+Node, String bootstrap\+Node\+Id)
 \item 
-List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1Kademlia_ae93c3c48787b7bf7608dfe9c2c7ff37d}{find\+Node}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, String target\+Node\+Id, List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table)
+List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1Kademlia_a116fa8fa0fa5049c5de1e61d2961aa6d}{find\+Node}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, String target\+Node\+Id, Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table)
 \item 
-void \mbox{\hyperlink{classKademlia_1_1Kademlia_a99931c9dc2f35779029d7e5dfbe5ae14}{ping}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, String target\+Node\+Id, List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table)
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_aa4e1a64b163902945dbe226c1bb6668d}{ping}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, String target\+Node\+Id, Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table)
 \item 
 Object \mbox{\hyperlink{classKademlia_1_1Kademlia_ac2f46779e4661bf48d4f59597a84ae22}{find\+Value}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} my\+Node, String key)
 \item 
-void \mbox{\hyperlink{classKademlia_1_1Kademlia_a56dd141aeefa153622d1f9de2b1fd895}{store}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} my\+Node, String key, Object value)
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_a131207f20c1bf0b9db5df8d962f31c85}{store}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} my\+Node, String key, \mbox{\hyperlink{classKademlia_1_1ValueWrapper}{Value\+Wrapper}} value)
 \item 
-void \mbox{\hyperlink{classKademlia_1_1Kademlia_aea5728518b01d953117695ea5f57c26f}{notify\+New\+Block\+Hash}} (\mbox{\hyperlink{classKademlia_1_1Node}{Node}} my\+Node, String new\+Block\+Hash)
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_a31e6aa409ca6ae5574bb2e58ee3ca162}{notify\+New\+Block\+Hash}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table, String new\+Block\+Hash)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_a1fa3236f17d6e8ff1e142efc3e1c9b83}{broadcast\+New\+Auction}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table, String auction\+Id)
+\item 
+boolean \mbox{\hyperlink{classKademlia_1_1Kademlia_a5c06984b6b56f3b69ea2e463f6960205}{contains}} (Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table, String node\+Id)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_a5090f9b1046209e47a6c43b1bc2c6153}{notify\+Auction\+Update}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table, \mbox{\hyperlink{classAuctions_1_1Auction}{Auction}} auction)
+\item 
+void \mbox{\hyperlink{classKademlia_1_1Kademlia_adef0fc39844a536045bff1fa9caec40a}{notify\+New\+Subscriber}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} my\+Node\+Info, Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ routing\+Table, \mbox{\hyperlink{classAuctions_1_1Auction}{Auction}} auction)
 \item 
 \mbox{\Hypertarget{classKademlia_1_1Kademlia_acf6bff704128c6d8b2e83a52b4a4900e}\label{classKademlia_1_1Kademlia_acf6bff704128c6d8b2e83a52b4a4900e}} 
 String\+Builder {\bfseries get\+Latest\+Block\+Hash} ()
@@ -37,11 +45,46 @@ static \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} \mbox{\hyperlink{c
 Class \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classKademlia_1_1Kademlia_ae93c3c48787b7bf7608dfe9c2c7ff37d}\label{classKademlia_1_1Kademlia_ae93c3c48787b7bf7608dfe9c2c7ff37d}} 
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a1fa3236f17d6e8ff1e142efc3e1c9b83}\label{classKademlia_1_1Kademlia_a1fa3236f17d6e8ff1e142efc3e1c9b83}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!broadcastNewAuction@{broadcastNewAuction}}
+\index{broadcastNewAuction@{broadcastNewAuction}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{broadcastNewAuction()}{broadcastNewAuction()}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+broadcast\+New\+Auction (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table,  }\item[{String}]{auction\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Broadcasts a new auction to the nodes in the network.
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Node\+Info} & The local node info. \\
+\hline
+{\em routing\+Table} & The local node routing table. \\
+\hline
+{\em auction\+Id} & The ID of the auction to broadcast. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a5c06984b6b56f3b69ea2e463f6960205}\label{classKademlia_1_1Kademlia_a5c06984b6b56f3b69ea2e463f6960205}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!contains@{contains}}
+\index{contains@{contains}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily boolean Kademlia.\+Kademlia.\+contains (\begin{DoxyParamCaption}\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table,  }\item[{String}]{node\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Checks if the routing table contains a node with the specified node ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em routing\+Table} & The routing table. \\
+\hline
+{\em node\+Id} & The node ID to check for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the routing table contains the node ID, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a116fa8fa0fa5049c5de1e61d2961aa6d}\label{classKademlia_1_1Kademlia_a116fa8fa0fa5049c5de1e61d2961aa6d}} 
 \index{Kademlia.Kademlia@{Kademlia.Kademlia}!findNode@{findNode}}
 \index{findNode@{findNode}!Kademlia.Kademlia@{Kademlia.Kademlia}}
 \doxysubsubsection{\texorpdfstring{findNode()}{findNode()}}
-{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Kademlia.\+find\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{String}]{target\+Node\+Id,  }\item[{List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Kademlia.\+find\+Node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{String}]{target\+Node\+Id,  }\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Finds the closest nodes to the target node by sending a FIND\+\_\+\+NODE message.
 
@@ -98,26 +141,62 @@ Joins the \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} network.
 {\em bootstrap\+Node\+Id} & id of the bootstrap node. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classKademlia_1_1Kademlia_aea5728518b01d953117695ea5f57c26f}\label{classKademlia_1_1Kademlia_aea5728518b01d953117695ea5f57c26f}} 
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a5090f9b1046209e47a6c43b1bc2c6153}\label{classKademlia_1_1Kademlia_a5090f9b1046209e47a6c43b1bc2c6153}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!notifyAuctionUpdate@{notifyAuctionUpdate}}
+\index{notifyAuctionUpdate@{notifyAuctionUpdate}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{notifyAuctionUpdate()}{notifyAuctionUpdate()}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+notify\+Auction\+Update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table,  }\item[{\mbox{\hyperlink{classAuctions_1_1Auction}{Auction}}}]{auction }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Notifies subscribers about an auction update.
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Node\+Info} & The local node info. \\
+\hline
+{\em routing\+Table} & The local node routing table. \\
+\hline
+{\em auction} & The auction to notify about. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a31e6aa409ca6ae5574bb2e58ee3ca162}\label{classKademlia_1_1Kademlia_a31e6aa409ca6ae5574bb2e58ee3ca162}} 
 \index{Kademlia.Kademlia@{Kademlia.Kademlia}!notifyNewBlockHash@{notifyNewBlockHash}}
 \index{notifyNewBlockHash@{notifyNewBlockHash}!Kademlia.Kademlia@{Kademlia.Kademlia}}
 \doxysubsubsection{\texorpdfstring{notifyNewBlockHash()}{notifyNewBlockHash()}}
-{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+notify\+New\+Block\+Hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1Node}{Node}}}]{my\+Node,  }\item[{String}]{new\+Block\+Hash }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+notify\+New\+Block\+Hash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table,  }\item[{String}]{new\+Block\+Hash }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Notifies nodes in the network about a new block hash, if it is different from the latest known hash.
 
 
 \begin{DoxyParams}{Parameters}
-{\em my\+Node} & The local node. \\
+{\em my\+Node\+Info} & The local node info. \\
+\hline
+{\em routing\+Table} & The local node routing table. \\
 \hline
 {\em new\+Block\+Hash} & The new block hash to notify about. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classKademlia_1_1Kademlia_a99931c9dc2f35779029d7e5dfbe5ae14}\label{classKademlia_1_1Kademlia_a99931c9dc2f35779029d7e5dfbe5ae14}} 
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_adef0fc39844a536045bff1fa9caec40a}\label{classKademlia_1_1Kademlia_adef0fc39844a536045bff1fa9caec40a}} 
+\index{Kademlia.Kademlia@{Kademlia.Kademlia}!notifyNewSubscriber@{notifyNewSubscriber}}
+\index{notifyNewSubscriber@{notifyNewSubscriber}!Kademlia.Kademlia@{Kademlia.Kademlia}}
+\doxysubsubsection{\texorpdfstring{notifyNewSubscriber()}{notifyNewSubscriber()}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+notify\+New\+Subscriber (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table,  }\item[{\mbox{\hyperlink{classAuctions_1_1Auction}{Auction}}}]{auction }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Notifies the network about a new subscriber to an auction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Node\+Info} & The local node info. \\
+\hline
+{\em routing\+Table} & The local node routing table. \\
+\hline
+{\em auction} & The auction to notify about. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_aa4e1a64b163902945dbe226c1bb6668d}\label{classKademlia_1_1Kademlia_aa4e1a64b163902945dbe226c1bb6668d}} 
 \index{Kademlia.Kademlia@{Kademlia.Kademlia}!ping@{ping}}
 \index{ping@{ping}!Kademlia.Kademlia@{Kademlia.Kademlia}}
 \doxysubsubsection{\texorpdfstring{ping()}{ping()}}
-{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+ping (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{String}]{target\+Node\+Id,  }\item[{List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+ping (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{my\+Node\+Info,  }\item[{String}]{target\+Node\+Id,  }\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{routing\+Table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Sends a ping message to the target node.
 
@@ -130,11 +209,11 @@ Sends a ping message to the target node.
 {\em routing\+Table} & Routing table of the local node. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classKademlia_1_1Kademlia_a56dd141aeefa153622d1f9de2b1fd895}\label{classKademlia_1_1Kademlia_a56dd141aeefa153622d1f9de2b1fd895}} 
+\mbox{\Hypertarget{classKademlia_1_1Kademlia_a131207f20c1bf0b9db5df8d962f31c85}\label{classKademlia_1_1Kademlia_a131207f20c1bf0b9db5df8d962f31c85}} 
 \index{Kademlia.Kademlia@{Kademlia.Kademlia}!store@{store}}
 \index{store@{store}!Kademlia.Kademlia@{Kademlia.Kademlia}}
 \doxysubsubsection{\texorpdfstring{store()}{store()}}
-{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+store (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1Node}{Node}}}]{my\+Node,  }\item[{String}]{key,  }\item[{Object}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily void Kademlia.\+Kademlia.\+store (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1Node}{Node}}}]{my\+Node,  }\item[{String}]{key,  }\item[{\mbox{\hyperlink{classKademlia_1_1ValueWrapper}{Value\+Wrapper}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Stores a key-\/value pair in the \mbox{\hyperlink{classKademlia_1_1Kademlia}{Kademlia}} network.
 

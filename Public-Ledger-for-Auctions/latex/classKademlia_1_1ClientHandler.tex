@@ -11,15 +11,13 @@ Collaboration diagram for Kademlia.\+Client\+Handler\+:
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classKademlia_1_1ClientHandler_ad6f36112e45863e6beb4cfe1bf0c228b}{Client\+Handler}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} node\+Info, \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} target\+Node\+Info, String key, Object value, \mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}} message\+Type, List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ near\+Nodes\+Info)
+\mbox{\hyperlink{classKademlia_1_1ClientHandler_a6a6c7a942ca001f87f5c51be113a8f57}{Client\+Handler}} (\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} node\+Info, \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} target\+Node\+Info, String key, \mbox{\hyperlink{classKademlia_1_1ValueWrapper}{Value\+Wrapper}} value, \mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}} message\+Type, List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ near\+Nodes\+Info)
 \item 
 void \mbox{\hyperlink{classKademlia_1_1ClientHandler_ac38cf5bfafe24058e1b96744d66f9aed}{channel\+Active}} (Channel\+Handler\+Context ctx)  throws IOException 
 \item 
 void \mbox{\hyperlink{classKademlia_1_1ClientHandler_a25516adade137f7f8f1d6c7e8d10568c}{channel\+Read}} (Channel\+Handler\+Context ctx, Object msg)  throws IOException, Class\+Not\+Found\+Exception 
 \item 
 void \mbox{\hyperlink{classKademlia_1_1ClientHandler_a8a7fdf6147dc13d266c63504cbb829f2}{exception\+Caught}} (Channel\+Handler\+Context ctx, Throwable cause)
-\item 
-List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1ClientHandler_ab8909ac3aa1137f839484b6292d70f45}{get\+Near\+Nodes\+Info}} ()
 \end{DoxyCompactItemize}
 
 
@@ -27,11 +25,11 @@ List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hype
 Class \mbox{\hyperlink{classKademlia_1_1ClientHandler}{Client\+Handler}}\+: Handles the client-\/side channel events 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classKademlia_1_1ClientHandler_ad6f36112e45863e6beb4cfe1bf0c228b}\label{classKademlia_1_1ClientHandler_ad6f36112e45863e6beb4cfe1bf0c228b}} 
+\mbox{\Hypertarget{classKademlia_1_1ClientHandler_a6a6c7a942ca001f87f5c51be113a8f57}\label{classKademlia_1_1ClientHandler_a6a6c7a942ca001f87f5c51be113a8f57}} 
 \index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!ClientHandler@{ClientHandler}}
 \index{ClientHandler@{ClientHandler}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
 \doxysubsubsection{\texorpdfstring{ClientHandler()}{ClientHandler()}}
-{\footnotesize\ttfamily Kademlia.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{node\+Info,  }\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info,  }\item[{String}]{key,  }\item[{Object}]{value,  }\item[{\mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}}}]{message\+Type,  }\item[{List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{near\+Nodes\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily Kademlia.\+Client\+Handler.\+Client\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{node\+Info,  }\item[{\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}}]{target\+Node\+Info,  }\item[{String}]{key,  }\item[{\mbox{\hyperlink{classKademlia_1_1ValueWrapper}{Value\+Wrapper}}}]{value,  }\item[{\mbox{\hyperlink{enumKademlia_1_1Kademlia_1_1MessageType}{Kademlia.\+Message\+Type}}}]{message\+Type,  }\item[{List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{near\+Nodes\+Info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 Constructs a new \mbox{\hyperlink{classKademlia_1_1ClientHandler}{Client\+Handler}}.
 
@@ -108,17 +106,6 @@ Called when an exception is caught in the channel.
 {\em cause} & The exception caught. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classKademlia_1_1ClientHandler_ab8909ac3aa1137f839484b6292d70f45}\label{classKademlia_1_1ClientHandler_ab8909ac3aa1137f839484b6292d70f45}} 
-\index{Kademlia.ClientHandler@{Kademlia.ClientHandler}!getNearNodesInfo@{getNearNodesInfo}}
-\index{getNearNodesInfo@{getNearNodesInfo}!Kademlia.ClientHandler@{Kademlia.ClientHandler}}
-\doxysubsubsection{\texorpdfstring{getNearNodesInfo()}{getNearNodesInfo()}}
-{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Client\+Handler.\+get\+Near\+Nodes\+Info (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-Gets the list of near nodes\textquotesingle{} information.
-
-\begin{DoxyReturn}{Returns}
-The list of near nodes\textquotesingle{} information. 
-\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

@@ -111,11 +111,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             case AUCTION_UPDATE:
                 msg.writeInt(key.length());
                 msg.writeCharSequence(key, StandardCharsets.UTF_8);
-                if(value.getValue() instanceof String close) { //Close
-                    ByteBuf closeBuf = Unpooled.wrappedBuffer(close.getBytes());
-                    msg.writeInt(closeBuf.readableBytes());
-                    msg.writeBytes(closeBuf);
-                    success = "Sent auction closure " + close + " to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
+                if(value.getValue() instanceof String auctionUpdate) { //Close or Subscriber
+                    ByteBuf auctionUpdateBuf = Unpooled.wrappedBuffer(auctionUpdate.getBytes());
+                    msg.writeInt(auctionUpdateBuf.readableBytes());
+                    msg.writeBytes(auctionUpdateBuf);
+                    success = "Sent auction update to node " + targetNodeInfo.getIpAddr() + ":" + targetNodeInfo.getPort();
                 } else { //Double (bid)
                     ByteBuf bidBuf = Utils.serialize(value.getValue());
                     msg.writeInt(bidBuf.readableBytes());
@@ -128,7 +128,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
                 logger.warning("Received unknown message type: " + messageType);
                 break;
         }
-        startTimeoutTimer();
+        if(messageType != Kademlia.MessageType.NEW_AUCTION) startTimeoutTimer();
     }
 
     /**
@@ -141,7 +141,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws IOException, ClassNotFoundException {
-        cancelTimeoutTimer();
+        if(messageType != Kademlia.MessageType.NEW_AUCTION)  cancelTimeoutTimer();
         if (msg instanceof DatagramPacket packet) {
             ByteBuf bytebuf = packet.content();
             messageType = Kademlia.MessageType.values()[bytebuf.readInt()];

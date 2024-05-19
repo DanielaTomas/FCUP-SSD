@@ -5,11 +5,14 @@
 \item 
 static String \mbox{\hyperlink{classKademlia_1_1Utils_a569c1cc2b80d9807b7ecbc158a718a71}{get\+Address}} ()
 \item 
+\mbox{\Hypertarget{classKademlia_1_1Utils_afe0e9a84b5e74930a72bcda0dfadb782}\label{classKademlia_1_1Utils_afe0e9a84b5e74930a72bcda0dfadb782}} 
+static byte\mbox{[}$\,$\mbox{]} {\bfseries generate\+Random\+Id} ()
+\item 
 static Byte\+Buf \mbox{\hyperlink{classKademlia_1_1Utils_a8b1949b5d3b0cf98c03531307f901dc7}{serialize}} (Object obj)  throws IOException 
 \item 
 static Object \mbox{\hyperlink{classKademlia_1_1Utils_a9f78403a316a4540b2b41cfad189f83a}{deserialize}} (Byte\+Buf byte\+Buf)  throws IOException, Class\+Not\+Found\+Exception 
 \item 
-static List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1Utils_a3d184cfb84c637762c22f191f04e2d97}{find\+Closest\+Nodes}} (List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ my\+Routing\+Table, String requested\+Node\+Id, final int K)
+static List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ \mbox{\hyperlink{classKademlia_1_1Utils_a7f4c56c605cc7c747a216febbe971e1a}{find\+Closest\+Nodes}} (Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$ my\+Routing\+Table, String requested\+Node\+Id, final int K)
 \item 
 static int \mbox{\hyperlink{classKademlia_1_1Utils_a19678da78409aac47c4381dcea0e1bc6}{calculate\+Distance}} (String node\+Id1, String node\+Id2)
 \item 
@@ -62,11 +65,11 @@ The deserialized object.
 {\em Class\+Not\+Found\+Exception} & If the class of the serialized object cannot be found. \\
 \hline
 \end{DoxyExceptions}
-\mbox{\Hypertarget{classKademlia_1_1Utils_a3d184cfb84c637762c22f191f04e2d97}\label{classKademlia_1_1Utils_a3d184cfb84c637762c22f191f04e2d97}} 
+\mbox{\Hypertarget{classKademlia_1_1Utils_a7f4c56c605cc7c747a216febbe971e1a}\label{classKademlia_1_1Utils_a7f4c56c605cc7c747a216febbe971e1a}} 
 \index{Kademlia.Utils@{Kademlia.Utils}!findClosestNodes@{findClosestNodes}}
 \index{findClosestNodes@{findClosestNodes}!Kademlia.Utils@{Kademlia.Utils}}
 \doxysubsubsection{\texorpdfstring{findClosestNodes()}{findClosestNodes()}}
-{\footnotesize\ttfamily static List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Utils.\+find\+Closest\+Nodes (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{my\+Routing\+Table,  }\item[{String}]{requested\+Node\+Id,  }\item[{final int}]{K }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+{\footnotesize\ttfamily static List$<$\mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}}$>$ Kademlia.\+Utils.\+find\+Closest\+Nodes (\begin{DoxyParamCaption}\item[{Set$<$ \mbox{\hyperlink{classKademlia_1_1NodeInfo}{Node\+Info}} $>$}]{my\+Routing\+Table,  }\item[{String}]{requested\+Node\+Id,  }\item[{final int}]{K }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
 Finds the closest nodes to the requested node information.
 

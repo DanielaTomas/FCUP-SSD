@@ -1,0 +1,284 @@
+\hypertarget{classAuctions_1_1Auction}{}\doxysection{Auctions.\+Auction Class Reference}
+\label{classAuctions_1_1Auction}\index{Auctions.Auction@{Auctions.Auction}}
+
+
+Inheritance diagram for Auctions.\+Auction\+:
+% FIG 0
+
+
+Collaboration diagram for Auctions.\+Auction\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAuctions_1_1Auction_abf25cdfa6dc6c1323ce07b55679eb414}{Auction}} (Public\+Key seller\+Public\+Key, String item, double starting\+Price, String end\+Time\+String)
+\item 
+boolean \mbox{\hyperlink{classAuctions_1_1Auction_af8235aec3f09e138cd51c34bf826f735}{place\+Bid}} (Public\+Key bidder\+Public\+Key, double bid\+Amount, byte\mbox{[}$\,$\mbox{]} signature)
+\item 
+boolean \mbox{\hyperlink{classAuctions_1_1Auction_adf1a108a588ffdf1f001b77a07fb5d51}{is\+Open}} ()
+\item 
+void \mbox{\hyperlink{classAuctions_1_1Auction_ad7154804cf739baeddcf7fab9f893370}{close\+Auction}} ()
+\item 
+void \mbox{\hyperlink{classAuctions_1_1Auction_ae69c063d04065fa1f6fff12a93d2ab45}{add\+Subscriber}} (String node\+Id)
+\item 
+boolean \mbox{\hyperlink{classAuctions_1_1Auction_a78380ce23e5c6638aed5c1dc7c807de6}{is\+Subscriber}} (String node\+Id)
+\item 
+String \mbox{\hyperlink{classAuctions_1_1Auction_a86e739f447d4430a49445a1f76941683}{to\+String}} ()
+\item 
+String \mbox{\hyperlink{classAuctions_1_1Auction_aeb698fac09a8ca315f44eeb5cf9d069b}{get\+Id}} ()
+\item 
+double \mbox{\hyperlink{classAuctions_1_1Auction_a42f78ffd93682eded2cffaeb91bb95b7}{get\+Current\+Bid}} ()
+\item 
+Public\+Key \mbox{\hyperlink{classAuctions_1_1Auction_a10bb217f6784188a13e2b540bc1e9f97}{get\+Current\+Bidder}} ()
+\item 
+Public\+Key \mbox{\hyperlink{classAuctions_1_1Auction_a183fbb958f9b1b5b37e4e024c56188dd}{get\+Seller\+Public\+Key}} ()
+\item 
+List$<$ String $>$ \mbox{\hyperlink{classAuctions_1_1Auction_a626820c76389276c7b56fbc268a54510}{get\+Subscribers}} ()
+\item 
+String \mbox{\hyperlink{classAuctions_1_1Auction_a87a2368451cc7ecc9c1d1be703aa74fd}{get\+Stored\+Node\+Id}} ()
+\item 
+void \mbox{\hyperlink{classAuctions_1_1Auction_adc2a1f60298a22a0794479a50d4f68dd}{set\+Current\+Bid}} (double current\+Bid)
+\item 
+void \mbox{\hyperlink{classAuctions_1_1Auction_a2d9dbdf66f02c9632b40f6ee44d33465}{set\+Current\+Bidder}} (Public\+Key current\+Bidder)
+\item 
+void \mbox{\hyperlink{classAuctions_1_1Auction_a8ec5b7fcd9b33cd1969c54c321def23d}{set\+Stored\+Node\+Id}} (String stored\+Node\+Id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static String \mbox{\hyperlink{classAuctions_1_1Auction_a55b20da6b016ccfca2494dd2409fb914}{generate\+Auction\+Id}} (Public\+Key seller\+Public\+Key, String item, double starting\+Price, String end\+Time)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classAuctions_1_1Auction_abf25cdfa6dc6c1323ce07b55679eb414}\label{classAuctions_1_1Auction_abf25cdfa6dc6c1323ce07b55679eb414}} 
+\index{Auctions.Auction@{Auctions.Auction}!Auction@{Auction}}
+\index{Auction@{Auction}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{Auction()}{Auction()}}
+{\footnotesize\ttfamily Auctions.\+Auction.\+Auction (\begin{DoxyParamCaption}\item[{Public\+Key}]{seller\+Public\+Key,  }\item[{String}]{item,  }\item[{double}]{starting\+Price,  }\item[{String}]{end\+Time\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor for creating a new auction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em seller\+Public\+Key} & The public key of the seller. \\
+\hline
+{\em item} & The item being auctioned. \\
+\hline
+{\em starting\+Price} & The starting price of the auction. \\
+\hline
+{\em end\+Time\+String} & The end time of the auction in the format \char`\"{}yyyy-\/\+MM-\/dd HH\+:mm\+:ss\char`\"{}. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classAuctions_1_1Auction_ae69c063d04065fa1f6fff12a93d2ab45}\label{classAuctions_1_1Auction_ae69c063d04065fa1f6fff12a93d2ab45}} 
+\index{Auctions.Auction@{Auctions.Auction}!addSubscriber@{addSubscriber}}
+\index{addSubscriber@{addSubscriber}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{addSubscriber()}{addSubscriber()}}
+{\footnotesize\ttfamily void Auctions.\+Auction.\+add\+Subscriber (\begin{DoxyParamCaption}\item[{String}]{node\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Adds a subscriber to the auction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & The ID of the node subscribing to the auction. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classAuctions_1_1Auction_ad7154804cf739baeddcf7fab9f893370}\label{classAuctions_1_1Auction_ad7154804cf739baeddcf7fab9f893370}} 
+\index{Auctions.Auction@{Auctions.Auction}!closeAuction@{closeAuction}}
+\index{closeAuction@{closeAuction}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{closeAuction()}{closeAuction()}}
+{\footnotesize\ttfamily void Auctions.\+Auction.\+close\+Auction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Closes the auction and logs the winner. \mbox{\Hypertarget{classAuctions_1_1Auction_a55b20da6b016ccfca2494dd2409fb914}\label{classAuctions_1_1Auction_a55b20da6b016ccfca2494dd2409fb914}} 
+\index{Auctions.Auction@{Auctions.Auction}!generateAuctionId@{generateAuctionId}}
+\index{generateAuctionId@{generateAuctionId}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{generateAuctionId()}{generateAuctionId()}}
+{\footnotesize\ttfamily static String Auctions.\+Auction.\+generate\+Auction\+Id (\begin{DoxyParamCaption}\item[{Public\+Key}]{seller\+Public\+Key,  }\item[{String}]{item,  }\item[{double}]{starting\+Price,  }\item[{String}]{end\+Time }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Generates an auction ID based on the seller, item, starting price and end time.
+
+
+\begin{DoxyParams}{Parameters}
+{\em seller\+Public\+Key} & The public key of the seller. \\
+\hline
+{\em item} & The item being auctioned. \\
+\hline
+{\em starting\+Price} & The starting price of the auction. \\
+\hline
+{\em end\+Time} & The end time of the auction. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The generated auction ID. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a42f78ffd93682eded2cffaeb91bb95b7}\label{classAuctions_1_1Auction_a42f78ffd93682eded2cffaeb91bb95b7}} 
+\index{Auctions.Auction@{Auctions.Auction}!getCurrentBid@{getCurrentBid}}
+\index{getCurrentBid@{getCurrentBid}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{getCurrentBid()}{getCurrentBid()}}
+{\footnotesize\ttfamily double Auctions.\+Auction.\+get\+Current\+Bid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the current bid amount.
+
+\begin{DoxyReturn}{Returns}
+The current bid amount. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a10bb217f6784188a13e2b540bc1e9f97}\label{classAuctions_1_1Auction_a10bb217f6784188a13e2b540bc1e9f97}} 
+\index{Auctions.Auction@{Auctions.Auction}!getCurrentBidder@{getCurrentBidder}}
+\index{getCurrentBidder@{getCurrentBidder}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{getCurrentBidder()}{getCurrentBidder()}}
+{\footnotesize\ttfamily Public\+Key Auctions.\+Auction.\+get\+Current\+Bidder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the public key of the current highest bidder.
+
+\begin{DoxyReturn}{Returns}
+The public key of the current highest bidder. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_aeb698fac09a8ca315f44eeb5cf9d069b}\label{classAuctions_1_1Auction_aeb698fac09a8ca315f44eeb5cf9d069b}} 
+\index{Auctions.Auction@{Auctions.Auction}!getId@{getId}}
+\index{getId@{getId}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily String Auctions.\+Auction.\+get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the auction ID.
+
+\begin{DoxyReturn}{Returns}
+The auction ID. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a183fbb958f9b1b5b37e4e024c56188dd}\label{classAuctions_1_1Auction_a183fbb958f9b1b5b37e4e024c56188dd}} 
+\index{Auctions.Auction@{Auctions.Auction}!getSellerPublicKey@{getSellerPublicKey}}
+\index{getSellerPublicKey@{getSellerPublicKey}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{getSellerPublicKey()}{getSellerPublicKey()}}
+{\footnotesize\ttfamily Public\+Key Auctions.\+Auction.\+get\+Seller\+Public\+Key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the public key of the seller.
+
+\begin{DoxyReturn}{Returns}
+The public key of the seller. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a87a2368451cc7ecc9c1d1be703aa74fd}\label{classAuctions_1_1Auction_a87a2368451cc7ecc9c1d1be703aa74fd}} 
+\index{Auctions.Auction@{Auctions.Auction}!getStoredNodeId@{getStoredNodeId}}
+\index{getStoredNodeId@{getStoredNodeId}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{getStoredNodeId()}{getStoredNodeId()}}
+{\footnotesize\ttfamily String Auctions.\+Auction.\+get\+Stored\+Node\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the ID of the node storing the auction.
+
+\begin{DoxyReturn}{Returns}
+The ID of the node storing the auction. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a626820c76389276c7b56fbc268a54510}\label{classAuctions_1_1Auction_a626820c76389276c7b56fbc268a54510}} 
+\index{Auctions.Auction@{Auctions.Auction}!getSubscribers@{getSubscribers}}
+\index{getSubscribers@{getSubscribers}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{getSubscribers()}{getSubscribers()}}
+{\footnotesize\ttfamily List$<$String$>$ Auctions.\+Auction.\+get\+Subscribers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets the list of subscribers to the auction.
+
+\begin{DoxyReturn}{Returns}
+The list of subscribers. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_adf1a108a588ffdf1f001b77a07fb5d51}\label{classAuctions_1_1Auction_adf1a108a588ffdf1f001b77a07fb5d51}} 
+\index{Auctions.Auction@{Auctions.Auction}!isOpen@{isOpen}}
+\index{isOpen@{isOpen}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{isOpen()}{isOpen()}}
+{\footnotesize\ttfamily boolean Auctions.\+Auction.\+is\+Open (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Checks if the auction is open.
+
+\begin{DoxyReturn}{Returns}
+True if the auction is open, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a78380ce23e5c6638aed5c1dc7c807de6}\label{classAuctions_1_1Auction_a78380ce23e5c6638aed5c1dc7c807de6}} 
+\index{Auctions.Auction@{Auctions.Auction}!isSubscriber@{isSubscriber}}
+\index{isSubscriber@{isSubscriber}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{isSubscriber()}{isSubscriber()}}
+{\footnotesize\ttfamily boolean Auctions.\+Auction.\+is\+Subscriber (\begin{DoxyParamCaption}\item[{String}]{node\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Checks if a node is a subscriber to the auction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & The ID of the node. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the node is a subscriber, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_af8235aec3f09e138cd51c34bf826f735}\label{classAuctions_1_1Auction_af8235aec3f09e138cd51c34bf826f735}} 
+\index{Auctions.Auction@{Auctions.Auction}!placeBid@{placeBid}}
+\index{placeBid@{placeBid}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{placeBid()}{placeBid()}}
+{\footnotesize\ttfamily boolean Auctions.\+Auction.\+place\+Bid (\begin{DoxyParamCaption}\item[{Public\+Key}]{bidder\+Public\+Key,  }\item[{double}]{bid\+Amount,  }\item[{byte\mbox{[}$\,$\mbox{]}}]{signature }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Places a bid on the auction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bidder\+Public\+Key} & The public key of the bidder. \\
+\hline
+{\em bid\+Amount} & The amount of the bid. \\
+\hline
+{\em signature} & The digital signature of the bid. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the bid is successfully placed, otherwise false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classAuctions_1_1Auction_adc2a1f60298a22a0794479a50d4f68dd}\label{classAuctions_1_1Auction_adc2a1f60298a22a0794479a50d4f68dd}} 
+\index{Auctions.Auction@{Auctions.Auction}!setCurrentBid@{setCurrentBid}}
+\index{setCurrentBid@{setCurrentBid}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{setCurrentBid()}{setCurrentBid()}}
+{\footnotesize\ttfamily void Auctions.\+Auction.\+set\+Current\+Bid (\begin{DoxyParamCaption}\item[{double}]{current\+Bid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets the current bid amount.
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+Bid} & The current bid amount. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a2d9dbdf66f02c9632b40f6ee44d33465}\label{classAuctions_1_1Auction_a2d9dbdf66f02c9632b40f6ee44d33465}} 
+\index{Auctions.Auction@{Auctions.Auction}!setCurrentBidder@{setCurrentBidder}}
+\index{setCurrentBidder@{setCurrentBidder}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{setCurrentBidder()}{setCurrentBidder()}}
+{\footnotesize\ttfamily void Auctions.\+Auction.\+set\+Current\+Bidder (\begin{DoxyParamCaption}\item[{Public\+Key}]{current\+Bidder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets the current highest bidder.
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+Bidder} & The current highest bidder. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a8ec5b7fcd9b33cd1969c54c321def23d}\label{classAuctions_1_1Auction_a8ec5b7fcd9b33cd1969c54c321def23d}} 
+\index{Auctions.Auction@{Auctions.Auction}!setStoredNodeId@{setStoredNodeId}}
+\index{setStoredNodeId@{setStoredNodeId}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{setStoredNodeId()}{setStoredNodeId()}}
+{\footnotesize\ttfamily void Auctions.\+Auction.\+set\+Stored\+Node\+Id (\begin{DoxyParamCaption}\item[{String}]{stored\+Node\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets the ID of the node storing the auction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em stored\+Node\+Id} & The ID of the node storing the auction. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classAuctions_1_1Auction_a86e739f447d4430a49445a1f76941683}\label{classAuctions_1_1Auction_a86e739f447d4430a49445a1f76941683}} 
+\index{Auctions.Auction@{Auctions.Auction}!toString@{toString}}
+\index{toString@{toString}!Auctions.Auction@{Auctions.Auction}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily String Auctions.\+Auction.\+to\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Converts the auction details to a string.
+
+\begin{DoxyReturn}{Returns}
+The string representation of the auction. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/\+Auctions/Auction.\+java\end{DoxyCompactItemize}

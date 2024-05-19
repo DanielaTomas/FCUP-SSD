@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['node_87',['Node',['../classKademlia_1_1Node.html',1,'Kademlia']]],
-  ['nodeinfo_88',['NodeInfo',['../classKademlia_1_1NodeInfo.html',1,'Kademlia']]]
+  ['messagetype_109',['MessageType',['../enumKademlia_1_1Kademlia_1_1MessageType.html',1,'Kademlia::Kademlia']]],
+  ['miner_110',['Miner',['../classBlockChain_1_1Miner.html',1,'BlockChain']]]
 ];

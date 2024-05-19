@@ -18,7 +18,7 @@ import static Kademlia.Utils.findClosestNodes;
 public class Kademlia {
 
     private static final Logger logger = Logger.getLogger(Kademlia.class.getName());
-    private static final int K = 2; //TODO ajustar valor
+    private static final int K = 2; // ajustar valor
     private static Kademlia instance;
     private StringBuilder latestBlockHash;
     private StringBuilder auctionId; //TODO Set<StringBuilder>?
@@ -63,7 +63,7 @@ public class Kademlia {
 
         connectAndHandle(myNode.getNodeInfo(), myNode.findNodeInfoById(bootstrapNodeId), null, null, MessageType.LATEST_BLOCK);
 
-        myNode.getRoutingTable().remove(myNode.findNodeInfoById(bootstrapNodeId));
+        myNode.getRoutingTable().remove(myNode.findNodeInfoById(bootstrapNodeId)); //TODO
 
         for(NodeInfo nearNodeInfo : nearNodes) {
             myNode.updateRoutingTable(nearNodeInfo);
@@ -174,13 +174,16 @@ public class Kademlia {
     public void store(Node myNode, String key, ValueWrapper value) {
         logger.info("Kademlia - Starting STORE RPC");
 
-        findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable());
+        findNode(myNode.getNodeInfo(),key,myNode.getRoutingTable()); //
         List<NodeInfo> keyNearNodes = findClosestNodes(myNode.getRoutingTable(), key, K);
 
         NodeInfo targetNodeInfo = findNodeForKey(myNode.getNodeInfo(), key, keyNearNodes);
         if (targetNodeInfo != null) {
             if (targetNodeInfo.equals(myNode.getNodeInfo())) {
                 myNode.storeKeyValue(key, value.getValue());
+                if(value.getValue() instanceof Auction) {
+                    ((Auction) value.getValue()).setStoredNodeId(myNode.getNodeInfo().getNodeId());
+                }
                 logger.info("key: " + key + ", value: " + value.getValue() + " stored");
             } else {
                 connectAndHandle(myNode.getNodeInfo(), targetNodeInfo, key, value, MessageType.STORE);
@@ -235,6 +238,13 @@ public class Kademlia {
         }
     }
 
+    /**
+     * Broadcasts a new auction to the nodes in the network.
+     *
+     * @param myNodeInfo     The local node info.
+     * @param routingTable   The local node routing table.
+     * @param auctionId      The ID of the auction to broadcast.
+     */
     public void broadcastNewAuction(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, String auctionId) {
         logger.info("Kademlia - Starting broadcast new auction");
         if(this.auctionId == null || !auctionId.contentEquals(this.auctionId)) {
@@ -247,6 +257,13 @@ public class Kademlia {
         }
     }
 
+    /**
+     * Checks if the routing table contains a node with the specified node ID.
+     *
+     * @param routingTable   The routing table.
+     * @param nodeId         The node ID to check for.
+     * @return True if the routing table contains the node ID, otherwise false.
+     */
     public boolean contains(Set<NodeInfo> routingTable, String nodeId) {
         for (NodeInfo nodeInfo : routingTable) {
             if (nodeInfo.getNodeId().equals(nodeId)) {
@@ -256,24 +273,59 @@ public class Kademlia {
         return false;
     }
 
+    /**
+     * Notifies subscribers about an auction update.
+     *
+     * @param myNodeInfo  The local node info.
+     * @param routingTable The local node routing table.
+     * @param auction      The auction to notify about.
+     */
     public void notifyAuctionUpdate(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, Auction auction) {
-        logger.info("Kademlia - Starting notify new bid");
+        logger.info("Kademlia - Starting auction update");
+
         for(String targetNodeId : auction.getSubscribers()) {
-            if(!contains(routingTable, targetNodeId) && !targetNodeId.equals(myNodeInfo.getNodeId())) {
-                findNode(myNodeInfo, targetNodeId, routingTable);
+            if(!contains(routingTable, targetNodeId) && !targetNodeId.equals(myNodeInfo.getNodeId()) && !targetNodeId.equals(auction.getStoredNodeId())) {
+                findNode(myNodeInfo, targetNodeId, routingTable); //
             }
         }
 
         String auctionId = auction.getId();
         Double bid = auction.getCurrentBid();
+        //TODO update current bidder
+
         for(NodeInfo targetNodeInfo : routingTable) {
-            if(auction.isSubscriber(targetNodeInfo.getNodeId())) {
+            if(targetNodeInfo.getNodeId().equals(auction.getStoredNodeId())) {
                 if(auction.isOpen()){
                     connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, new ValueWrapper(bid), MessageType.AUCTION_UPDATE);
-                } else {
+                }
+            }
+            if(auction.isSubscriber(targetNodeInfo.getNodeId())) {
+                if(auction.isOpen() && !targetNodeInfo.getNodeId().equals(auction.getStoredNodeId())){
+                    connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, new ValueWrapper(bid), MessageType.AUCTION_UPDATE);
+                } else if (!auction.isOpen()) {
                     connectAndHandle(myNodeInfo, targetNodeInfo, auctionId, new ValueWrapper("Auction " + auctionId + " closed."), MessageType.AUCTION_UPDATE);
                 }
             }
+        }
+    }
+
+    /**
+     * Notifies the network about a new subscriber to an auction.
+     *
+     * @param myNodeInfo     The local node info.
+     * @param routingTable   The local node routing table.
+     * @param auction        The auction to notify about.
+     */
+    public void notifyNewSubscriber(NodeInfo myNodeInfo, Set<NodeInfo> routingTable, Auction auction) {
+        logger.info("Kademlia - Starting new subscriber");
+        for(String targetNodeId : auction.getSubscribers()) {
+            if(!contains(routingTable, targetNodeId) && !targetNodeId.equals(myNodeInfo.getNodeId()) && !targetNodeId.equals(auction.getStoredNodeId())) {
+                findNode(myNodeInfo, targetNodeId, routingTable); //
+            }
+        }
+        for(NodeInfo targetNodeInfo : routingTable) {
+            if(targetNodeInfo.getNodeId().equals(auction.getStoredNodeId()))
+                connectAndHandle(myNodeInfo, targetNodeInfo, auction.getId(), new ValueWrapper(myNodeInfo.getNodeId()), MessageType.AUCTION_UPDATE);
         }
     }
 
