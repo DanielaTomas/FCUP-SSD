@@ -129,8 +129,9 @@ public class PeerMainMenu implements Runnable {
                         if(auction.placeBid(myPublicKey, bidAmount, signature)) {
                             Transaction transaction = new Transaction(auction.getSellerPublicKey(), bidAmount);
                             transaction.signTransaction(myPrivateKey);
-                            this.blockchain.addTransaction(transaction);
-                            kademlia.notifyAuctionUpdate(myNode.getNodeInfo(),myNode.getRoutingTable(),auction);
+                            if(this.blockchain.addTransaction(transaction)) {
+                                kademlia.notifyAuctionUpdate(myNode.getNodeInfo(), myNode.getRoutingTable(), auction);
+                            }
                         }
                     } else {
                         System.out.println("Auction not found.");

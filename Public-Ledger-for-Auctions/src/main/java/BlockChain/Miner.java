@@ -26,7 +26,7 @@ public class Miner {
      *
      * @param b The most recent block in the chain.
      */
-    public boolean PoW(Block b) {
+    private boolean PoW(Block b) {
         String target = new String(new char[Constants.DIFFICULTY]).replace('\0', '0');
         String hash = b.getHash();
 

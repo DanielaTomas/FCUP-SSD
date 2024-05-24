@@ -6,9 +6,12 @@ import Auctions.Wallet;
 import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /** Class Blockchain: Represents a blockchain containing a chain of blocks and pending transactions. */
 public class Blockchain {
+    private static final Logger logger = Logger.getLogger(Blockchain.class.getName());
+
     private static Blockchain instance; // Singleton design pattern, seems like a good idea for this class
 
     private List<Block> chain;
@@ -60,9 +63,13 @@ public class Blockchain {
      *
      * @param transaction The transaction to add.
      */
-    public void addTransaction(Transaction transaction) {
-        if(transaction == null || !transaction.verifySignature()) return;
+    public boolean addTransaction(Transaction transaction) {
+        if(transaction == null || !transaction.verifySignature()) {
+            logger.warning("Transaction not added. Transaction is null or signature is not valid.");
+            return false;
+        }
         pendingTransactions.add(transaction);
+        return true;
     }
 
     /**
